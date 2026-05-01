@@ -1,0 +1,411 @@
+[
+  {
+    "id": "T01",
+    "categoria_esperada": [
+      "depresion"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Estaba navegando por Facebook y, en una publicación, vi la foto de mi amiga que es un casi algo; en ese momento por mi m...",
+    "raw_response": "{\n  \"p_depresion\": 40,\n  \"p_ansiedad\": 60,\n  \"p_suicida\": 0,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Se detectan señales de inseguridad y comparación social, lo que puede indicar ansiedad y una leve tristeza\"\n}",
+    "scores": {
+      "p_depresion": 40,
+      "p_ansiedad": 60,
+      "p_suicida": 0,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Se detectan señales de inseguridad y comparación social, lo que puede indicar ansiedad y una leve tristeza"
+    },
+    "predicted_top_clinical": "p_ansiedad"
+  },
+  {
+    "id": "T02",
+    "categoria_esperada": [
+      "depresion"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Salí a la cocina por un vaso de agua y me enteré de que mi abuelo había sido llevado al hospital, no me sorprendió en un...",
+    "raw_response": "{\n  \"p_depresion\": 20,\n  \"p_ansiedad\": 10,\n  \"p_suicida\": 0,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"La persona experimenta culpa por no sentir empatía, lo que sugiere una conciencia emocional, pero no hay señales de depresión, ansiedad o ideación suicida claras.\"\n}",
+    "scores": {
+      "p_depresion": 20,
+      "p_ansiedad": 10,
+      "p_suicida": 0,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "La persona experimenta culpa por no sentir empatía, lo que sugiere una conciencia emocional, pero no hay señales de depresión, ansiedad o ideación suicida claras."
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T03",
+    "categoria_esperada": [
+      "depresion",
+      "ansiedad"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Estaba haciendo un trabajo para la universidad y se me erizó la piel porque en cierto momento sentí que no estaba hacién...",
+    "raw_response": "{\n  \"p_depresion\": 20,\n  \"p_ansiedad\": 80,\n  \"p_suicida\": 0,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Se observan señales de ansiedad como la angustia y el pensamiento negativo, pero no hay indicios de depresión profunda ni ideación suicida.\"\n}",
+    "scores": {
+      "p_depresion": 20,
+      "p_ansiedad": 80,
+      "p_suicida": 0,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Se observan señales de ansiedad como la angustia y el pensamiento negativo, pero no hay indicios de depresión profunda ni ideación suicida."
+    },
+    "predicted_top_clinical": "p_ansiedad"
+  },
+  {
+    "id": "T04",
+    "categoria_esperada": [
+      "suicida",
+      "depresion"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "He intentado hacer de todo, cosas en las que se supone que soy bueno o suelo disfrutar, pero últimamente no siento alegr...",
+    "raw_response": "{\n  \"p_depresion\": 90,\n  \"p_ansiedad\": 20,\n  \"p_suicida\": 80,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Se observan señales de depresión y pensamientos suicidas debido a la pérdida de interés en actividades y sentimientos de inutilidad.\"\n}",
+    "scores": {
+      "p_depresion": 90,
+      "p_ansiedad": 20,
+      "p_suicida": 80,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Se observan señales de depresión y pensamientos suicidas debido a la pérdida de interés en actividades y sentimientos de inutilidad."
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T05",
+    "categoria_esperada": [
+      "depresion"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Me he descuidado con la universidad y mi educación técnica, no supe cómo hacer una evidencia y la dejé pasar, constantem...",
+    "raw_response": "{\n  \"p_depresion\": 40,\n  \"p_ansiedad\": 60,\n  \"p_suicida\": 0,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Se observan señales de ansiedad y preocupación por el futuro académico, pero no se detectan indicios de depresión severa ni ideación suicida.\"\n}",
+    "scores": {
+      "p_depresion": 40,
+      "p_ansiedad": 60,
+      "p_suicida": 0,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Se observan señales de ansiedad y preocupación por el futuro académico, pero no se detectan indicios de depresión severa ni ideación suicida."
+    },
+    "predicted_top_clinical": "p_ansiedad"
+  },
+  {
+    "id": "T06",
+    "categoria_esperada": [
+      "depresion"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Te veo alegre y no quiero arruinar eso, porque al fin y al cabo es lo que siempre hago, arruinar todo. Tú lo tienes todo...",
+    "raw_response": "{\n  \"p_depresion\": 80,\n  \"p_ansiedad\": 40,\n  \"p_suicida\": 20,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Se observan señales de tristeza y desesperanza, con una percepción de no ser necesario o valioso para los demás.\"\n}",
+    "scores": {
+      "p_depresion": 80,
+      "p_ansiedad": 40,
+      "p_suicida": 20,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Se observan señales de tristeza y desesperanza, con una percepción de no ser necesario o valioso para los demás."
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T07",
+    "categoria_esperada": [
+      "depresion",
+      "ansiedad"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Normalmente la gente se la pasa diciendo que actualmente no nos podemos concentrar por culpa de TikTok y las redes socia...",
+    "raw_response": "{\n  \"p_depresion\": 80,\n  \"p_ansiedad\": 40,\n  \"p_suicida\": 20,\n  \"score_normas\": 80,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Se mencionan síntomas de tristeza y desesperanza, pero no hay lenguaje agresivo ni contenido dañino explícito.\"\n}",
+    "scores": {
+      "p_depresion": 80,
+      "p_ansiedad": 40,
+      "p_suicida": 20,
+      "score_normas": 80,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Se mencionan síntomas de tristeza y desesperanza, pero no hay lenguaje agresivo ni contenido dañino explícito."
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T08",
+    "categoria_esperada": [
+      "depresion",
+      "suicida"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Tengo unas cuantas cajas de pastillas en las gavetas de una mesita de noche en mi cuarto, nadie tiene porqué enterarse y...",
+    "raw_response": "{\n  \"p_depresion\": 80,\n  \"p_ansiedad\": 20,\n  \"p_suicida\": 90,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Ideación suicida explícita sin agresión hacia terceros\"\n}",
+    "scores": {
+      "p_depresion": 80,
+      "p_ansiedad": 20,
+      "p_suicida": 90,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Ideación suicida explícita sin agresión hacia terceros"
+    },
+    "predicted_top_clinical": "p_suicida"
+  },
+  {
+    "id": "T09",
+    "categoria_esperada": [
+      "ansiedad",
+      "depresion",
+      "suicida"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Ya ni siquiera puedo estar tranquilo cuando estoy de pie, no puedo controlar el moverme porque si no lo hago siento que ...",
+    "raw_response": "{\n  \"p_depresion\": 60,\n  \"p_ansiedad\": 90,\n  \"p_suicida\": 20,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Señales de ansiedad intensa y desesperación, pero sin ideación suicida explícita\"\n}",
+    "scores": {
+      "p_depresion": 60,
+      "p_ansiedad": 90,
+      "p_suicida": 20,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Señales de ansiedad intensa y desesperación, pero sin ideación suicida explícita"
+    },
+    "predicted_top_clinical": "p_ansiedad"
+  },
+  {
+    "id": "T10",
+    "categoria_esperada": [
+      "depresion"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Me está pasando algo y es involuntario: últimamente no soporto a la gente, siento que todo me fastidia y que necesito es...",
+    "raw_response": "{\n  \"p_depresion\": 80,\n  \"p_ansiedad\": 40,\n  \"p_suicida\": 0,\n  \"score_normas\": 80,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Señales de tristeza y desesperanza, junto con una necesidad de espacio y soledad, sugieren depresión. La irritabilidad y el comportamiento grosero pueden estar relacionados con la ansiedad, pero no es el síntoma principal.\"\n}",
+    "scores": {
+      "p_depresion": 80,
+      "p_ansiedad": 40,
+      "p_suicida": 0,
+      "score_normas": 80,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Señales de tristeza y desesperanza, junto con una necesidad de espacio y soledad, sugieren depresión. La irritabilidad y el comportamiento grosero pueden estar relacionados con la ansiedad, pero no es el síntoma principal."
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T11",
+    "categoria_esperada": [
+      "depresion",
+      "suicida"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Voy a utilizar lo que queda de mis fuerzas para contemplar por última vez los paisajes que antes tanto disfrutaba ver y ...",
+    "raw_response": "{\n  \"p_depresion\": 80,\n  \"p_ansiedad\": 20,\n  \"p_suicida\": 90,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Se detectan señales de desesperanza y despedida, con una posible ideación suicida pasiva.\"\n}",
+    "scores": {
+      "p_depresion": 80,
+      "p_ansiedad": 20,
+      "p_suicida": 90,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Se detectan señales de desesperanza y despedida, con una posible ideación suicida pasiva."
+    },
+    "predicted_top_clinical": "p_suicida"
+  },
+  {
+    "id": "T12",
+    "categoria_esperada": [
+      "depresion",
+      "suicida"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Yo no sé, se supone que me debería sentir así, yo soy alguien que se supone que es inteligente o del cual las personas e...",
+    "raw_response": "{\n  \"p_depresion\": 90,\n  \"p_ansiedad\": 80,\n  \"p_suicida\": 70,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Señales de tristeza, desesperanza, inutilidad y pensamientos suicidas, junto con preocupación por el impacto en seres queridos.\"\n}",
+    "scores": {
+      "p_depresion": 90,
+      "p_ansiedad": 80,
+      "p_suicida": 70,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Señales de tristeza, desesperanza, inutilidad y pensamientos suicidas, junto con preocupación por el impacto en seres queridos."
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T13",
+    "categoria_esperada": [
+      "depresion",
+      "suicida"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Cada día es una tortura, levantarme de la cama duele, bañarme duele, cepillarme los dientes duele, comer duele, pero mi ...",
+    "raw_response": "{\n  \"p_depresion\": 90,\n  \"p_ansiedad\": 60,\n  \"p_suicida\": 20,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Señales de tristeza persistente, desesperanza y fatiga emocional, con sentimientos de fracaso y agotamiento.\"\n}",
+    "scores": {
+      "p_depresion": 90,
+      "p_ansiedad": 60,
+      "p_suicida": 20,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Señales de tristeza persistente, desesperanza y fatiga emocional, con sentimientos de fracaso y agotamiento."
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T14",
+    "categoria_esperada": [
+      "ansiedad"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "No puedo dormir, llevo meses sin dormir bien, las voces me despiertan a cada rato y me dicen cosas que no quiero escucha...",
+    "raw_response": "{\n  \"p_depresion\": 60,\n  \"p_ansiedad\": 80,\n  \"p_suicida\": 20,\n  \"score_normas\": 80,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Se observan señales de ansiedad y malestar debido a la falta de sueño y las voces, pero no hay indicaciones claras de ideación suicida activa ni lenguaje agresivo hacia terceros.\"\n}",
+    "scores": {
+      "p_depresion": 60,
+      "p_ansiedad": 80,
+      "p_suicida": 20,
+      "score_normas": 80,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Se observan señales de ansiedad y malestar debido a la falta de sueño y las voces, pero no hay indicaciones claras de ideación suicida activa ni lenguaje agresivo hacia terceros."
+    },
+    "predicted_top_clinical": "p_ansiedad"
+  },
+  {
+    "id": "T15",
+    "categoria_esperada": [
+      "depresion",
+      "suicida"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Mis padres están decepcionados de mí y los entiendo, he crecido con el simple resultado de ser un mal hombre, nada de lo...",
+    "raw_response": "{\n  \"p_depresion\": 90,\n  \"p_ansiedad\": 20,\n  \"p_suicida\": 80,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Se observan señales de tristeza, desesperanza y autoestima baja, con ideación suicida pasiva.\"\n}",
+    "scores": {
+      "p_depresion": 90,
+      "p_ansiedad": 20,
+      "p_suicida": 80,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Se observan señales de tristeza, desesperanza y autoestima baja, con ideación suicida pasiva."
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T16",
+    "categoria_esperada": [
+      "neutral"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Hoy entregué el trabajo de cálculo, salió bien. Voy a comer algo y después me pongo con el de física.",
+    "raw_response": "{\n  \"p_depresion\": 0,\n  \"p_ansiedad\": 0,\n  \"p_suicida\": 0,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Texto neutro y positivo, sin señales de malestar psicológico\"\n}",
+    "scores": {
+      "p_depresion": 0,
+      "p_ansiedad": 0,
+      "p_suicida": 0,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Texto neutro y positivo, sin señales de malestar psicológico"
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T17",
+    "categoria_esperada": [
+      "neutral"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Normalmente me levanto a las 5am, me baño, desayuno y voy a la parada del autobús, lo espero unos 10 minutos o menos y y...",
+    "raw_response": "{\n  \"p_depresion\": 0,\n  \"p_ansiedad\": 0,\n  \"p_suicida\": 0,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Texto describe una rutina diaria sin señales de malestar psicológico\"\n}",
+    "scores": {
+      "p_depresion": 0,
+      "p_ansiedad": 0,
+      "p_suicida": 0,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Texto describe una rutina diaria sin señales de malestar psicológico"
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T18",
+    "categoria_esperada": [
+      "neutral"
+    ],
+    "cumple_normas_esperado": null,
+    "texto_preview": "Gracias a la guía que nos dejó la profesora, entregaremos el trabajo en la fecha acordada y tal vez lo único adicional q...",
+    "raw_response": "{\n  \"p_depresion\": 0,\n  \"p_ansiedad\": 20,\n  \"p_suicida\": 0,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"El texto muestra una preocupación leve por el plazo de entrega y la necesidad de buscar fuentes adicionales, pero no presenta señales de malestar psicológico grave.\"\n}",
+    "scores": {
+      "p_depresion": 0,
+      "p_ansiedad": 20,
+      "p_suicida": 0,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "El texto muestra una preocupación leve por el plazo de entrega y la necesidad de buscar fuentes adicionales, pero no presenta señales de malestar psicológico grave."
+    },
+    "predicted_top_clinical": "p_ansiedad"
+  },
+  {
+    "id": "T19",
+    "categoria_esperada": [
+      "normas"
+    ],
+    "cumple_normas_esperado": false,
+    "texto_preview": "Mira la verdad no me importa lo que pienses, pero te digo lo que yo pienso: Creo que eres un inútil que no vale para nad...",
+    "raw_response": "{\n  \"p_depresion\": 0,\n  \"p_ansiedad\": 0,\n  \"p_suicida\": 0,\n  \"score_normas\": 0,\n  \"cumple_normas\": false,\n  \"razon_normas\": \"Lenguaje agresivo e insultos\",\n  \"notas\": \"El texto contiene un lenguaje ofensivo y agresivo hacia otra persona\"\n}",
+    "scores": {
+      "p_depresion": 0,
+      "p_ansiedad": 0,
+      "p_suicida": 0,
+      "score_normas": 0,
+      "cumple_normas": false,
+      "razon_normas": "Lenguaje agresivo e insultos",
+      "notas": "El texto contiene un lenguaje ofensivo y agresivo hacia otra persona"
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T20",
+    "categoria_esperada": [
+      "normas"
+    ],
+    "cumple_normas_esperado": false,
+    "texto_preview": "Mátate, idiota, jaja",
+    "raw_response": "{\n  \"p_depresion\": 0,\n  \"p_ansiedad\": 0,\n  \"p_suicida\": 0,\n  \"score_normas\": 0,\n  \"cumple_normas\": false,\n  \"razon_normas\": \"Lenguaje agresivo e insultos\",\n  \"notas\": \"Texto inapropiado y dañino\"\n}",
+    "scores": {
+      "p_depresion": 0,
+      "p_ansiedad": 0,
+      "p_suicida": 0,
+      "score_normas": 0,
+      "cumple_normas": false,
+      "razon_normas": "Lenguaje agresivo e insultos",
+      "notas": "Texto inapropiado y dañino"
+    },
+    "predicted_top_clinical": "p_depresion"
+  },
+  {
+    "id": "T21",
+    "categoria_esperada": [
+      "normas"
+    ],
+    "cumple_normas_esperado": true,
+    "texto_preview": "Hola, qué bueno que hayas tomado el valor de expresar lo que sientes, sé que no es algo fácil, pero no te preocupes, tod...",
+    "raw_response": "{\n  \"p_depresion\": 0,\n  \"p_ansiedad\": 0,\n  \"p_suicida\": 0,\n  \"score_normas\": 100,\n  \"cumple_normas\": true,\n  \"razon_normas\": null,\n  \"notas\": \"Texto de apoyo y acompañamiento, sin señales de malestar psicológico\"\n}",
+    "scores": {
+      "p_depresion": 0,
+      "p_ansiedad": 0,
+      "p_suicida": 0,
+      "score_normas": 100,
+      "cumple_normas": true,
+      "razon_normas": null,
+      "notas": "Texto de apoyo y acompañamiento, sin señales de malestar psicológico"
+    },
+    "predicted_top_clinical": "p_depresion"
+  }
+]
