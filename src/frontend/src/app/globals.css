@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TEMA LAVANDA — Rol Estudiante (activo)
+   ============================================================ */
+@theme inline {
+  --color-background: #f6f5ff;
+  --color-surface: #ffffff;
+  --color-foreground: #1e1b3a;
+  --color-muted: #7875a8;
+  --color-primary: #6c5dd3;
+  --color-accent: #f4a261;
+  --color-border: #e4e2f5;
+  --color-input: #d4d1f0;
+
+  --color-risk-low: #166534;
+  --color-risk-low-bg: #dcfce7;
+  --color-risk-medium: #92400e;
+  --color-risk-medium-bg: #fef3c7;
+  --color-risk-high: #991b1b;
+  --color-risk-high-bg: #fee2e2;
+
+  --font-display: var(--font-nunito), "Nunito", sans-serif;
+  --font-sans: var(--font-inter), "Inter", sans-serif;
+}
+
+/* ============================================================
+   MODO OSCURO — clase .dark en <html>
+   ============================================================ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+.dark {
+  --color-background: #0d0b1a;
+  --color-surface: #16132b;
+  --color-foreground: #eae9f5;
+  --color-muted: #9490c4;
+  --color-primary: #9b8fe8;
+  --color-border: #2a2550;
+  --color-input: #332e60;
+
+  --color-risk-low-bg: #14532d;
+  --color-risk-low: #86efac;
+  --color-risk-medium-bg: #78350f;
+  --color-risk-medium: #fcd34d;
+  --color-risk-high-bg: #7f1d1d;
+  --color-risk-high: #fca5a5;
+}
+
+/* ============================================================
+   TEMA PSICÓLOGO — clase .psychologist-theme en <html>
+   ============================================================ */
+.psychologist-theme {
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-foreground: #1e293b;
+  --color-muted: #64748b;
+  --color-primary: #6c5dd3;
+  --color-accent: #10b981;
+  --color-border: #e2e8f0;
+  --color-input: #cbd5e1;
+}
+
+.psychologist-theme.dark {
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-foreground: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-primary: #7c6ddb;
+  --color-border: #1e293b;
+}
+
+/* ============================================================
+   ESTILOS BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
