@@ -6,6 +6,7 @@ Para construir esto, me apoyaré en las recomendaciones que dio el profesor:
 1. Definir qué debemos hacer:
 	- Definir el tipo de aplicación: Con ayuda de los requisitos, características de los usuarios, sus intereses y las restricciones del sistema, debemos crear una solución que responda y satisfaga las necesidades de manera idónea. Debemos argumentar por qué elegimos ese tipo de aplicación.
 	- Arquitectura del sistema: Una vez elegido el tipo de aplicación, propondremos una arquitectura para nuestro sistema con ayuda de las arquitecturas de referencia que existen y están documentadas para el tipo elegido. Esta arquitectura se elige porque se adapta a las necesidades de la aplicación. Cada una de las partes en las que se organiza es coherente con el modelo de requisitos del sistema. 
+	- Definir subsistemas y los componentes que deben ir en cada uno.
 	- Para definir los componentes y contextualizar las diferentes partes, debemos ver las funcionalidades que tiene el sistema, cada componente resuelve una de las funcionalidades y responde a necesidades que se plantearon como requisitos.
 	
 
@@ -17,7 +18,12 @@ Nuestra aplicación, desde el punto de vista en la nube es una SaaS, además es 
 
 2. La arquitectura que elegimos es: 
 
-Considero que la de microservicios y la de patrón de capas son las que más responden a nuestras necesidades, dado que debemos aplicar los patrones GRASP y principios solid, así como ajustarnos al proceso de ingeniería de software, estas dos arquitecturas permiten no solo cumplir con esos patrones si no que más tarden contribuyen al cumplimiento de los atributos de calidad del sistema. De esta manera, la arquitectura permite la implementación de las diferentes funciones que se plantearon en el modelo de requisitos, y teniendo en cuenta que la aplicación no será dirigida a un solo actor y además estos presentan intereses complementarios pero muy diferentes
+Considero que la de microservicios y la de patrón de capas son las que más responden a nuestras necesidades, dado que debemos aplicar los patrones GRASP y principios solid, así como ajustarnos al proceso de ingeniería de software, estas dos arquitecturas permiten no solo cumplir con esos patrones si no que más tarden contribuyen al cumplimiento de los atributos de calidad del sistema. De esta manera, la arquitectura permite la implementación de las diferentes funciones que se plantearon en el modelo de requisitos y facilita el enfoque de la aplicación, la cual no está  dirigida a un solo actor y por ende los intereses entre estos aunque se complementan, se toman desde diferentes perspectivas, cosa que se hace posible implementar desde esta arquitectura.
+
+
+3. Identificación de subsistemas.
+
+
 
 Puede que la arquitectura limpia también sea una buena opción, pero no la comprendo aún y de hecho no sé si aplique o sea adecuada para una aplicación de un tamaño como el que proyecta MindBridge.
 
@@ -38,11 +44,17 @@ Arquitectura limpia: La arquitectura limpia coloca la lógica de negocios y el m
 
 >[!Preguntas]
 >- ¿Qué es exactamente un microservicio?
->- ¿Cuándo se considera una aplicación pequeña, mediana, grande o empresarial?
-> - ¿Por qué no aplicar Mobile first no es una buena decisión y suele dar más trabajo? ¿Qué hace que sea más difícil adaptar de pantalla grande a pantalla pequeña?
+>_Un servicio independiente con responsabilidad única, desplegable de forma autónoma, con su propio entorno de ejecución y que se comunica con otros servicios exclusivamente a través de una interfaz de red (REST, mensajes, etc.). La clave es que puede desarrollarse, desplegarse y escalar sin afectar al resto del sistema. El microservicio NLP de MindBridge cumple esto: tiene su propio runtime Python, su propio proceso, y el backend solo conoce su contrato JSON._
+>- ¿Cuándo se considera una aplicación pequeña, mediana, grande o empresarial? 
+>_No hay una definición estándar, pero el criterio útil es la complejidad de los dominios y el número de equipos. Una aplicación pequeña tiene un dominio simple y puede ser mantenida por una persona. Una mediana tiene múltiples módulos con reglas de negocio distintas y requiere un equipo pequeño. MindBridge es mediana: tiene tres dominios claramente separados (foro, triaje NLP, gestión clínica) con reglas de negocio independientes._
+> - ¿Por qué no aplicar Mobile first no es una buena decisión y suele dar más trabajo? ¿Qué hace que sea más difícil adaptar de pantalla grande a pantalla pequeña? 
+> _Una pantalla pequeña obliga a priorizar: solo caben los elementos esenciales. Ese ejercicio de prioridad produce interfaces más claras. Cuando diseñas primero para pantalla grande incluyes más elementos porque hay espacio, y al intentar reducirlo después debes decidir qué eliminar o colapsar, lo cual es más costoso que haber empezado con lo mínimo y agregar. En CSS, agregar complejidad con `min-width` media queries es más predecible que restar con `max-width`._
 > - No entendí muy bien la arquitectura limpia, ¿En qué consiste exactamente?
 > - ¿Qué es un componente?
+> _Una unidad modular de software con una responsabilidad definida que expone su funcionalidad a través de interfaces y oculta su implementación interna. En UML de componentes, un componente tiene interfaces ofrecidas (lo que provee) e interfaces requeridas (lo que necesita de otros). No es sinónimo de clase: un componente puede contener varias clases internamente._
+>
 > - ¿Será mejor separar la lógica de estudiante y la del psicólogo por capas?
+> _No por capas separadas, sino por módulos dentro de la misma capa de negocio. Capas distintas implicarían duplicar toda la infraestructura. La separación correcta es por componentes cohesivos: `GestorPublicaciones` sirve al estudiante, `GestorAlertas` sirve al psicólogo, y comparten la misma capa de negocio y la misma capa de datos._
 
 
 

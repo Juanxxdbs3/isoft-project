@@ -5,3 +5,6 @@ __pycache__/
 .vscode/
 .idea/
 .env
+
+data_collection/
+
