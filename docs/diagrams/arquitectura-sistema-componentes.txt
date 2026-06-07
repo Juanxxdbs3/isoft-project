@@ -1,0 +1,154 @@
+DIAGRAM: Diagrama de componentes
+TYPE: Component Diagram
+
+COMPONENT: GestorSeguridadYAcceso
+LAYER: Standalone / Cross-cutting
+PROVIDED INTERFACES:
+- ISecurityAndAccess
+
+COMPONENT: Presentación::ComponentesUI_Estudiante
+LAYER: Capa de presentación :: Presentación
+REQUIRED INTERFACES:
+- IFacade
+
+COMPONENT: Presentación::ComponentesUI_Administrador
+LAYER: Capa de presentación :: Presentación
+REQUIRED INTERFACES:
+- IFacade
+
+COMPONENT: Presentación::ComponentesUI_Psicólogo
+LAYER: Capa de presentación :: Presentación
+REQUIRED INTERFACES:
+- IFacade
+
+COMPONENT: Capa de presentación::FachadaAplicación
+LAYER: Capa de presentación
+PROVIDED INTERFACES:
+- IFacade
+REQUIRED INTERFACES:
+- ITriage
+- IAttention
+
+COMPONENT: Controladores de procesos::WorkflowTriaje
+LAYER: Capa de negocio :: Controladores de procesos
+PROVIDED INTERFACES:
+- ITriage
+REQUIRED INTERFACES:
+- ISecurityAndAccess
+- INLPService
+- IPost
+- IAlert
+- IExportCaseRepository
+
+COMPONENT: Controladores de procesos::WorkflowAtencion
+LAYER: Capa de negocio :: Controladores de procesos
+PROVIDED INTERFACES:
+- IAttention
+REQUIRED INTERFACES:
+- ISecurityAndAccess
+- IAlert
+- IChat
+
+COMPONENT: Componentes operativos::GestorPublicaciones
+LAYER: Capa de negocio :: Componentes operativos
+PROVIDED INTERFACES:
+- IPost
+REQUIRED INTERFACES:
+- IRepository
+
+COMPONENT: Componentes operativos::GestorAlertas
+LAYER: Capa de negocio :: Componentes operativos
+PROVIDED INTERFACES:
+- IAlert
+REQUIRED INTERFACES:
+- IRepository
+
+COMPONENT: Componentes operativos::GestorChat
+LAYER: Capa de negocio :: Componentes operativos
+PROVIDED INTERFACES:
+- IChat
+REQUIRED INTERFACES:
+- IRepository
+
+COMPONENT: Componentes operativos::GestorExportación
+LAYER: Capa de negocio :: Componentes operativos
+PROVIDED INTERFACES:
+- IExportCaseRepository
+REQUIRED INTERFACES:
+- IRepository
+
+COMPONENT: Componentes operativos::GestorNotificaciones
+LAYER: Capa de negocio :: Componentes operativos
+REQUIRED INTERFACES:
+- IRepository
+
+COMPONENT: Capa de datos::ComponenteRepositorios
+LAYER: Capa de datos
+PROVIDED INTERFACES:
+- IRepository
+
+COMPONENT: Agentes de servicio::NLPServiceAgent
+LAYER: Capa de datos :: Agentes de servicio
+REQUIRED INTERFACES:
+- «HTTPS, REST»
+
+COMPONENT: Agentes de servicio::EmailServiceAgent
+LAYER: Capa de datos :: Agentes de servicio
+REQUIRED INTERFACES:
+- «HTTPS, REST»
+
+COMPONENT: Agentes de servicio::CalendarServiceAgent
+LAYER: Capa de datos :: Agentes de servicio
+REQUIRED INTERFACES:
+- «HTTPS, REST»
+
+COMPONENT: Agentes de servicio::FormServiceAgent
+LAYER: Capa de datos :: Agentes de servicio
+REQUIRED INTERFACES:
+- «HTTPS, REST»
+
+COMPONENT: Microservicio NLP
+STEREOTYPE: external
+PROVIDED INTERFACES:
+- INLPService
+
+COMPONENT: Google Gmail API
+STEREOTYPE: External
+
+COMPONENT: Google Calendar API
+STEREOTYPE: External
+
+COMPONENT: Google Forms API
+STEREOTYPE: External
+
+COMPONENT: PostgreSQL (Supabase)
+STEREOTYPE: database
+
+RELATIONS:
+- Presentación::ComponentesUI_Estudiante -> Capa de presentación::FachadaAplicación (Dependency, IFacade)
+- Presentación::ComponentesUI_Administrador -> Capa de presentación::FachadaAplicación (Dependency, IFacade)
+- Presentación::ComponentesUI_Psicólogo -> Capa de presentación::FachadaAplicación (Dependency, IFacade)
+- Capa de presentación::FachadaAplicación -> Controladores de procesos::WorkflowTriaje (Dependency, ITriage)
+- Capa de presentación::FachadaAplicación -> Controladores de procesos::WorkflowAtencion (Dependency, IAttention)
+- Controladores de procesos::WorkflowTriaje -> GestorSeguridadYAcceso (Dependency, ISecurityAndAccess)
+- Controladores de procesos::WorkflowAtencion -> GestorSeguridadYAcceso (Dependency, ISecurityAndAccess)
+- Controladores de procesos::WorkflowTriaje -> Microservicio NLP (Dependency, INLPService)
+- Controladores de procesos::WorkflowTriaje -> Componentes operativos::GestorPublicaciones (Dependency, IPost)
+- Controladores de procesos::WorkflowTriaje -> Componentes operativos::GestorAlertas (Dependency, IAlert)
+- Controladores de procesos::WorkflowTriaje -> Componentes operativos::GestorExportación (Dependency, IExportCaseRepository)
+- Controladores de procesos::WorkflowAtencion -> Componentes operativos::GestorAlertas (Dependency, IAlert)
+- Controladores de procesos::WorkflowAtencion -> Componentes operativos::GestorChat (Dependency, IChat)
+- Componentes operativos::GestorPublicaciones -> Capa de datos::ComponenteRepositorios (Dependency, IRepository)
+- Componentes operativos::GestorAlertas -> Capa de datos::ComponenteRepositorios (Dependency, IRepository)
+- Componentes operativos::GestorChat -> Capa de datos::ComponenteRepositorios (Dependency, IRepository)
+- Componentes operativos::GestorExportación -> Capa de datos::ComponenteRepositorios (Dependency, IRepository)
+- Componentes operativos::GestorNotificaciones -> Capa de datos::ComponenteRepositorios (Dependency, IRepository)
+- Capa de datos::ComponenteRepositorios -> PostgreSQL (Supabase) (Dependency)
+- Capa de datos::ComponenteRepositorios -> Agentes de servicio::NLPServiceAgent (Dependency)
+- Capa de datos::ComponenteRepositorios -> Agentes de servicio::EmailServiceAgent (Dependency)
+- Capa de datos::ComponenteRepositorios -> Agentes de servicio::CalendarServiceAgent (Dependency)
+- Capa de datos::ComponenteRepositorios -> Agentes de servicio::FormServiceAgent (Dependency)
+- Agentes de servicio::NLPServiceAgent -> Microservicio NLP (Dependency, «HTTPS, REST»)
+- Agentes de servicio::EmailServiceAgent -> Google Gmail API (Dependency, «HTTPS, REST»)
+- Agentes de servicio::CalendarServiceAgent -> Google Calendar API (Dependency, «HTTPS, REST»)
+- Agentes de servicio::FormServiceAgent -> Google Forms API (Dependency, «HTTPS, REST»)

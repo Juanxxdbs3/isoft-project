@@ -1,0 +1,133 @@
+DIAGRAM: Modulo de Presentacion e Interfaz
+TYPE: Class Diagram
+
+CLASS: EstudianteUIRouter
+STEREOTYPE: boundary
+ATTRIBUTES: none
+METHODS:
+- + handleCrearPost(HTTPRequest, HTTPResponse): void
+- + handleUILogin(HTTPRequest, HTTPResponse): void
+
+CLASS: PsicologoUIRouter
+STEREOTYPE: boundary
+ATTRIBUTES: none
+METHODS:
+- + handleObtenerAlertas(HTTPRequest, HTTPResponse): void
+- + handleUnirseAChat(HTTPRequest, HTTPResponse): void
+
+CLASS: AdministradorUIRouter
+STEREOTYPE: boundary
+ATTRIBUTES: none
+METHODS:
+- + handleModerarSistema(HTTPRequest, HTTPResponse): void
+
+CLASS: ConsentimientoInputDTO
+ATTRIBUTES:
+- - aceptado: boolean
+- - versionTerminos: String
+METHODS: none
+
+CLASS: LoginInputDTO
+ATTRIBUTES:
+- - codigoPlano: String
+- - contrasenaPlano: String
+METHODS: none
+
+CLASS: PublicacionInputDTO
+ATTRIBUTES:
+- - seudonimoAutor: String
+- - textoContenido: String
+METHODS: none
+
+CLASS: FachadaAplicacion
+STEREOTYPE: facade
+ATTRIBUTES:
+- - atencionService: IAttention
+- - caseService: ICaseManagement
+- - forumService: IForum
+- - notificationService: INotificationService
+- - seguridadService: ISecurityAndAccess
+- - triajeService: ITriage
+METHODS:
+- + activarChatDeEmergencia(UUID): HTTPResponse
+- + actualizarEstadoForo(boolean): HTTPResponse
+- + procesarAutenticacion(LoginInputDTO): HTTPResponse
+- + recibirNuevaPublicacion(PublicacionInputDTO): HTTPResponse
+- + registrarFirmaDigital(ConsentimientoInputDTO): HTTPResponse
+- «Destroy» + FachadaAplicacion()
+- «Create» + FachadaAplicacion(ISecurityAndAccess, ITriage, IAttention, ICaseManagement, IForum)
+
+CLASS: RegistrationConsent
+ATTRIBUTES:
+- - accepted: boolean = true
+- - acceptedAt: DateTime
+- - documentVersion: string
+- - id: UUID
+- - studentId: UUID
+METHODS:
+- + getRegistrationConsent(): RegistrationConsent
+- «Create» + RegistrationConsent()
+- «Destroy» + RegistrationConsent(UUID, UUID, boolean, DateTime)
+
+INTERFACE: INotificationService
+STEREOTYPE: interface
+METHODS:
+- + notifyInApp(UUID, String, RiskLevel = null): boolean
+- + notifyPsychologistByEmail(UUID, String, String, RiskLevel): boolean
+
+INTERFACE: ITriage
+STEREOTYPE: interface
+METHODS:
+- + registerComment(UUID, String, String): Comment
+- + registerForumPost(String, String): Post
+- + requestAnalysis(UUID, ContentType): NLPAnalysis
+
+INTERFACE: IAttention
+STEREOTYPE: interface
+METHODS:
+- + changeForumDisponibility(boolean): void
+- + createManualReferral(UUID): Case
+- + openChatChannel(UUID): ChatRoom
+- + saveDigitalConsent(String, boolean, String): InformedConsentSignature
+
+INTERFACE: ISecurityAndAccess
+STEREOTYPE: interface
+METHODS:
+- + authPsychologist(String, String): Psychologist
+- + authStudent(String, String): Student
+- + checkPseudonymAvailability(String): boolean
+- + deanonymize(UUID): UUID
+- + initiatePasswordRecovery(String): boolean
+- + logout(UUID): boolean
+- + registerStudent(String, String, boolean, String): Student
+- + resetPassword(String, String): void
+- + validatestudentCodeFormat(String): boolean
+
+INTERFACE: ICaseManagement
+STEREOTYPE: interface
+METHODS:
+- + assignCaseToPsychologist(UUID, String): Case
+- + listCasesByType(CaseType): List<Case>
+- + recordConsentAndExportToAdviser(UUID, String): InformedConsentSignature
+- + toggleEmailNotifications(UUID, boolean): boolean
+- + triggerCriticalAlert(UUID, RiskLevel, String, String): void
+
+RELATIONS:
+- EstudianteUIRouter -> FachadaAplicacion (Dependency)
+- PsicologoUIRouter -> FachadaAplicacion (Dependency)
+- AdministradorUIRouter -> FachadaAplicacion (Dependency)
+- AdministradorUIRouter -> LoginInputDTO (Dependency)
+- EstudianteUIRouter -> ConsentimientoInputDTO (Dependency)
+- EstudianteUIRouter -> LoginInputDTO (Dependency)
+- EstudianteUIRouter -> PublicacionInputDTO (Dependency)
+- PsicologoUIRouter -> LoginInputDTO (Dependency)
+- PsicologoUIRouter -> PublicacionInputDTO (Dependency)
+- FachadaAplicacion -> ConsentimientoInputDTO (Dependency)
+- FachadaAplicacion -> LoginInputDTO (Dependency)
+- FachadaAplicacion -> PublicacionInputDTO (Dependency)
+- FachadaAplicacion -> INotificationService [1] (Aggregation)
+- FachadaAplicacion -> ITriage [1] (Aggregation)
+- FachadaAplicacion -> IAttention [1] (Aggregation)
+- FachadaAplicacion -> ISecurityAndAccess [1] (Aggregation)
+- FachadaAplicacion -> ICaseManagement [1] (Aggregation)
+- FachadaAplicacion -> RegistrationConsent (Association)

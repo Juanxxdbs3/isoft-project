@@ -1,0 +1,264 @@
+DIAGRAM: Attention & Alerts Module
+TYPE: Class Diagram
+
+CLASS: Entidades del negocio::ExportCase
+ATTRIBUTES:
+- - deliveryStatus: AdviserExportStatus
+- - destinationEmail: String
+- - exportationDate: DateTime
+- - format: String
+METHODS:
+- + getExportCase(): ExportCase
+- + setDeliveryStatus(AdviserExportStatus): void
+- + setDestinataryEmail(String): void
+- «Destroy» + ~ExportCase()
+- «Create» + ExportCase(String, AdviserExportStatus, DateTime, String)
+
+CLASS: services::MailNotificationService
+STEREOTYPE: service
+ATTRIBUTES:
+- - institutionalMailProvider: String
+- - realTimeClient: String
+- - smsProvider: String
+METHODS:
+- + notifyInApp(UUID, String, RiskLevel = null): boolean
+- + notifyPsychologistByEmail(UUID, String, String, RiskLevel): boolean
+- «Destroy» + ~MailNotificationService()
+- «Create» + MailNotificationService(String, String)
+
+CLASS: infrastructure::AdviserModelExportAdapter
+STEREOTYPE: infrastructure
+ATTRIBUTES:
+- - endpointUrl: String
+METHODS:
+- + exportCaseDocument(String, String): boolean
+
+CLASS: services::AttentionService
+STEREOTYPE: service
+ATTRIBUTES:
+- - adviserClient: IAlertExport
+- - caseRepository: ICaseRepository
+METHODS:
+- + assignCaseToPsychologist(UUID, String): void
+- + changeForumDisponibility(boolean): void
+- + createManualReferral(UUID): Case
+- + listCasesByType(CaseType): List<Case>
+- + openChatChannel(UUID): ChatRoom
+- + recordConsentAndExportToAdviser(UUID, String): InformedConsentSignature
+- + toggleEmailNotifications(UUID, boolean): boolean
+- + triggerCriticalAlert(UUID, RiskLevel, String, String): void
+
+CLASS: Entidades del negocio::ChatMessage
+ATTRIBUTES:
+- - id: UUID
+- - messageDate: DateTime
+- - read: boolean
+- - senderId: UUID
+- - senderRole: String
+- - text: String
+- - type: MessageType
+METHODS:
+- + getChatMsg(): ChatMessage
+- + setRead(boolean): void
+- «Destroy» + ~ChatMessage()
+- «Create» + ChatMsg(Usuario, String, mtag, DateTime, MessageType)
+
+CLASS: Entidades del negocio::ChatRoom
+ATTRIBUTES:
+- - id: UUID
+- - inactivityTime: DateTime
+- - openDate: DateTime
+- - status: ChatStatus
+METHODS:
+- + getId(): UUID
+- + getStatus(): ChatStatus
+- + setStatus(ChatStatus): void
+- + updateInactivity(DateTime): void
+- «Destroy» + ~ChatRoom()
+- «Create» + ChatRoom(ChatStatus, DateTime, DateTime)
+
+CLASS: infrastructure::EmailSendAdapter
+STEREOTYPE: infrastructure
+ATTRIBUTES:
+- - apiKey: String
+METHODS:
+- + sendReceiptViaEmail(String, String): void
+
+CLASS: controller::ChatManager
+STEREOTYPE: control
+ATTRIBUTES:
+- - chatRepository: IChatRepository
+- - emailClient: IEmailClient
+METHODS:
+- + closeInactiveChats(): void
+- + initializeTherapeuticChat(): ChatRoom
+- + sendChatMessage(UUID, String, String, MessageType): ChatMessage
+- + unsubscribeFromCapture(UUID): void
+
+CLASS: Entidades del negocio::Alert
+ATTRIBUTES:
+- - aiGeneratedSummary: String
+- - assignedPsychologistId: String
+- - generationDate: DateTime
+- - historicalSnapshot: String
+- - isComplementary: boolean
+- - riskLevel: RiskLevel
+- - status: AlertStatus
+METHODS:
+- + getAlert(): Alert
+- + setIsComplementary(boolean): void
+- + setRiskLevel(RiskLevel): void
+- «Destroy» + ~Alert()
+- «Create» + Alert(boolean, RiskLevel, DateTime, AlertStatus)
+
+CLASS: Entidades del negocio::Case
+ATTRIBUTES:
+- - adviserExportStatus: AdviserExportStatus
+- - assignedPsychologistId: UUID = null
+- - caseType: CaseType
+- - id: UUID
+- - isUnsubscribedFromCapture: boolean = false
+- - openedAt: DateTime
+- - pseudonymId: UUID
+- - status: CaseStatus
+METHODS:
+- + getCase(): Case
+- + setAdviserExportStatus(AdviserExportStatus): void
+- + setAssignedPsychologistId(String): void
+- + setStatus(CaseStatus): void
+- + setUnsubscribed(boolean): void
+- «Destroy» + ~Case()
+- «Create» + Case(UUID, String, CaseStatus)
+
+CLASS: entidades del negocio::InformedConsentSignature
+ATTRIBUTES:
+- - documentVersion: String
+- - formCode: String = FO-SU-015
+- - id: UUID
+- - mechanism: String
+- - pseudonymId: UUID
+- - signedAt: DateTime
+METHODS:
+- + getInformedConsent(): InformedConsentSignature
+- «Destroy» + ~InformedConsentSignature()
+- «Create» + InformedConsentSignature(String, DateTime, String)
+
+INTERFACE: Interfaces::INotificationService
+STEREOTYPE: interface
+METHODS:
+- + notifyInApp(UUID, String, RiskLevel = null): boolean
+- + notifyPsychologistByEmail(UUID, String, String, RiskLevel): boolean
+
+INTERFACE: Interfaces::ISecurityAndAccess
+STEREOTYPE: interface
+METHODS:
+- + authPsychologist(String, String): Psychologist
+- + authStudent(String, String): Student
+- + checkPseudonymAvailability(String): boolean
+- + deanonymize(UUID): UUID
+- + initiatePasswordRecovery(String): boolean
+- + logout(UUID): boolean
+- + registerStudent(String, String, boolean, String): Student
+- + resetPassword(String, String): void
+- + validatestudentCodeFormat(String): boolean
+
+INTERFACE: Interfaces::ICaseManagement
+STEREOTYPE: interface
+METHODS:
+- + assignCaseToPsychologist(UUID, String): Case
+- + listCasesByType(CaseType): List<Case>
+- + recordConsentAndExportToAdviser(UUID, String): InformedConsentSignature
+- + toggleEmailNotifications(UUID, boolean): boolean
+- + triggerCriticalAlert(UUID, RiskLevel, String, String): void
+
+INTERFACE: Interfaces::IExportCaseRepository
+STEREOTYPE: interface
+METHODS:
+- + saveExportLog(ExportCase): ExportCase
+
+INTERFACE: Interfaces::IAttention
+STEREOTYPE: interface
+METHODS:
+- + changeForumDisponibility(boolean): void
+- + createManualReferral(UUID): Case
+- + openChatChannel(UUID): ChatRoom
+- + saveDigitalConsent(String, boolean, String): InformedConsentSignature
+
+INTERFACE: Interfaces::IAlertExport
+STEREOTYPE: interface
+METHODS:
+- + exportCaseDocument(String, String): boolean
+
+INTERFACE: Interfaces::ICaseRepository
+STEREOTYPE: interface
+METHODS:
+- + findCaseById(UUID): Case
+- + findCasesByType(CaseType): List<Case>
+- + saveAlert(UUID, Alert): alert
+- + saveCase(Case): Case
+- + saveConsentInInformedConsentSignature(UUID, InformedConsentSignature): void
+
+INTERFACE: Interfaces::IChatRepository
+STEREOTYPE: interface
+METHODS:
+- + findInactiveChatsForTeardown(): List<ChatRoom>
+- + saveMessageToChatRoom(ChatMessage, UUID): ChatMessage
+- + saveRoom(ChatRoom, UUID): ChatRoom
+
+INTERFACE: Interfaces::IEmailClient
+STEREOTYPE: interface
+METHODS:
+- + sendReceiptViaEmail(String, String): void
+
+ENUM: Types::MessageType
+STEREOTYPE: enumeration
+FIELDS: [APPOINTMENT_PROPOSAL, STANDARD_TEXT, CHARACTERIZATION_LINK]
+
+ENUM: Types::ChatStatus
+STEREOTYPE: enumeration
+FIELDS: [ACTIVE, CLOSED_BY_INACTIVITY, ARCHIVED]
+
+ENUM: Types::RiskLevel
+STEREOTYPE: enumeration
+FIELDS: [LOW, MEDIUM, HIGH]
+
+ENUM: Types::AlertStatus
+STEREOTYPE: enumeration
+FIELDS: [PENDING, ACCEPTED, SERVED, FALSE_POSITIVE, COMPLEMENTARY]
+
+ENUM: Types::AdviserExportStatus
+STEREOTYPE: enumeration
+FIELDS: [NOT_EXPORTED, EXPORTED_SUCCESS, FAILED]
+
+ENUM: Types::CaseStatus
+STEREOTYPE: enumeration
+FIELDS: [OPENED, ASSIGNED, ARCHIVED, RESOLVED]
+
+RELATIONS:
+- services::MailNotificationService -> Interfaces::INotificationService (Realization)
+- services::MailNotificationService -> Interfaces::IEmailClient [1] (Aggregation)
+- infrastructure::EmailSendAdapter -> Interfaces::IEmailClient (Realization)
+- controller::ChatManager -> Interfaces::IChatRepository [1] (Aggregation)
+- controller::ChatManager -> Interfaces::IEmailClient [1] (Aggregation)
+- controller::ChatManager -> Entidades del negocio::ChatRoom (Dependency)
+- controller::ChatManager -> Entidades del negocio::ChatMessage (Dependency)
+- services::AttentionService -> Interfaces::IAttention (Realization)
+- services::AttentionService -> Interfaces::ICaseManagement (Realization)
+- services::AttentionService -> Interfaces::IAlertExport [1] (Aggregation)
+- services::AttentionService -> Interfaces::ICaseRepository [1] (Aggregation)
+- services::AttentionService -> Interfaces::INotificationService (Dependency)
+- services::AttentionService -> Interfaces::ISecurityAndAccess (Dependency)
+- services::AttentionService -> Interfaces::IExportCaseRepository (Dependency)
+- infrastructure::AdviserModelExportAdapter -> Interfaces::IAlertExport (Realization)
+- infrastructure::AdviserModelExportAdapter -> Entidades del negocio::ExportCase (Dependency)
+- Interfaces::ICaseRepository -> Entidades del negocio::Case (Dependency)
+- Interfaces::ICaseRepository -> Entidades del negocio::Alert (Dependency)
+- Interfaces::ICaseRepository -> entidades del negocio::InformedConsentSignature (Dependency)
+- Interfaces::IChatRepository -> Entidades del negocio::ChatRoom (Dependency)
+- Interfaces::IChatRepository -> Entidades del negocio::ChatMessage (Dependency)
+- Entidades del negocio::ChatRoom [1] -> Entidades del negocio::ChatMessage [0..*] (Composition, "contiene")
+- Entidades del negocio::Case [1] -> Entidades del negocio::Alert [1..*] (Aggregation, "agrupa")
+- Entidades del negocio::Case [1] -> Entidades del negocio::ChatRoom [0..*] (Aggregation, "tiene")
+- Entidades del negocio::Case [1] -> Entidades del negocio::ExportCase [0..*] (Aggregation)
+- Entidades del negocio::ChatRoom [0..1] -> Entidades del negocio::Alert [1] (Aggregation, "origina")
+- Entidades del negocio::Case [0..1] -> entidades del negocio::InformedConsentSignature [0..1] (Association, "valida")

@@ -1,0 +1,19 @@
+{
+  "epoch": 5,
+  "f1_suicidal": 0.8163265306122449,
+  "f1_depression": 0.5641025641025641,
+  "f1_anxiety": 0.5957446808510638,
+  "config": {
+    "model_name": "dccuchile/bert-base-spanish-wwm-cased",
+    "dataset_path": "/content/drive/MyDrive/mindbridge_nlp/training_dataset.json",
+    "output_dir": "/content/drive/MyDrive/mindbridge_nlp/checkpoints/clinical",
+    "max_length": 256,
+    "batch_size": 16,
+    "num_epochs": 5,
+    "lr": 2e-05,
+    "weight_decay": 0.01,
+    "train_ratio": 0.8,
+    "val_ratio": 0.1,
+    "seed": 42
+  }
+}

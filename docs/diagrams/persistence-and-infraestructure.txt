@@ -1,0 +1,148 @@
+DIAGRAM: Persistence layer and Infrastructure
+TYPE: Class Diagram
+
+CLASS: Infraestructure::SupabaseRegistrationConsentRepository
+STEREOTYPE: infrastructure
+ATTRIBUTES:
+- - client: SupabaseClient
+METHODS:
+- + findLatestByStudentId(UUID): RegistrationConsent
+- + saveConsent(RegistrationConsent): RegistrationConsent
+- «Create» + SupabaseRegistrationConsentRepository(SupabaseClient)
+- «Destroy» + ~SupabaseRegistrationConsentRepository()
+
+CLASS: Infraestructure::SupabaseChatRepository
+STEREOTYPE: infrastructure
+ATTRIBUTES:
+- - client: SupabaseClient
+METHODS:
+- + findInactiveCasesForRecapture(int): List<Case>
+- + saveMessage(ChatMessage, UUID): ChatMessage
+- + saveRoom(ChatRoom, UUID): ChatRoom
+- «Create» + SupabaseChatRepository(SupabaseClient)
+- «Destroy» + ~SupabaseChatRepository()
+
+CLASS: SupabaseQueryBuilder
+STEREOTYPE: dataType
+ATTRIBUTES: none
+METHODS: none
+
+CLASS: PostgrestResponse
+STEREOTYPE: dataType
+ATTRIBUTES:
+- - data: dynamic
+- - error: String
+- - status: int
+METHODS: none
+
+CLASS: SupabaseClient
+STEREOTYPE: utility
+ATTRIBUTES:
+- - supabaseKey: String
+- - supabaseUrl: String
+METHODS:
+- + from(String): SupabaseQueryBuilder
+- + rpc(String, Map): PostgrestResponse
+- «Destroy» + ~SupabaseClient()
+- «Create» + SupabaseClient(String, String)
+
+CLASS: Infraestructure::SupabaseCaseRepository
+STEREOTYPE: infrastructure
+ATTRIBUTES:
+- - client: SupabaseClient
+METHODS:
+- + findCaseById(UUID): Case
+- + saveAlert(Alert, UUID): Alert
+- + saveCase(Case): Case
+- + saveConsent(InformedConsentSignature, UUID): InformedConsentSignature
+- «Destroy» + ~SupabaseCaseRepository()
+- «Create» + SupabaseCaseRepository(SupabaseClient)
+
+CLASS: Infraestructure::SupabasePostRepository
+STEREOTYPE: infrastructure
+ATTRIBUTES:
+- - client: SupabaseClient
+METHODS:
+- + findById(UUID): Post
+- + findPaginated(String, int): List<Post>
+- + save(Post): Post
+- «Destroy» + ~supabasePostRepository()
+- «Create» + supabasePostRepository(SupabaseClient)
+
+CLASS: Infraestructure::SupabaseCommentRepository
+STEREOTYPE: infrastructure
+ATTRIBUTES:
+- - client: SupabaseClient
+METHODS:
+- + findById(UUID): Comment
+- + save(Comment): Comment
+- «Destroy» + ~supabaseCommentRepository()
+- «Create» + supabaseCommentRepository(SupabaseClient)
+
+CLASS: Infraestructure::SupabaseExportCaseRepository
+STEREOTYPE: infrastructure
+ATTRIBUTES:
+- - client: SupabaseClient
+- - exportPath: String
+METHODS:
+- + generateAdviserXML(UUID): String
+- + generateCasePDF(UUID): Blob
+- + saveExportLog(ExportCase): ExportCase
+- «Destroy» + ~SupabaseExportCaseRepository()
+- «Create» + SupabaseExportCaseRepository(SupabaseClient)
+
+INTERFACE: Interfaces::IRegistrationConsentRepository
+STEREOTYPE: interface
+METHODS:
+- + findLatestByStudentId(UUID): RegistrationConsent
+- + saveConsent(RegistrationConsent): RegistrationConsent
+
+INTERFACE: Interfaces::IChatRepository
+STEREOTYPE: interface
+METHODS:
+- + findInactiveCasesForRecapture(int): List<Case>
+- + saveMessage(ChatMessage, UUID): ChatMessage
+- + saveRoom(ChatRoom, UUID): ChatRoom
+
+INTERFACE: Interfaces::ICaseRepository
+STEREOTYPE: interface
+METHODS:
+- + findCaseById(UUID): Case
+- + findCasesByType(CaseType): List<Case>
+- + saveAlert(Alert, UUID): Alert
+- + saveCase(Case): Case
+- + saveConsent(InformedConsentSignature, UUID): InformedConsentSignature
+
+INTERFACE: Interfaces::IPostRepository
+STEREOTYPE: interface
+METHODS:
+- + findById(UUID): Post
+- + findPaginated(String, int): List<Post>
+- + save(Post): Post
+
+INTERFACE: Interfaces::ICommentRepository
+STEREOTYPE: interface
+METHODS:
+- + findById(UUID): Comment
+- + save(Comment): Comment
+
+INTERFACE: Interfaces::IExportCaseRepository
+STEREOTYPE: interface
+METHODS:
+- + saveExportLog(ExportCase): ExportCase
+
+RELATIONS:
+- Infraestructure::SupabaseRegistrationConsentRepository -> Interfaces::IRegistrationConsentRepository (Realization)
+- Infraestructure::SupabaseChatRepository -> Interfaces::IChatRepository (Realization)
+- Infraestructure::SupabaseCaseRepository -> Interfaces::ICaseRepository (Realization)
+- Infraestructure::SupabasePostRepository -> Interfaces::IPostRepository (Realization)
+- Infraestructure::SupabaseCommentRepository -> Interfaces::ICommentRepository (Realization)
+- Infraestructure::SupabaseExportCaseRepository -> Interfaces::IExportCaseRepository (Realization)
+- SupabaseClient [1] -> Infraestructure::SupabaseRegistrationConsentRepository (Aggregation)
+- SupabaseClient [1] -> Infraestructure::SupabaseChatRepository (Aggregation)
+- SupabaseClient [1] -> Infraestructure::SupabasePostRepository (Aggregation)
+- SupabaseClient [1] -> Infraestructure::SupabaseCaseRepository (Aggregation)
+- SupabaseClient [1] -> Infraestructure::SupabaseCommentRepository (Aggregation)
+- SupabaseClient [1] -> Infraestructure::SupabaseExportCaseRepository (Aggregation)
+- SupabaseClient -> SupabaseQueryBuilder (Dependency)
+- SupabaseClient -> PostgrestResponse (Dependency)

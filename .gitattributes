@@ -1,0 +1,32 @@
+# Auto-detect text files and normalize line endings
+* text=auto
+
+# Source code
+*.ts text diff=typescript
+*.tsx text diff=typescript
+*.js text
+*.jsx text
+*.json text
+*.md text diff=markdown
+*.css text
+*.py text diff=python
+*.sql text
+*.yaml text
+*.yml text
+*.toml text
+*.env.example text
+
+# Binary / images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.docx binary
+
+# Model weights - mark as binary
+*.safetensors binary
+*.pt binary
+*.pth binary
+*.bin binary

@@ -1,0 +1,254 @@
+DIAGRAM: EntidadesNegocio
+TYPE: Class Diagram
+
+CLASS: RegistrationConsent
+ATTRIBUTES:
+- accepted: boolean = true
+- acceptedAt: DateTime
+- documentVersion: string
+- id: UUID
+- studentId: UUID
+METHODS:
+- + getRegistrationConsent(): RegistrationConsent
+- «create» + registrationConsent()
+- «destroy» + RegistrationConsent(UUID, UUID, boolean, DateTime)
+
+CLASS: ComplementaryData
+ATTRIBUTES:
+- academicProgram: AcademicProgram
+- alternativeEmail: string
+- nickname: string
+- semester: int
+METHODS:
+- + getCompData(): ComplementaryData
+- «destroy» + ~ComplementaryData()
+- «create» + ComplementaryData(String, String, enum, int)
+
+CLASS: Pseudonym
+ATTRIBUTES:
+- assignmentDatetime: datetime
+- status: boolean
+- text: String
+- turnDownDate: DateTime [Nullable]
+METHODS:
+- + activate(datetime): void
+- + deactivate(datetime): void
+- + gettext(): string
+- + isActive(): boolean
+- «destroy» + ~Pseudonym()
+- «create» + Pseudonym(enum, DateTime, String)
+
+CLASS: InformedConsentSignature
+ATTRIBUTES:
+- documentVersion: String
+- formCode: String = FO-SU-015
+- id: UUID
+- mechanism: String
+- pseudonymId: UUID
+- signedAt: DateTime
+METHODS:
+- + getInformedConsent(): InformedConsentSignature
+- «destroy» + ~InformedConsentSignature()
+- «create» + InformedConsentSignature(String, DateTime, String)
+
+CLASS: Student
+ATTRIBUTES:
+- activePseudonymId: UUID
+- campus: CampusUdeC
+- codigostudianteconpasw: string
+- hashPassword: string
+- optionalData: ComplementaryData
+- status: AccountStatus
+METHODS:
+- + getcode(): string
+- + getestado(): enum
+- + setOptionalData(ComplementaryData): void
+- + setEstado(enum): void
+- + setStatus(enum): void
+- + verifyPassword(String): boolean
+- «destroy» + ~Student()
+- «create» + Student(String, String, String)
+
+CLASS: Rol
+ATTRIBUTES:
+- description: string
+- name: string
+METHODS:
+- + getInfo(): Rol
+- + setDescription(String): void
+- + setName(String): void
+- «destroy» + ~Rol()
+- «create» + Rol(String, String)
+
+CLASS: Post
+ATTRIBUTES:
+- creationDate: DateTime
+- id: UUID
+- lastModified: datetime
+- status: PostStatus
+- text: String
+METHODS:
+- + get id(): UUID
+- + gettext(): string
+- + edit(String): void
+- + setEstado(PostStatus): void
+- + setText(String): void
+- «destroy» + ~Post()
+- «create» + Post(String, String)
+
+CLASS: Comment
+ATTRIBUTES:
+- checkcomment: comment
+- creationDate: datetime
+- status: PostStatus
+- text: String
+METHODS:
+- + getcheckcomment(): comment
+- + getcreationtime(): datetime
+- + getstatus(): PostStatus
+- + gettext(): String
+- + setStatus(PostStatus): void
+- «destroy» + ~Comment()
+- «create» + Comment(Comment, enum, DateTime, String)
+
+CLASS: NlpAnalysis
+ATTRIBUTES:
+- analyzedTextOption: string
+- anxietyProbability: float
+- baseMeterIndex: float
+- communityRulesInfraction: boolean
+- contentId: UUID
+- contentType: ContentType
+- depressiveProbability: float
+- suicidalBehavior: boolean
+- suicidalProbability: float
+- timestampAnalyse: DateTime
+- topClinicalLabel: String
+METHODS:
+- + getnlpanalysis(): nlpAnalysis
+- «destroy» + ~NLPAnalysis()
+- «create» + NLPAnalysis(boolean, float, float, float, datetime)
+
+CLASS: ChatMessage
+ATTRIBUTES:
+- id: UUID
+- messageDate: datetime
+- read: boolean
+- senderId: UUID
+- senderRole: String
+- text: String
+- type: MessageType
+METHODS:
+- + getchatmsg(): chatmessage
+- + setread(boolean): void
+- «destroy» + ~ChatMessage()
+- «create» + chatmsg(usuario, string, mtag, datetime, messagetype)
+
+CLASS: ChatRoom
+ATTRIBUTES:
+- id: UUID
+- inactivityTime: datetime
+- openDate: datetime
+- status: ChatStatus
+METHODS:
+- + get id(): UUID
+- + getstatus(): ChatStatus
+- + setstatus(ChatStatus): void
+- + updateInactivity(datetime): void
+- «destroy» + ~ChatRoom()
+- «create» + chatroom(chatstatus, datetime, datetime)
+
+CLASS: Case
+ATTRIBUTES:
+- adviserExportStatus: AdviserExportStatus
+- assignedPsychologistId: UUID = null
+- caseType: caseType
+- id: UUID
+- isUnsubscribedFromCapture: boolean = false
+- openedAt: DateTime
+- pseudonymId: UUID
+- status: CaseStatus
+METHODS:
+- + getcase(): case
+- + setAdviserExportStatus(AdviserExportStatus): void
+- + setAssignedPsychologistId(string): void
+- + setStatus(CaseStatus): void
+- + setUnsubscribed(boolean): void
+- «destroy» + ~case()
+- «create» + Case(UUID, String, CaseStatus)
+
+CLASS: Psychologist
+ATTRIBUTES:
+- campus: CampusUdeC
+- emailAlertsSubscribed: boolean = true
+- forumParticipant: boolean
+- id: UUID
+- name: string
+- shift: shiftType
+- status: AccountStatus
+METHODS:
+- + getCampus(): CampusUdeC[]
+- + getForumParticipant(): boolean
+- + get id(): UUID
+- + getname(): string
+- + getshift(): shiftType
+- + getstatus(): AccountStatus
+- + setCampus(CampusUdeC): void
+- + setEstado(enum): void
+- + setForumParticipant(boolean): void
+- + setNombre(String): void
+- + setShift(shiftType): void
+- «destroy» + ~Psychologist()
+- «create» + Psychologist(String, UUID, String, boolean, string, String)
+
+CLASS: Alert
+ATTRIBUTES:
+- aiGeneratedSummary: String
+- assignedPsychologistId: string
+- generationDate: Datetime
+- historicalSnapshot: string
+- isComplementary: boolean
+- riskLevel: RiskLevel
+- status: AlertStatus
+METHODS:
+- + getalert(): alert
+- + setIsComplementary(boolean): void
+- + setRiskLevel(RiskLevel): void
+- «destroy» + ~Alert()
+- «create» + Alert(boolean, enum, datetime, enum)
+
+CLASS: ExportCase
+ATTRIBUTES:
+- deliveryStatus: AdviserExportStatus
+- destinationEmail: String
+- exportationDate: DateTime
+- format: string
+METHODS:
+- + getExportCase(): ExportCase
+- + setDeliveryStatus(AdviserExportStatus): void
+- + setDestinataryEmail(String): void
+- «destroy» + ~ExportCase()
+- «create» + ExportCase(String, AdviserExportStatus, DateTime, String)
+
+RELATIONS:
+- Student [1] -> RegistrationConsent [0..1] (Composition, "acepta")
+- Student [1] -> ComplementaryData [0..1] (Composition, "tiene")
+- Student [1] -> Pseudonym [1..*] (Composition, "tiene")
+- Student [1] -> InformedConsentSignature [0..1] (Composition, "acepta")
+- Student [*] -> Rol [1] (Association, "tiene asignado")
+- Psychologist [*] -> Rol [1] (Association, "tiene asignado")
+- Student [1] -> Post [0..*] (Aggregation, "crea")
+- Student [1] -> Comment [0..*] (Agregation, "crea")
+- Post [1] -> Comment [0..*] (Composition, "tiene")
+- NlpAnalysis [1] -> Post [0..1] (Aggregation, "Activa")
+- NlpAnalysis [1] -> Comment [0..1] (Aggregation, "Activa")
+- Student [1] -> ChatRoom [1] (Aggregation, "usa")
+- Psychologist [1] -> ChatRoom [0..*] (Aggregation, "inicia")
+- ChatRoom [1] -> ChatMessage [1..*] (Composition, "contiene")
+- Case [0..*] -> Psychologist [1] (Aggregation, "Maneja")
+- Case [0..*] -> Student [1] (Association, "Tiene un")
+- Case [1] -> Alert [1..*] (Aggregation, "agrupa")
+- ChatRoom [0..1] -> Alert [1] (Aggregation, "origina")
+- NlpAnalysis [1] -> Alert [0..1] (Association, "origina")
+- Psychologist [1] -> Alert [0..*] (Aggregation, "gestiona")
+- Case [1] -> ExportCase [0..*] (Aggregation)

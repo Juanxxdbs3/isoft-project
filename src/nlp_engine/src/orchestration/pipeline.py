@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 from src.config import settings
 from src.orchestration.preprocessor import TextPreprocessor
 from src.orchestration.safety_filter import SafetyFilter
+from src.models.clinical import BETOClinicalModel
 from src.stubs.model_stub import ModelStub
 from src.schemas.request import AnalysisRequest
 from src.schemas.response import (
@@ -32,7 +33,7 @@ class AnalysisPipeline:
             mixed_language_threshold=settings.mixed_language_threshold
         )
         self._safety_filter = SafetyFilter()
-        self._model = ModelStub()
+        self._model = BETOClinicalModel(settings.clinical_model_path)
 
     def run(self, request: AnalysisRequest) -> AnalysisResponse:
         preprocessing = self._preprocessor.process(request.text)

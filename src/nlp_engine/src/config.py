@@ -37,6 +37,9 @@ class Settings(BaseSettings):
     stub_p_suicidal: float = 20.0
     stub_score_norms: float = 0.1
 
+    # Model paths
+    clinical_model_path: str = "src/models/clinical_model_v1"
+
     # Model versions
     clinical_model_version: str = "stub-v0.3"
     norms_model_version: str = "stub-v0.3"

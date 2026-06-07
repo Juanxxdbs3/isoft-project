@@ -1,0 +1,180 @@
+DIAGRAM: Triage & Forum Module
+TYPE: Class Diagram
+
+CLASS: Entidades del negocio::Post
+ATTRIBUTES:
+- - creationDate: DateTime
+- - id: UUID
+- - lastModified: DateTime
+- - status: PostStatus
+- - text: String
+METHODS:
+- + getId(): UUID
+- + getStatus(): PostStatus
+- + getText(): String
+- + setStatus(PostStatus): void
+- + setText(String): void
+- «Destroy» + Post()
+- «Create» + Post(String, String)
+
+CLASS: Entidades del negocio::Student
+ATTRIBUTES:
+- - activePseudonymId: UUID
+- - campus: CampusUdeC
+- - codigoEstudianteEncrypted: String
+- - hashPassword: String
+- - optionalData: ComplementaryData
+- - status: AccountStatus
+METHODS:
+- + getCode(): String
+- + getHeadquarter(): enum
+- + setOptionalData(ComplementaryData): void
+- + setSede(enum): void
+- + setStatus(enum): void
+- + verifyPassword(String): boolean
+- «Destroy» + Student()
+- «Create» + Student(String, String, String)
+
+CLASS: Entidades del negocio::Comment
+ATTRIBUTES:
+- - citedComment: Comment
+- - creationDate: DateTime
+- - status: PostStatus
+- - text: String
+METHODS:
+- + getCitedComment(): Comment
+- + getCreatedTime(): DateTime
+- + getStatus(): PostStatus
+- + getText(): String
+- + setStatus(PostStatus): void
+- «Destroy» + Comment()
+- «Create» + Comment(Comment? =nullable, enum, DateTime, String)
+
+CLASS: Entidades del negocio::NLPAnalysis
+ATTRIBUTES:
+- - analyzedTextSnapshot: String
+- - anxietyProbability: float
+- - baseMalaiseIndex: float
+- - communityRulesInfraction: boolean
+- - contentId: UUID
+- - contentType: ContentType
+- - depressiveProbability: float
+- - suicidalOverride: boolean
+- - suicidalProbability: float
+- - timestampAnalisis: DateTime
+- - topClinicalLabel: String
+METHODS:
+- + getNLPAnalysis(): NLPAnalysis
+- «Destroy» + NLPAnalysis()
+- «Create» + NLPAnalysis(boolean, float, float, float, DateTime)
+
+CLASS: ForumManager
+ATTRIBUTES:
+- - commentRepository: ICommentRepository
+- - postRepository: IPostRepository
+METHODS:
+- + applyManualModeration(UUID, ContentType, ModerationAction, String): void
+- + getActiveFeed(String, int): List<Post>
+
+CLASS: Services::TriageService
+STEREOTYPE: service
+ATTRIBUTES:
+- - attentionService: IAttention
+- - commentRepository: ICommentRepository
+- - nlpClient: INLPClient
+- - postRepository: IPostRepository
+METHODS:
+- + evaluateRiskThresholds(NLPAnalysis, String): void
+- + registerComment(UUID, String, String): Comment
+- + registerForumPost(String, String): Post
+- + requestAnalysis(UUID, ContentType): NLPAnalysis
+
+CLASS: NLPRestAdapter
+ATTRIBUTES:
+- - endpointURL: String
+METHODS:
+- + analyzeTextPayload(String): NLPAnalysis
+
+INTERFACE: Interfaces::IForum
+STEREOTYPE: interface
+METHODS:
+- + applyManualModeration(UUID, ContentType, ModerationAction, String): void
+- + getActiveFeed(String, int): List<Post>
+
+INTERFACE: Interfaces::IPostRepository
+STEREOTYPE: interface
+METHODS:
+- + findById(UUID): Post
+- + findPaginated(String, int): List<Post>
+- + save(Post): Post
+
+INTERFACE: Interfaces::ICommentRepository
+STEREOTYPE: interface
+METHODS:
+- + findById(UUID): Comment
+- + save(Comment): Comment
+
+INTERFACE: Interfaces::ITriage
+STEREOTYPE: interface
+METHODS:
+- + registerComment(UUID, String, String): Comment
+- + registerForumPost(String, String): Post
+- + requestAnalysis(UUID, ContentType): NLPAnalysis
+
+INTERFACE: Interfaces::ICaseManagement
+STEREOTYPE: interface
+METHODS:
+- + assignCaseToPsychologist(UUID, String): Case
+- + listCasesByType(CaseType): List<Case>
+- + recordConsentAndExportToAdviser(UUID, String): InformedConsentSignature
+- + toggleEmailNotifications(UUID, boolean): boolean
+- + triggerCriticalAlert(UUID, RiskLevel, String, String): void
+
+INTERFACE: Interfaces::IAttention
+STEREOTYPE: interface
+METHODS:
+- + changeForumDisponibility(boolean): void
+- + createManualReferral(UUID): Case
+- + openChatChannel(UUID): ChatRoom
+- + saveDigitalConsent(String, boolean, String): InformedConsentSignature
+
+INTERFACE: Interfaces::INLPClient
+STEREOTYPE: interface
+METHODS:
+- + analyzeTextPayload(String): NLPAnalysis
+
+ENUM: Types::PostStatus
+STEREOTYPE: enumeration
+FIELDS: [VISIBLE, DELETED, MODERATED]
+
+ENUM: Types::ContentType
+STEREOTYPE: enumeration
+FIELDS: [POST, COMMENT]
+
+ENUM: Types::ModerationAction
+STEREOTYPE: enumeration
+FIELDS: [HIDE, APPROVE, FLAG]
+
+RELATIONS:
+- Entidades del negocio::Student [1] -> Entidades del negocio::Post [0..*] (Aggregation, "crea")
+- Entidades del negocio::Student [1] -> Entidades del negocio::Comment [0..*] (Aggregation, "crea")
+- Entidades del negocio::Post [1] -> Entidades del negocio::Comment [0..*] (Composition, "tiene")
+- ForumManager -> Interfaces::IForum (Realization)
+- ForumManager -> Interfaces::IPostRepository [1] (Aggregation)
+- ForumManager -> Interfaces::ICommentRepository [1] (Aggregation)
+- ForumManager -> Entidades del negocio::Post (Dependency)
+- Services::TriageService -> Interfaces::ITriage (Realization)
+- Services::TriageService -> Interfaces::IAttention [1] (Aggregation)
+- Services::TriageService -> Interfaces::INLPClient [1] (Aggregation)
+- Services::TriageService -> Interfaces::ICaseManagement (Dependency)
+- Services::TriageService -> Interfaces::IPostRepository (Dependency)
+- Services::TriageService -> Interfaces::ICommentRepository (Dependency)
+- Services::TriageService -> Entidades del negocio::NLPAnalysis (Dependency)
+- NLPRestAdapter -> Interfaces::INLPClient (Realization)
+- NLPRestAdapter -> Entidades del negocio::NLPAnalysis (Dependency)
+- Interfaces::IPostRepository -> Entidades del negocio::Post (Dependency)
+- Interfaces::ICommentRepository -> Entidades del negocio::Comment (Dependency)
+- Interfaces::ITriage -> Entidades del negocio::Post (Dependency)
+- Interfaces::ITriage -> Entidades del negocio::Comment (Dependency)
+- Interfaces::ITriage -> Entidades del negocio::NLPAnalysis (Dependency)
+- Interfaces::INLPClient -> Entidades del negocio::NLPAnalysis (Dependency)

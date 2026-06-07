@@ -7,6 +7,6 @@ router = APIRouter()
 _pipeline = AnalysisPipeline()
 
 
-@router.post("/analizar", response_model=AnalysisResponse)
+@router.post("/api/v1/analyze", response_model=AnalysisResponse)
 def analyze_text(request: AnalysisRequest) -> AnalysisResponse:
     return _pipeline.run(request)

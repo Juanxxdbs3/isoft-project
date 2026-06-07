@@ -1,0 +1,88 @@
+GRASP:
+
+- ¿GRASP son patrones de diseño? Soluciones eficientes y genéricas que resuelven problemas comunes de manera legible y ordenada. Son la formalización de buenas practicas. ayudan a tomar decisiones en pos de crear sistemas robustos, flexibles y mantenibles.
+- ¿Qué es un patrón de diseño como tal?
+- ¿Qué es una abstract factory?
+- ¿Por qué quisiera que una clase solamente tenga una instancia? ¿Y si son muchos estudiantes o muchos objetos de esa clase en general que necesito?
+- ¿Qué es un singleton?
+- ¿Qué relevancia tiene el observer en este proyecto? veo que es como para marketing ¿O en realidad va más allá de eso?
+- Veo que en general se busca mucho el aislar y reutilizar.
+- Brevemente, ¿Qué son esos patrones de los GoF?
+- Patrón factory, ¿Qué es?
+
+- Respecto al patrón de alta cohesión
+	- La cohesión El nivel de relación entre las partes del software visto desde varios niveles, y además dicha relación y su magtnitud no implica que las partes estén fusionadas o conectadas directamente si no que tengan responsabilidades diferenciadas y únicas.
+	- Una clase con alta cohesión implica una única responsabilidad y esto típicamente se nota cuando una clase tiene relativamente pocos métodos y estos están muy relacionados entre sí y aportan entre todas tareas que acercan al objetivo principal de la clase.
+	- Es recomendable buscar la alta cohesión desde el inicio del diseño para una independencia funcional, si no se logra se puede colaborar con otros objetos para compartir el esfuerzo.
+	- Mala cohesión <-> mal acoplamiento
+	- "A menudo da al soporte de bajo acoplamiento." ¿Qué significa esto?
+	- Esto de la separación de responsabilidades, ¿Es exclusivo del PAC?
+	- En general, busca mantener manejable la complejidad del proyecto de software.
+
+
+
+- Respecto al patrón de bajo acoplamiento
+	- Se busca el bajo acomplamiento para que en en realización de una responsabilidad de determinada clase, esta no dependa profundamente de otras para hacerlo. (Cosa que no entiendo si el objetivo es que trabajen juntas, coordinadas y que a medida que completan tareas se hace el sistema)
+	- ¿Eso es como cuando un programa web que se desarrollar usa frameworks? ¿Esto sería de alto acomplamiento? por ejemplo usar inquirer en nodejs o express ¿Significa que es malo usar frameworks? por ejemplo hay algunos programas que en su instalación le traen directamente las librerias y frameworks con versiones especificas para que ese programa funcione.
+	- Facilita pruebas aisladas
+	- ¿Cómo así que la dependencia entre módulos debe ser por interfaces y además mínima? ¿Interfaces como APIS o Interfaces de contrato? ¿Qué tienen que ver acá, o se refieren al polimorfismo de múltiples herencias?
+	- "Puede dar al principio Inversión de Dependencia." ¿Qué es eso?
+	- No existe medida absoluta de cuando el acoplamiento es demasiado alto. Lo importante es que un desarrollador pueda medir el grado de acoplamiento actual y evaluar si aumentarlo causara problemas. ¿Y con qué criterio se hace eso?
+	- "Si se lleva al extremo produce un diseño pobre al dar lugar a pocos objetos inconexos, saturados y con actividad compleja que hacen todo el trabajo." ¿Con eso se refiere a que sí se deben usar librerias/frameworks?
+	- contraindicaciones: No suele ser un problema el acoplamiento entre objetos estables y elementos generalizados como librerías, sino en aquellos que no son estables en alguna dimensión, como su interfaz, implementación o su mera presencia.
+	Si se fuerza a disminuir el acoplamiento en puntos donde hay ausencia de inestabilidad o evolución alta es desperdiciar tiempo. ¿Me explicas eso mejor? ¿Se refiere a objetos/elementos propios del programa cuyo estado es muy variable debido a los parametros o a la propia naturaleza del objeto? por ejemplo, la capa de persistencia, ¿Qué tan acoplada debe ser? porque entiendo que a ella solo debería accederse por su API/endpoints o la conexión.
+	-Me hablaron de generalización, composición, Dependencia: acoplamiento Muy Bajo. Las mantienen la relación al mínimo utilizando únicamente lo necesario, sin necesidad de conocer de más. ¿Cuál es una relación de dependencia en software? ¿Una importación?
+	-Siento que este se me complica porque va muy de la mano con las interfaces y acabo de conocer las interfaces por lo que mi manejo en ellas no es experto, ¿consejos y criterios para aplicarlas? sé que una herencia es definir qué es y en algunas ocasiones cómo lo hace, y la interfaz es simplemente qué es, no define (idealmente) cómo lo hace.
+	- Una clase no debería tener dependencias directas con más de una clase, aumenta mucho el acoplamiento, más bien, debería haber un controlador intermedio que gestione las operaciones de esas clases ¿es esto una regla inmutable? ¿Al meter un orquestador no es simplemente pasar ese alto acoplamiento "necesario" al controlador? ¿No lo haría entonces al controlador fuertemente acoplado? ¿Este tipo de elementos (controladores) son la excepción?
+	- "Una clase coordinadora puede conocer muchas clases. Pero no debería saber demasiado sobre ellas. Eso es arquitectura sana."
+	- Técnicamente no es "prohibido" que un objeto contenga a otro como parte de su constructor, no? simplemente se debe evitar
+
+-Respecto al patrón Controlador
+	- Por lo que veo acá intentan introducir algo como que las clases son solo manejadoras de estados y los controladores son manejadores de eventos y procesos 
+	- Hay controlador de fachada, de casos de uso y saturado, el ideal parece ser el de casos de uso, y el de fachada es para aplicaciones con pocos eventos o mensajes desde la UI (o de otros sistemas, entradas).Puede usarse por ejemplo un controlador de controladores, algo así como un router, no?
+	- Un controlador no debería almacenar estados.
+	- "Se recomienda utilizar la misma clase controlador para todo el sistema." ¿Cómo así? ¿No contradice a lo que estuve leyendo? está en el mismo material que leí.
+	- Por lo que veo el controlador lo suelen colocar entre la UI (entradas) y lógica del sistema, que ejecuta la lógica detras de los procesos, ¿O el controlador también puede llevar la lógica de algún proceso? ¿En controlador solo llama o también maneja algunas excepciones, errores, casos, etc?
+
+- Respecto al patrón creador
+	-Básicamente determina quién crea las instancias, a quién se le asigna dicha responsabilidad. Se usa cuando entre dos clases, una agrega, contiene,  registra, utiliza o tiene a la otra.
+	- "si una clase ya está muy metida en la lógica de otra, crearla ahí reduce acoplamiento." What?
+	- "Si una clase ya conoce los datos o administra los objetos, crear ahí evita que otra clase tenga que meterse a hacer el trabajo."
+	- "Muchas veces se encuentra un creador buscando las clases que tienen los datos de inicialización que pasarán durante la creación."
+	- Normalmente por lo que veo la naturaleza de este patrón guía a crear instancias de clases que sean semánticamente similares o que simplemente partan de una dependencia temporal de la otra, quiero decir, que una debe darse antes o que una se da temporalmente al mismo tiempo que la otra, pero no necesariamente dependen entre sí. excepto cuando se viole el princpio de alta cohesión.
+
+- Respecto al patrón experto
+	-En pocas palabaras consiste en más o menos que las clases no sean chismosas o no estén pidiendo datos a otras.
+	- Para cumplirlo se empieza desde lo específico a lo general, esto en el sentido de saber a quién asignarle una responsabilidad
+	- diferentes "expertos" pueden colaborar entre sí
+
+-Respecto al patrón de fabricación pura
+	-¿Este lo que quiere decir es que una clase crea y exporta de alguna manera los objetos?
+	- ¿Cómo hago para no entrar en bucles de rompo cohesión, arreglo cohesión, rompo experto, daño fabricación pura, etc? 
+	- "Se soporta Alta cohesión porque las responsabilidades se factorizan en una clase de grano fino que sólo se centra en un conjunto muy específico de tareas relacionadas." ¿A qué se refiere con eso de grano fino? ¿Y qué otra tarea más allá de crear?
+	- "El uso excesivo del patrón a manos de un inexperto en el diseño de objetos y que conoce la descomposición del software con base en sus funciones puede dar lugar a la conversión de funciones en objetos." ¿Esto significa que estas clases más que todo son es funciones? ¿No sería mejor usar Interface para ellas? aunque bueno tal vez no porque habría que implementarla, pero lo podría hacer un controlador principal, ¿O hay inconvenientes?
+	- "En el modelo de dominio podemos ver que en el mundo real el vendedor registra una venta, puede ser en forma de factura o escrito en una libreta para mantener un control, pero esto en un software representa una base de datos (BD), sin embargo, si la clases Registro encargada de crear y registrar las facturas realizadas contiene además acciones relacionadas con las BD rompería la cohesión de la misma. En ese caso es mejor crear una clase artificial que se relacione con la clase Registro y que su función esté únicamente relacionada con las responsabilidades asociadas con la BD." ¿Me explicas mejor el por qué de eso?
+	- En este patrón suelen aparecer clases que "no están en el dominio" o que su existencia en el dominio se representa en varias clases al ser abstraida al menos para darles un uso practico en el contexto del sistema conceptual.
+
+
+´-Respecto al Patrón de indirección
+	- Al parecer busca el bajo acoplamiento por medio de intermediarios.
+	- ¿Esto es como cuando se divide en microservicios y deja de ser un monolito el sistema? por ejemplo, la comunicación http sería la capa de asbtracción adicional porque la clase de un backend no importa directamente la de la persistencia, ¿O es de otra manera?
+	- "El patrón Fabricación pura es una forma de indirección." ¿Cómo así? ¿Por qué?
+	- Supongo que entonces otro objetivo más implicito es que las clases entre sí no deben conocer la lógica que implementa cada una, solo los resultados que dará o pedirá (la estructura y protocolo).
+
+- Respecto al patrón de polimorfismo
+	- A pesar de que lo hemos estudiado tal vez salgan preguntas y supongo que lo que intenta decir es que debería manejarse las instancias de los objetos a través de una clase general, de modo que si una clase implementa/hereda de otra su comportamiento debería encajar con los de la superclase.
+	- "El diseño de sistemas con interfaces y polimorfismo para “futuras necesidades” especulativas frente a posibles variaciones desconocidas. Es conveniente una evaluación crítica, puesto que no es raro que se dedique un esfuerzo innecesario a preparar para el futuro un diseño con polimorfismo en puntos de variación que en realidad son improbables y nunca aparecerán realmente." ¿Esto es básicamente no sobrepensar el sistema? KISS? (Keep it Simple and Stupid)
+	- Acá el material define el polimorfismo un poco diferente: Asignar el mismo nombre a servicios en diferentes objetos cuando los servicios son parecidos o están relacionados. Aunque supongo que su esencia no cambia, al final es abstraer hasta poder clasificar y agrupar, no?
+	- "Se reduce la necesidad de usar estructuras condicionales para decidir qué comportamiento ejecutar." Me parece súper importante
+	-En un cuestionario apareció: ¿Cuál es la principal ventaja del uso del patrón Polimorfismo? 1. Permite que un objeto cambie su clase en tiempo de ejecución para adaptarse a diferentes contextos. 2. 
+	Facilita la eliminación de estructuras condicionales en el código, permitiendo que cada clase implemente su propia versión de un método. La 2 es la correcta, pero, ¿Por qué tiene prioridad sobre la 1? Ambas las encuentro correctas.
+
+- Respecto a variaciones protegidas
+	- Esto leyendo la introducción parece que va con el tema este de solid de que una clase debe estar abierta a extensión pero cerrada a modificación.
+	- "Identifique los puntos de variaciones predecibles o inestabilidad; asigne las responsabilidades para crear una “interfaz” estable alrededor de ellos." ¿Me explicas eso?
+	- O sea, es como de alguna manera asumir que un cambio nuevo es inestable y a medida que va creciendo el software volverlos estables implementando las interfaces de manera diferente?
+	- "En primer lugar, merece la pena definir dos puntos de cambio: Punto de variación: Variaciones en el sistema actual, existente o en los requisitos. Punto de evolución: Puntos especulativos de variación que podrían aparecer en el futuro, pero que no están presentes en los requisitos actuales. Nota: Algunas veces el coste de “futuras necesidades” especulativamente en los puntos de evolución pesa más que el coste en el que se incurre por un diseño simple." ¿Me explicas eso?
+	- Ah ok, por lo que veo es como "predecir" realmente qué partes (atributos/métodos) es posible que cambien y relacionarlas con una interfaz, que al final es relacionar la misma clase con una interfaz.
+

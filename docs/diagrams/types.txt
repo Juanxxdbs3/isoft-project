@@ -1,0 +1,107 @@
+DIAGRAM: Types
+TYPE: Class Diagram (Enumerations)
+
+ENUM: AcademicProgram
+STEREOTYPE: enumeration
+FIELDS: none
+
+ENUM: AccountStatus
+STEREOTYPE: enumeration
+FIELDS:
+- ACTIVE
+- DELETED
+- SUSPENDED
+
+ENUM: AdviserExportStatus
+STEREOTYPE: enumeration
+FIELDS:
+- NOT_EXPORTED
+- EXPORTED_SUCCESS
+- FAILED
+
+ENUM: AlertStatus
+STEREOTYPE: enumeration
+FIELDS:
+- PENDING
+- ACCEPTED
+- SERVED
+- FALSE_POSITIVE
+- COMPLEMENTARY
+
+ENUM: CampusUdeC
+STEREOTYPE: enumeration
+FIELDS:
+- Claustro de San Agustín
+- Campus de Zaragocilla
+- Campus de Piedra de Bolívar
+- Claustro de la Merced
+- Claustro de Santo Domingo
+- El Carmen de Bolívar
+- Magangué
+- San Juan Nepomuceno
+- Santa Cruz de Mompós
+- Cereté
+- Lorica
+
+ENUM: CaseStatus
+STEREOTYPE: enumeration
+FIELDS:
+- OPENED
+- ASSIGNED
+- ARCHIVED
+- RESOLVED
+
+ENUM: CaseType
+STEREOTYPE: enumeration
+FIELDS:
+- AUTOMATIC_ALERT
+- SELF_REFERRAL
+
+ENUM: MessageType
+STEREOTYPE: enumeration
+FIELDS:
+- APPOINTMENT_PROPOSAL
+- STANDARD_TEXT
+- CHARACTERIZATION_LINK
+
+ENUM: ModerationAction
+STEREOTYPE: enumeration
+FIELDS:
+- HIDE
+- APPROVE
+- FLAG
+
+ENUM: ContentType
+STEREOTYPE: enumeration
+FIELDS:
+- POST
+- COMMENT
+
+ENUM: ChatStatus
+STEREOTYPE: enumeration
+FIELDS:
+- ACTIVE
+- CLOSED_BY_INACTIVITY
+- ARCHIVED
+
+ENUM: PostStatus
+STEREOTYPE: enumeration
+FIELDS:
+- VISIBLE
+- DELETED
+- MODERATED
+
+ENUM: RiskLevel
+STEREOTYPE: enumeration
+FIELDS:
+- LOW
+- MEDIUM
+- HIGH
+
+ENUM: ShiftType
+STEREOTYPE: enumeration
+FIELDS:
+- SHIFT_1 = 07:00-15:00
+- SHIFT_2 = 15:00-22:00
+
+RELATIONS: none
