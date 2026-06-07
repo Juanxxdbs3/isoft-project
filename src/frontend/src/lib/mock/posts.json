@@ -1,0 +1,42 @@
+[
+  {
+    "id": "post-001",
+    "pseudonym": "SolValiente42",
+    "text": "Últimamente he sentido que no puedo con todo. Los trabajos se acumulan y siento que no avanzo. ¿Alguien más se siente así?",
+    "createdAt": "2026-06-06T14:30:00.000Z",
+    "status": "visible",
+    "commentCount": 3
+  },
+  {
+    "id": "post-002",
+    "pseudonym": "LunaSerena18",
+    "text": "Hoy fue un buen día. Logré terminar un proyecto que venía posponiendo hace semanas. Pequeñas victorias.",
+    "createdAt": "2026-06-06T10:15:00.000Z",
+    "status": "visible",
+    "commentCount": 1
+  },
+  {
+    "id": "post-003",
+    "pseudonym": "RioConstante7",
+    "text": "No sé si esto le pasa a alguien más, pero a veces siento que mis amigos no me entienden cuando digo que estoy cansado. No es cansancio físico, es otra cosa.",
+    "createdAt": "2026-06-05T22:00:00.000Z",
+    "status": "visible",
+    "commentCount": 5
+  },
+  {
+    "id": "post-004",
+    "pseudonym": "EstrellaLuminosa33",
+    "text": "Mañana tengo una exposición importante y estoy muy nervioso. Si alguien tiene consejos para manejar la ansiedad antes de hablar en público, los agradecería mucho.",
+    "createdAt": "2026-06-05T18:45:00.000Z",
+    "status": "visible",
+    "commentCount": 2
+  },
+  {
+    "id": "post-005",
+    "pseudonym": "BosqueSereno91",
+    "text": "Hace un mes empecé a ir a terapia y aunque al principio fue difícil, siento que estoy entendiendo mejor mis emociones. Recomiendo dar ese paso si están pensando en hacerlo.",
+    "createdAt": "2026-06-04T09:20:00.000Z",
+    "status": "visible",
+    "commentCount": 4
+  }
+]

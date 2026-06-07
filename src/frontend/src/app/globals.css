@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 /* ============================================================
-   TEMA LAVANDA — Rol Estudiante (activo)
+   TEMA VERDE — Rol Estudiante (activo)
    ============================================================ */
 @theme inline {
-  --color-background: #f6f5ff;
+  --color-background: #f4f9f7;
   --color-surface: #ffffff;
-  --color-foreground: #1e1b3a;
-  --color-muted: #7875a8;
-  --color-primary: #6c5dd3;
+  --color-foreground: #1a3b34;
+  --color-muted: #6b8e85;
+  --color-primary: #346b5a;
   --color-accent: #f4a261;
-  --color-border: #e4e2f5;
-  --color-input: #d4d1f0;
+  --color-border: #e5efea;
+  --color-input: #c8ddd6;
 
   --color-risk-low: #166534;
   --color-risk-low-bg: #dcfce7;
@@ -30,13 +30,13 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 .dark {
-  --color-background: #0d0b1a;
-  --color-surface: #16132b;
-  --color-foreground: #eae9f5;
-  --color-muted: #9490c4;
-  --color-primary: #9b8fe8;
-  --color-border: #2a2550;
-  --color-input: #332e60;
+  --color-background: #0d2321;
+  --color-surface: #122e29;
+  --color-foreground: #e2f0eb;
+  --color-muted: #7dada0;
+  --color-primary: #5baf94;
+  --color-border: #1e4a40;
+  --color-input: #2a5c50;
 
   --color-risk-low-bg: #14532d;
   --color-risk-low: #86efac;

@@ -101,7 +101,7 @@ function Hero() {
         <div className="relative">
           <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 bg-border/30">
             <Image
-              src="/student-in-laptop.png"
+              src="/student-in-laptop.jpg"
               alt="Estudiante usando MindBridge en su computador"
               width={600}
               height={500}
@@ -137,7 +137,7 @@ const steps = [
     description:
       "Solo necesitas tu código estudiantil, una contraseña y tu sede. " +
       "Tú eliges el nombre con el que apareces en el foro.",
-    image: "/student-in-laptop.png",
+    image: "/student-in-laptop.jpg",
     alt: "Estudiante registrándose en MindBridge",
   },
   {
@@ -146,7 +146,7 @@ const steps = [
     description:
       "Escribe lo que sientes, cuando quieras. Otros pueden comentarte " +
       "y tú puedes comentar a otros. Sin límites de frecuencia.",
-    image: "/post-card.png",
+    image: "/post-card.jpg",
     alt: "Publicación anónima en el foro",
   },
   {
@@ -155,7 +155,7 @@ const steps = [
     description:
       "Si el sistema detecta que podrías necesitar ayuda, un psicólogo " +
       "puede escribirte directamente. Sin que nadie más lo sepa.",
-    image: "/therapy-sesion.png",
+    image: "/therapy-sesion.jpg",
     alt: "Psicólogo contactando a un estudiante",
   },
 ];
@@ -230,7 +230,7 @@ function PsychologistStrip() {
         </div>
 
         <Link
-          href="/login"
+          href="/login?role=psychologist"
           className="shrink-0 px-6 py-3 bg-white/15 hover:bg-white/25 text-white
                      text-sm font-medium rounded-full border border-white/30 transition-all
                      hover:-translate-y-0.5"

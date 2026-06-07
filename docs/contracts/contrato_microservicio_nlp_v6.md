@@ -173,8 +173,6 @@ Toda llamada desde el backend al microservicio se autentica mediante un token Be
 POST /api/v1/analyze
 ```
 
-**Nota:** el esqueleto de Fase 3 implementa `/analizar`. Debe renombrarse a `/api/v1/analyze` al integrar el modelo real en Fase 5.
-
 ### 10.2 Estructura JSON
 
 ```json
@@ -329,7 +327,7 @@ Target: 5.521 registros con la siguiente distribución:
 | Depresión | ~400 | ~5.121 |
 | Ansiedad | ~405 | ~5.116 |
 
-**Nota crítica:** el `unified_dataset.json` actual presenta un error en el script `prepare_datasets.py`: las etiquetas `depresion` y `ansiedad` muestran 0 ejemplos positivos pese a que los sources originales sí los contienen. El dataset correcto debe coincidir con las estadísticas de `dataset_stats.json`. No iniciar el fine-tuning hasta confirmar que los conteos son correctos.
+**Nota:** El error en `prepare_datasets.py` fue corregido. El modelo clínico se entrenó exitosamente alcanzando F1 suicidal 0.816 (supera umbral 0.70), F1 depression 0.564 y F1 anxiety 0.596. Ver `docs/notes/nlp-dataset-status.md` para métricas detalladas.
 
 ### 14.3 Desbalance y compensación
 
@@ -387,17 +385,13 @@ El desbalance entre clases de depresión/ansiedad (pocos positivos) y suicidio (
 21 textos evaluados con Llama 3.3-70b vía Groq. Tasa de acierto: 17/21. Umbrales confirmados. Solapamiento depresión/ansiedad documentado. Criterio de normas de comunidad corregido.
 
 ### Fase 3 — Esqueleto FastAPI ✅ COMPLETADA
-Endpoints `POST /analizar` y `GET /health`. Pipeline completo con `TextPreprocessor`, `SafetyFilter`, `ModelStub` y `AnalysisPipeline`. Tres tests en verde. Documentación OpenAPI en `/docs`.
+Endpoints `POST /api/v1/analyze` y `GET /health`. Pipeline completo con `TextPreprocessor`, `SafetyFilter`, `BETOClinicalModel` y `AnalysisPipeline`. Tres tests en verde. Documentación OpenAPI en `/docs`.
 
-**Pendiente de Fase 3:** renombrar `/analizar` a `/api/v1/analyze` al integrar el modelo real.
+### Fase 4 — Dataset y fine-tuning ✅ COMPLETADA
+Construcción del dataset unificado. Fine-tuning de BETO clínico en Google Colab con F1 suicidal 0.816 (supera umbral 0.70). Integración de `BETOClinicalModel` en el pipeline reemplazando `ModelStub`.
 
-### Fase 4 — Dataset y fine-tuning 🔄 EN EJECUCIÓN
-Construcción del dataset unificado. Fine-tuning de BETO clínico en Google Colab. Validación de 50–100 ejemplos con la profesional de psicología.
-
-**Bloqueante activo:** error en etiquetas depresión/ansiedad del `unified_dataset.json`. Resolver antes de continuar.
-
-### Fase 5 — Integración del modelo real 🔲 PENDIENTE
-Reemplazo del `ModelStub` por `BETOClinicalModel` con la misma firma de `predict`. Renombrar endpoint. Pruebas de latencia en hardware de despliegue. Validación de umbrales con la profesional. Actualización de `version_modelo_clinico` y `version_modelo_normas` en variables de entorno.
+### Fase 5 — Integración del modelo real ✅ COMPLETADA
+`ModelStub` reemplazado por `BETOClinicalModel` con la misma firma `predict()`. Endpoint renombrado a `/api/v1/analyze`. Pendiente: pruebas de latencia en hardware de despliegue, validación de umbrales con la profesional de psicología, y estrategia de despliegue para `model.safetensors` (~800MB).
 
 ---
 

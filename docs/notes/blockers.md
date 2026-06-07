@@ -37,3 +37,17 @@ y `special_tokens_map.json` — necesarios para que HuggingFace cargue el tokeni
 **Resolution:** Regenerados el 2026-06-06 descargando `vocab.txt` y `special_tokens_map.json`
 desde el repositorio original de HuggingFace (`dccuchile/bert-base-spanish-wwm-cased`).
 El tokenizer del modelo base es idéntico al del checkpoint fine-tuneado.
+
+## Entity reference documentation out of sync with diagrams — RESOLVED
+
+**Service:** documentation
+**Description:** `docs/models/MindBridge_entity_reference.md` contenía nombres de entidades en español
+(Estudiante, Psicólogo, Publicación, etc.) y enumeraciones inconsistentes con los diagramas de verdad
+en `docs/diagrams/entidades-del-negocio.txt` y `docs/diagrams/types.txt`.
+**Resolution:** Actualizado el 2026-06-07. Cambios realizados:
+- Renombradas todas las entidades a inglés: Estudiante→Student, Psicólogo→Psychologist, Publicación→Post, etc.
+- Agregadas 5 entidades faltantes: ComplementaryData, InformedConsentSignature, Rol, Case, ChatRoom.
+- Corregidas relaciones: reemplazadas referencias a "Seat" con "CampusUdeC"; actualizado cardinalities.
+- Enums corregidos: AlertStatus (ATTENDED→SERVED), ChatStatus (agregado CLOSED_BY_INACTIVITY), MessageType (TEXT→STANDARD_TEXT, WELLBEING_RESOURCE→CHARACTERIZATION_LINK).
+- Agregados 8 enums faltantes: AccountStatus, AdviserExportStatus, CaseStatus, CaseType, ContentType, ShiftType, ModerationAction, AcademicProgram, CampusUdeC.
+- Actualizado "Immutable records" y "Key constraints" para reflejar nombres en inglés.
