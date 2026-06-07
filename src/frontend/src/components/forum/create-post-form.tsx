@@ -23,7 +23,7 @@ export function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
 
     try {
       const token = localStorage.getItem("access_token");
-      await apiPost("/posts", { text_content: trimmed }, token || undefined);
+      await apiPost("/forum/posts", { text_content: trimmed }, token || undefined);
       setText("");
       onPostCreated?.();
     } catch (err) {
@@ -40,7 +40,7 @@ export function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-surface border border-border rounded-2xl p-4 mb-6"
+      className="w-full bg-surface border border-border rounded-2xl p-4 mb-6"
     >
       <div className="flex gap-3 items-start">
         <div className="mt-1.5 shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
@@ -53,8 +53,7 @@ export function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
             placeholder="¿Cómo te sientes hoy?"
             rows={2}
             maxLength={500}
-            className="w-full bg-transparent text-sm text-foreground placeholder:text-muted/50
-                       resize-none focus:outline-none"
+            className="w-full bg-transparent text-sm text-foreground placeholder:text-muted/50 resize-none focus:outline-none"
           />
           <div className="flex items-center justify-between mt-2 pt-2 border-t border-border">
             <span className="text-xs text-muted">{text.length}/500</span>

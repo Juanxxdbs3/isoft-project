@@ -1,76 +1,109 @@
 @import "tailwindcss";
 
 /* ============================================================
-   TEMA VERDE — Rol Estudiante (activo)
+   1. DEFINICIÓN DINÁMICA DE VARIABLES (NATIVO DEL NAVEGADOR)
    ============================================================ */
-@theme inline {
-  --color-background: #f4f9f7;
-  --color-surface: #ffffff;
-  --color-foreground: #1a3b34;
-  --color-muted: #6b8e85;
-  --color-primary: #346b5a;
-  --color-accent: #f4a261;
-  --color-border: #e5efea;
-  --color-input: #c8ddd6;
+:root {
+  --background: #f4f9f7;
+  --surface: #ffffff;
+  --sidebar: #e8f5e9;
+  --foreground: #1a3b34;
+  --muted: #6b8e85;
+  --primary: #346b5a;
+  --accent: #f4a261;
+  --border: #e5efea;
+  --input: #c8ddd6;
 
-  --color-risk-low: #166534;
-  --color-risk-low-bg: #dcfce7;
-  --color-risk-medium: #92400e;
-  --color-risk-medium-bg: #fef3c7;
-  --color-risk-high: #991b1b;
-  --color-risk-high-bg: #fee2e2;
+  --risk-low: #166534;
+  --risk-low-bg: #dcfce7;
+  --risk-medium: #92400e;
+  --risk-medium-bg: #fef3c7;
+  --risk-high: #991b1b;
+  --risk-high-bg: #fee2e2;
 
   --font-display: var(--font-nunito), "Nunito", sans-serif;
   --font-sans: var(--font-inter), "Inter", sans-serif;
 }
 
-/* ============================================================
-   MODO OSCURO — clase .dark en <html>
-   ============================================================ */
-@custom-variant dark (&:where(.dark, .dark *));
-
+/* Modo Oscuro Estudiante */
 .dark {
-  --color-background: #0d2321;
-  --color-surface: #122e29;
-  --color-foreground: #e2f0eb;
-  --color-muted: #7dada0;
-  --color-primary: #5baf94;
-  --color-border: #1e4a40;
-  --color-input: #2a5c50;
+  --background: #022c22;
+  --surface: #064e3b;
+  --sidebar: #052e22;
+  --foreground: #e5e7eb;
+  --muted: #6ee7b7;
+  --primary: #34d399;
+  --accent: #a3e635;
+  --border: #065f46;
+  --input: #065f46;
 
-  --color-risk-low-bg: #14532d;
-  --color-risk-low: #86efac;
-  --color-risk-medium-bg: #78350f;
-  --color-risk-medium: #fcd34d;
-  --color-risk-high-bg: #7f1d1d;
-  --color-risk-high: #fca5a5;
+  --risk-low-bg: #14532d;
+  --risk-low: #86efac;
+  --risk-medium-bg: #78350f;
+  --risk-medium: #fcd34d;
+  --risk-high-bg: #7f1d1d;
+  --risk-high: #fca5a5;
 }
 
-/* ============================================================
-   TEMA PSICÓLOGO — clase .psychologist-theme en <html>
-   ============================================================ */
+/* Tema Psicólogo (Claro) */
 .psychologist-theme {
-  --color-background: #f8fafc;
-  --color-surface: #ffffff;
-  --color-foreground: #1e293b;
-  --color-muted: #64748b;
-  --color-primary: #6c5dd3;
-  --color-accent: #10b981;
-  --color-border: #e2e8f0;
-  --color-input: #cbd5e1;
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --foreground: #1e293b;
+  --muted: #64748b;
+  --primary: #6c5dd3;
+  --accent: #10b981;
+  --border: #e2e8f0;
+  --input: #cbd5e1;
 }
 
+/* Tema Psicólogo (Oscuro) */
 .psychologist-theme.dark {
-  --color-background: #0f172a;
-  --color-surface: #1e293b;
-  --color-foreground: #f8fafc;
-  --color-muted: #94a3b8;
-  --color-primary: #7c6ddb;
-  --color-border: #1e293b;
+  --background: #0f172a;
+  --surface: #1e293b;
+  --foreground: #e2e8f0;
+  --muted: #94a3b8;
+  --primary: #7c6ddb;
+  --accent: #34d399;
+  --border: #1e293b;
+  --input: #1e293b;
 }
 
 /* ============================================================
-   ESTILOS BASE
+   2. MAPEADO DE TOKENS PARA TAILWIND v4
+   ============================================================ */
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-sidebar: var(--sidebar);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-input: var(--input);
+
+  /* Equivalencias semánticas para Shadcn UI */
+  --color-card: var(--surface);
+  --color-card-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted);
+  --color-popover: var(--surface);
+  --color-popover-foreground: var(--foreground);
+
+  /* Niveles de riesgo */
+  --color-risk-low: var(--risk-low);
+  --color-risk-low-bg: var(--risk-low-bg);
+  --color-risk-medium: var(--risk-medium);
+  --color-risk-medium-bg: var(--risk-medium-bg);
+  --color-risk-high: var(--risk-high);
+  --color-risk-high-bg: var(--risk-high-bg);
+
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+}
+
+/* ============================================================
+   3. ESTILOS BASE
    ============================================================ */
 *,
 *::before,

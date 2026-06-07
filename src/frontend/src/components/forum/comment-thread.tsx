@@ -2,34 +2,60 @@
 
 import { useState } from "react";
 import { SendHorizonal } from "lucide-react";
+import { apiGet, apiPost, ApiError } from "../../lib/api";
 import type { CommentItem as CommentItemType } from "../../types/domain";
-import commentsData from "../../lib/mock/comments.json";
-
-const allComments = commentsData as Record<string, CommentItemType[]>;
 
 interface CommentThreadProps {
   postId: string;
+  initialComments?: CommentItemType[];
 }
 
-export function CommentThread({ postId }: CommentThreadProps) {
-  const [comments, setComments] = useState<CommentItemType[]>(allComments[postId] || []);
+export function CommentThread({ postId, initialComments = [] }: CommentThreadProps) {
+  const [comments, setComments] = useState<CommentItemType[]>(initialComments);
   const [newComment, setNewComment] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const trimmed = newComment.trim();
-    if (!trimmed) return;
+    if (!trimmed || submitting) return;
 
-    const optimistic: CommentItemType = {
-      id: `cmt-opt-${Date.now()}`,
-      pseudonym: "Tú",
-      text: trimmed,
-      createdAt: new Date().toISOString(),
-      status: "visible" as const,
-    };
+    setSubmitting(true);
+    setError(null);
+    const token = localStorage.getItem("access_token");
 
-    setComments((prev) => [...prev, optimistic]);
-    setNewComment("");
+    try {
+      await apiPost(
+        `/forum/posts/${postId}/comments`,
+        { text_content: trimmed },
+        token || undefined
+      );
+
+      // Refetch comments after successful creation
+      const result = await apiGet<
+        { id: string; text: string; createdAt: string; status: string; pseudonym: string }[]
+      >(`/forum/posts/${postId}/comments`, token || undefined);
+
+      setComments(
+        result.map((c) => ({
+          id: c.id,
+          pseudonym: c.pseudonym,
+          text: c.text,
+          createdAt: c.createdAt,
+          status: c.status,
+        }))
+      );
+      setNewComment("");
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError("Error al publicar el comentario");
+      }
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -51,19 +77,25 @@ export function CommentThread({ postId }: CommentThreadProps) {
         </div>
       ))}
 
+      {error && (
+        <p className="text-xs text-red-500 dark:text-red-400">{error}</p>
+      )}
+
       <form onSubmit={handleSubmit} className="flex gap-2 pt-2">
         <input
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Escribe un comentario…"
           maxLength={300}
+          disabled={submitting}
           className="flex-1 px-3 py-2 bg-surface border border-input rounded-xl text-sm
                      text-foreground placeholder:text-muted/50
-                     focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary"
+                     focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary
+                     disabled:opacity-50"
         />
         <button
           type="submit"
-          disabled={!newComment.trim()}
+          disabled={!newComment.trim() || submitting}
           className="px-3 py-2 bg-primary text-white rounded-xl hover:bg-primary/90
                      transition-all disabled:opacity-40 disabled:cursor-not-allowed"
           aria-label="Enviar comentario"

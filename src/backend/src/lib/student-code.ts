@@ -36,5 +36,42 @@ export function validateStudentCode(code: string): string | null {
     return `El programa académico "${program}" no es válido`;
   }
 
+  const entryPeriod = code.substring(3, 6);
+  const lastEntryDigit = entryPeriod[2];
+  if (lastEntryDigit !== "1" && lastEntryDigit !== "2") {
+    return "El período de ingreso debe terminar en 1 o 2 (semestre)";
+  }
+
+  const specialCommunity = code[6];
+  if (specialCommunity !== "0" && specialCommunity !== "1") {
+    return "El dígito de comunidad especial debe ser 0 o 1";
+  }
+
+  const admissionPosition = code.substring(7, 10);
+  const posNum = parseInt(admissionPosition, 10);
+  if (isNaN(posNum) || posNum < 1 || posNum > 999) {
+    return "La posición de admisión debe estar entre 001 y 999";
+  }
+
   return null;
+}
+
+export type StudentCodeValidationResult =
+  | { success: true; data: ParsedStudentCode }
+  | { success: false; error: string };
+
+export function validateAndParseStudentCode(
+  code: string,
+): StudentCodeValidationResult {
+  const error = validateStudentCode(code);
+  if (error) {
+    return { success: false, error };
+  }
+
+  const parsed = parseStudentCode(code);
+  if (!parsed) {
+    return { success: false, error: "El código estudiantil debe tener exactamente 10 dígitos" };
+  }
+
+  return { success: true, data: parsed };
 }

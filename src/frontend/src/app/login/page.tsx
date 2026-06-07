@@ -1,9 +1,15 @@
 "use client";
 
-import { useState, FormEvent, use } from "react";
+import { Suspense, useState, FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { apiPost, ApiError } from "../../lib/api";
+import { apiPost, apiGet, ApiError } from "../../lib/api";
+
+interface ProfileResponse {
+  pseudonym: string;
+  created_at?: string;
+  avatar_url?: string | null;
+}
 
 type Role = "student" | "psychologist";
 
@@ -15,6 +21,14 @@ interface LoginResponse {
 }
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-sm text-muted">Cargando…</div>}>
+      <LoginContent />
+    </Suspense>
+  );
+}
+
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [role, setRole] = useState<Role>(
@@ -41,6 +55,28 @@ export default function LoginPage() {
       localStorage.setItem("refresh_token", data.refresh_token);
       localStorage.setItem("role", data.role);
       localStorage.setItem("campus", data.campus);
+
+      // For students, the identifier IS the pseudonym — store it immediately
+      if (role === "student") {
+        localStorage.setItem("pseudonym", identifier);
+      }
+
+      // Fetch real profile (includes created_at, fallback pseudonym)
+      try {
+        const profile = await apiGet<ProfileResponse>("/auth/me", data.access_token);
+        localStorage.setItem("pseudonym", profile.pseudonym);
+        if (profile.created_at) {
+          localStorage.setItem("created_at", profile.created_at);
+        }
+        if (profile.avatar_url) {
+          localStorage.setItem("avatar_url", profile.avatar_url);
+        }
+      } catch {
+        // Fallback: store today's date so profile doesn't freeze on "Cargando..."
+        if (!localStorage.getItem("created_at")) {
+          localStorage.setItem("created_at", new Date().toISOString());
+        }
+      }
 
       if (data.role === "psychologist") {
         router.push("/dashboard");

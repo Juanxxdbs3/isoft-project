@@ -4,13 +4,21 @@
 
 ---
 
+# Contrato de la Capa de Presentación — MindBridge
+
+## Diseño del frontend: sistema visual, pantallas, componentes y fases de construcción
+
+---
+
 ## Historial de versiones
 
 | Versión | Fecha      | Descripción                                                                                                                                                                                                                                                                                                                                                              |
 | ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1.0     | 18-05-2026 | Primera versión del contrato: principios visuales, sistema de color con modo oscuro, mapa de pantallas del estudiante, estrategia de datos mock, roadmap de seis fases.                                                                                                                                                                                                  |
-| 1.1     | 27-05-2026 | Actualización del árbol de directorios con el flag --src-dir bajo Next.js 15. Cierre formal de la Paleta Verde como sistema cromático productivo y la Paleta Lavanda como alternativa de contraste en salud mental. Integración del rol del BFF en Next.js conviviendo con la API en Fastify.                                                                            |
+| 1.4     | 07-06-2026 | Forum GET endpoints completados: `GET /api/v1/forum/posts` (paginated, no auth), `GET /api/v1/forum/posts/mine` (JWT), `GET /api/v1/forum/posts/:postId` (detail), `GET /api/v1/forum/posts/:postId/comments` (comments list). PostgREST nested join pattern documented for pseudonym resolution via `student_active_pseudonym_id_fkey`. RLS policies `post_select_all_authenticated` y `comment_select_all_authenticated` implementadas. |
+| 1.3     | 07-06-2026 | Fase 1 completada: login y registro con validación, Suspense boundaries, pseudonym stored in localStorage. Fase 2 completada: forum feed con sidebar fijo (fixed left-0 top-14), main content con pl-56, DiceBear avatars integrados. Fase 3 iniciada: psychologist route group creado. Backend forum CRUD endpoints implementados. JWT fix (fastify.jwt.decode). Avatar endpoint agregado. API URL fija a `http://localhost:3001/api/v1`. CAMPUS extraído a `src/frontend/src/lib/campus.ts`. Validación de student code mejorada (entry period, special community, admission position). Dark mode colors centralizados en globals.css. Hardcoded dark: overrides removidos. |
 | 1.2     | 04-06-2026 | Integración de principios de diseño UI (Nielsen, Shneiderman, leyes cognitivas) como fundamento explícito de las decisiones visuales y de densidad. Cierre de decisiones de diseño pendientes de v1.1. Estandarización del sistema de tokens para coincidir con convención de código en inglés del proyecto. Actualización del roadmap al estado actual de construcción. |
+| 1.1     | 27-05-2026 | Actualización del árbol de directorios con el flag --src-dir bajo Next.js 15. Cierre formal de la Paleta Verde como sistema cromático productivo y la Paleta Lavanda como alternativa de contraste en salud mental. Integración del rol del BFF en Next.js conviviendo con la API en Fastify.                                                                            |
+| 1.0     | 18-05-2026 | Primera versión del contrato: principios visuales, sistema de color con modo oscuro, mapa de pantallas del estudiante, estrategia de datos mock, roadmap de seis fases.                                                                                                                                                                                                  |
 
 ---
 
@@ -97,6 +105,7 @@ Los tokens se definen en `globals.css` con la directiva `@theme` de Tailwind v4.
   --background: #f4f9f7;
   --surface: #ffffff;
   --surface-hover: #edf5f1;
+  --sidebar: #edf5f1;
 
   --foreground: #1a3b34;
   --muted-foreground: #6b8e85;
@@ -123,21 +132,22 @@ Los tokens se definen en `globals.css` con la directiva `@theme` de Tailwind v4.
 
 ```css
 .dark {
-  --background: #0d2321;
-  --surface: #122e29;
-  --surface-hover: #1a3b34;
+  --background: #022c22;
+  --surface: #064e3b;
+  --surface-hover: #064e3b;
+  --sidebar: #052e22;
 
-  --foreground: #e2f0eb;
-  --muted-foreground: #7dada0;
+  --foreground: #e5e7eb;
+  --muted-foreground: #6ee7b7;
 
-  --primary: #5baf94;
-  --primary-foreground: #0d2321;
+  --primary: #34d399;
+  --primary-foreground: #022c22;
 
-  --accent: #f4a261;
-  --accent-foreground: #0d2321;
+  --accent: #a3e635;
+  --accent-foreground: #022c22;
 
-  --border: #1e4a40;
-  --input-border: #2a5c50;
+  --border: #065f46;
+  --input-border: #065f46;
 
   --risk-low-bg: #14532d;
   --risk-low-text: #86efac;
@@ -155,6 +165,7 @@ Los tokens se definen en `globals.css` con la directiva `@theme` de Tailwind v4.
   --background: #f8fafc;
   --surface: #ffffff;
   --surface-hover: #f1f5f9;
+  --sidebar: #edf5f1;
 
   --foreground: #1e293b;
   --muted-foreground: #64748b;
@@ -184,6 +195,7 @@ Los tokens se definen en `globals.css` con la directiva `@theme` de Tailwind v4.
   --background: #0f172a;
   --surface: #1e293b;
   --surface-hover: #263348;
+  --sidebar: #0f2d2a;
 
   --foreground: #f8fafc;
   --muted-foreground: #94a3b8;
@@ -246,14 +258,16 @@ isoft-project/
     │       │   ├── globals.css
     │       │   ├── layout.tsx
     │       │   ├── page.tsx                  ← Landing page pública
+    │       │   ├── terminos/
     │       │   ├── (auth)/
     │       │   │   ├── login/
     │       │   │   └── register/
     │       │   ├── (student)/
     │       │   │   ├── layout.tsx
-    │       │   │   ├── forum/
-    │       │   │   │   └── [postId]/
-    │       │   │   ├── profile/
+    │       │   │   ├── foro/
+    │       │   │   │   └── [id]/
+    │       │   │   ├── perfil/
+    │       │   │   ├── configuracion/
     │       │   │   └── chat/
     │       │   └── (psychologist)/
     │       │       ├── layout.tsx
@@ -268,14 +282,16 @@ isoft-project/
     │       │   ├── chat/
     │       │   ├── alerts/
     │       │   └── ui/                       ← Primitivos shadcn/ui
-    │       ├── lib/
-    │       │   ├── utils.ts
-    │       │   ├── i18n/
-    │       │   │   └── risk.ts               ← Diccionario LOW→Bajo, etc.
-    │       │   └── mock/
-    │       │       ├── posts.json
-    │       │       ├── alerts.json
-    │       │       └── chat-messages.json
+     │       ├── lib/
+     │       │   ├── utils.ts
+     │       │   ├── campus.ts                ← All 11 campuses as const
+     │       │   ├── student-code.ts          ← Student code validation
+     │       │   ├── i18n/
+     │       │   │   └── risk.ts               ← Diccionario LOW→Bajo, etc.
+     │       │   └── mock/
+     │       │       ├── posts.json
+     │       │       ├── alerts.json
+     │       │       └── chat-messages.json
     │       └── types/
     │           └── domain.ts
     ├── backend/
@@ -300,6 +316,8 @@ isoft-project/
 | `RiskBadge`      | Badge semántico LOW/MEDIUM/HIGH con tokens de color correspondientes   |
 | `ProfileHistory` | Historial de publicaciones propias del estudiante                      |
 | `MessageBubble`  | Burbuja de mensaje en el chat                                          |
+
+**Avatar Implementation:** Los avatares se generan dinámicamente usando DiceBear Open Peeps API (`https://api.dicebear.com/10.x/open-peeps/svg?seed=<pseudonym>`). El proveedor se configura mediante la variable de entorno `NEXT_PUBLIC_AVATAR_BASE_URL`.
 
 **UI Process Components** — gestionan estado de interacción, formularios, efectos. Client Components (`"use client"`).
 
@@ -327,10 +345,12 @@ Un UI Process Component puede contener UI Components como `children`. Un UI Comp
 | `/`              | `app/page.tsx`                          | —            |
 | `/registro`      | `app/(auth)/register/page.tsx`          | RF01, RF02   |
 | `/login`         | `app/(auth)/login/page.tsx`             | —            |
-| `/foro`          | `app/(student)/forum/page.tsx`          | RF07, RF08   |
-| `/foro/[postId]` | `app/(student)/forum/[postId]/page.tsx` | RF08, RF12   |
-| `/perfil`        | `app/(student)/profile/page.tsx`        | RF11, RF22   |
+| `/foro`          | `app/(student)/foro/page.tsx`           | RF07, RF08   |
+| `/foro/[id]`     | `app/(student)/foro/[id]/page.tsx`      | RF08, RF12   |
+| `/perfil`        | `app/(student)/perfil/page.tsx`         | RF11, RF22   |
+| `/configuracion` | `app/(student)/configuracion/page.tsx`  | —            |
 | `/chat`          | `app/(student)/chat/page.tsx`           | RF23         |
+| `/terminos`      | `app/terminos/page.tsx`                 | —            |
 
 ### 7.2 Rol psicólogo
 
@@ -348,7 +368,7 @@ Las siguientes decisiones estaban pendientes en v1.1 y quedan resueltas en esta 
 
 **Identificador de login del estudiante.** El estudiante se registra con seudónimo, contraseña, código estudiantil y sede. El seudónimo puede generarse automáticamente si el campo se envía vacío. El código estudiantil se encripta antes de persistir y no se muestra en ninguna interfaz.
 
-**Paginación del foro.** Se implementa paginación por cursor basada en `created_at` (timestamp ISO 8601). El frontend envía el cursor del último elemento visible en cada solicitud. Sin scroll infinito.
+**Paginación del foro.** Se implementa paginación por cursor basada en `created_at` (timestamp ISO 8601) internamente en las llamadas a la API. El frontend presenta una barra de navegación horizontal con números de página (`‹ 1 2 3 … 10 ›`), no scroll infinito. El cursor se gestiona internamente para las solicitudes al backend.
 
 **Consentimiento FO-BU-O13.** El psicólogo envía el enlace al formulario Google Forms desde el módulo de chat mediante un mensaje de tipo `CHARACTERIZATION_LINK`. El backend inyecta la URL configurada automáticamente.
 
@@ -432,34 +452,30 @@ interface ChatMessage {
 
 Creación del proyecto Next.js con `--src-dir`. Configuración de Tailwind con tokens de color para ambos modos y roles. Instalación y configuración de shadcn/ui. Definición de `types/domain.ts`. Configuración de Supabase Auth básica.
 
-### Fase 1 — Landing y autenticación ⚠️ PARCIALMENTE COMPLETADA
+### Fase 1 — Landing y autenticación ✅ COMPLETADA
 
-- Se creó: la Landing page con identidad visual del sistema.
-- Falta: Formulario de registro (RF01, RF02) con validación progresiva. Formulario de login con redirección por rol. Middleware de protección de rutas.
-
-**Nota:** Solo la landing page (`/`) está implementada. Login (`/login`) y registro (`/registro`) están pendientes de construir.
+Landing page con identidad visual del sistema. Formulario de registro (RF01, RF02) con validación progresiva del seudónimo y contraseña. Formulario de login con redirección por rol. Middleware de protección de rutas. Suspense boundaries para `useSearchParams()`. Pseudonym stored in localStorage con `created_at` y `avatar_url` from `/auth/me`.
 
 **Pantallas:** `/`, `/registro`, `/login`.
 
-### Fase 2 — Foro del estudiante 🔲 PLANIFICADA
+### Fase 2 — Foro del estudiante ✅ COMPLETADA
 
-Feed de publicaciones con paginación por cursor. Crear publicación. Detalle de publicación con comentarios. Perfil con historial de publicaciones propias. Eliminación y edición (RF11, RF12).
+Feed de publicaciones con paginación por cursor. Sidebar fijo (`fixed left-0 top-14`), main content con `pl-56` para offset. Crear publicación. Detalle de publicación con comentarios. Perfil con historial de publicaciones propias (reads from localStorage). Eliminación y edición (RF11, RF12). DiceBear avatars integrados. Avatar URL support via `PATCH /api/v1/forum/profile/avatar`.
 
-**Pantallas:** `/foro`, `/foro/[postId]`, `/perfil`.
-**Precondición:** datos mock definidos en `lib/mock/`.
+**Pantallas:** `/foro`, `/foro/[id]`, `/perfil`.
 
-### Fase 3 — Panel del psicólogo 🔲 PLANIFICADA
+### Fase 3 — Panel del psicólogo 🔄 EN EJECUCIÓN
 
 Dashboard con lista de alertas priorizadas y RiskBadges. Detalle de alerta con puntuaciones NLP (RF14). Aceptación de caso (RF19). Chat básico (RF23).
 
 **Pantallas:** `/panel`, `/panel/alertas/[alertId]`, `/panel/casos/[caseId]/chat`.
-**Precondición:** Fase 2 completada.
+**Status:** Route group `(psychologist)/layout.tsx` + `dashboard/page.tsx` created. Layout pending.
 
-### Fase 4 — Integración con backend 🔲 PENDIENTE
+### Fase 4 — Integración con backend 🔄 EN EJECUCIÓN
 
-Reemplazo de funciones mock por llamadas reales al backend Fastify. Conexión con Supabase Realtime para el chat. Manejo de estados de carga, error y vacío en todas las pantallas.
+Reemplazo de funciones mock por llamadas reales al backend Fastify. Backend forum CRUD endpoints ya implementados (`POST /api/v1/forum/posts`, `PATCH`, `DELETE`, comments). JWT fix applied (`fastify.jwt.decode()`). Avatar endpoint implemented. Conexión con Supabase Realtime para el chat. Manejo de estados de carga, error y vacío en todas las pantallas.
 
-**Precondición:** Backend Fastify con endpoints definidos y funcionales.
+**Status:** Forum endpoints working. Auth, Alerts, Cases, Chat endpoints pending.
 
 ### Fase 5 — Integración NLP y funciones avanzadas 🔲 PENDIENTE
 
@@ -473,7 +489,158 @@ Accesibilidad final (contraste, teclado, roles ARIA). Optimización de rendimien
 
 ---
 
-## 12. Pendientes formalizados
+## 12. Contrato de API — Forum Endpoints
+
+### Endpoints GET (sin autenticación)
+
+#### `GET /api/v1/forum/posts?page=1&limit=10`
+
+Retorna todas las publicaciones visibles, paginadas por cursor basado en `created_at`.
+
+**Parámetros de query:**
+- `page` (number, default 1): número de página
+- `limit` (number, default 10): cantidad de posts por página
+
+**Respuesta (200):**
+```json
+{
+  "data": {
+    "posts": [
+      {
+        "id": "uuid",
+        "pseudonym": "string",
+        "text": "string",
+        "createdAt": "2026-06-07T10:30:00Z",
+        "status": "VISIBLE",
+        "campus": "string"
+      }
+    ],
+    "total": 42,
+    "page": 1,
+    "limit": 10
+  }
+}
+```
+
+#### `GET /api/v1/forum/posts/:postId`
+
+Retorna el detalle de una publicación individual con su seudónimo.
+
+**Respuesta (200):**
+```json
+{
+  "data": {
+    "id": "uuid",
+    "pseudonym": "string",
+    "text": "string",
+    "createdAt": "2026-06-07T10:30:00Z",
+    "status": "VISIBLE",
+    "campus": "string"
+  }
+}
+```
+
+#### `GET /api/v1/forum/posts/:postId/comments`
+
+Retorna todos los comentarios de una publicación, ordenados por `created_at` ASC.
+
+**Respuesta (200):**
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "pseudonym": "string",
+      "text": "string",
+      "createdAt": "2026-06-07T10:35:00Z",
+      "status": "VISIBLE"
+    }
+  ]
+}
+```
+
+### Endpoints GET (con autenticación JWT)
+
+#### `GET /api/v1/forum/posts/mine`
+
+Retorna todas las publicaciones del estudiante autenticado.
+
+**Headers requeridos:**
+```
+Authorization: Bearer <JWT_TOKEN>
+```
+
+**Respuesta (200):**
+```json
+{
+  "data": {
+    "posts": [
+      {
+        "id": "uuid",
+        "pseudonym": "string",
+        "text": "string",
+        "createdAt": "2026-06-07T10:30:00Z",
+        "status": "VISIBLE",
+        "campus": "string"
+      }
+    ]
+  }
+}
+```
+
+### Estructura de datos — PostItem
+
+```typescript
+interface PostItem {
+  id: string;              // UUID
+  pseudonym: string;       // from student → pseudonym.texto
+  text: string;            // from text_content
+  createdAt: string;       // ISO 8601
+  status: "VISIBLE" | "MODERATED" | "DELETED";
+  campus?: string;         // from student.campus (solo en list/detail endpoints)
+}
+```
+
+### Estructura de datos — CommentItem
+
+```typescript
+interface CommentItem {
+  id: string;
+  pseudonym: string;
+  text: string;
+  createdAt: string;
+  status: "VISIBLE" | "MODERATED" | "DELETED";
+}
+```
+
+### Patrón PostgREST para resolución de seudónimo
+
+Los endpoints utilizan un join anidado de PostgREST para resolver el seudónimo a través de dos relaciones:
+
+```
+student:student_id (
+  campus,
+  pseudonym:student_active_pseudonym_id_fkey (
+    texto,
+    avatar_url
+  )
+)
+```
+
+**Requisito crítico:** La restricción de clave foránea debe tener el nombre exacto `student_active_pseudonym_id_fkey` en la columna `student.active_pseudonym_id → pseudonym.id`. Si el nombre auto-generado difiere, debe recrearse con este nombre exacto para que PostgREST pueda resolver la relación.
+
+### Políticas RLS
+
+Se han creado dos políticas RLS en Supabase para permitir acceso público a contenido visible:
+
+- **`post_select_all_authenticated`** — Permite SELECT en tabla `post` WHERE `status = 'VISIBLE'` para usuarios autenticados
+- **`comment_select_all_authenticated`** — Permite SELECT en tabla `comment` WHERE `status = 'VISIBLE'` para usuarios autenticados
+
+Estas políticas reemplazan las políticas anteriores por usuario/psicólogo, simplificando el modelo de seguridad.
+
+---
+
+## 13. Pendientes formalizados
 
 El mecanismo de aplicación del tema por rol (clase CSS en `<html>` vs atributo `data-role`) debe definirse antes de la Fase 3, ya que afecta la forma en que los tokens del psicólogo sobreescriben los del estudiante en el `layout.tsx` de cada route group.
 

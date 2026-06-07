@@ -5,20 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { apiPost, ApiError } from "../../lib/api";
 import { validateStudentCode } from "../../lib/student-code";
-
-const CAMPUSES = [
-  { value: "CLAUSTRO_SAN_AGUSTIN", label: "Claustro de San Agustín" },
-  { value: "ZARAGOCILLA", label: "Campus de Zaragocilla" },
-  { value: "PIEDRA_BOLIVAR", label: "Campus de Piedra de Bolívar" },
-  { value: "CLAUSTRO_LA_MERCED", label: "Claustro de la Merced" },
-  { value: "CLAUSTRO_SANTO_DOMINGO", label: "Claustro de Santo Domingo" },
-  { value: "EL_CARMEN_DE_BOLIVAR", label: "El Carmen de Bolívar" },
-  { value: "MAGANGUE", label: "Magangué" },
-  { value: "SAN_JUAN_NEPOMUCENO", label: "San Juan Nepomuceno" },
-  { value: "SANTA_CRUZ_DE_MOMPOS", label: "Santa Cruz de Mompós" },
-  { value: "CERETE", label: "Cereté" },
-  { value: "LORICA", label: "Lorica" },
-];
+import { CAMPUSES } from "../../lib/campus";
 
 interface RegisterResponse {
   student_id: string;
@@ -44,7 +31,7 @@ export default function RegisterPage() {
 
   function updateField<K extends keyof typeof form>(
     key: K,
-    value: (typeof form)[K]
+    value: (typeof form)[K],
   ) {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
@@ -86,9 +73,9 @@ export default function RegisterPage() {
       });
 
       setSuccess(
-        `Registro exitoso. Tu seudónimo es: ${data.pseudonym}. Ahora puedes iniciar sesión.`
+        `Registro exitoso. Tu seudónimo es: ${data.pseudonym}. Ahora puedes iniciar sesión.`,
       );
-      setTimeout(() => router.push("/login"), 3000);
+      setTimeout(() => router.push("/login"), 5000);
     } catch (err) {
       if (err instanceof ApiError) {
         setError(err.message);
@@ -118,6 +105,13 @@ export default function RegisterPage() {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Top error banner — visible even when scrolled down */}
+          {error && (
+            <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900 rounded-xl px-4 py-3 font-medium">
+              {error}
+            </p>
+          )}
+
           <div>
             <label
               htmlFor="student_code"
@@ -136,9 +130,6 @@ export default function RegisterPage() {
                          placeholder:text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary/40
                          focus:border-primary"
             />
-            <p className="text-xs text-muted mt-1">
-              Código de 10 dígitos: Programa + Periodo Ingreso + Comunidad + Posición Admisión
-            </p>
           </div>
 
           <div>
@@ -146,7 +137,8 @@ export default function RegisterPage() {
               htmlFor="pseudonym"
               className="block text-sm font-medium text-foreground mb-1"
             >
-              Seudónimo <span className="text-muted font-normal">(opcional)</span>
+              Seudónimo{" "}
+              <span className="text-muted font-normal">(opcional)</span>
             </label>
             <input
               id="pseudonym"
@@ -234,7 +226,9 @@ export default function RegisterPage() {
               <input
                 type="checkbox"
                 checked={form.accepted_terms}
-                onChange={(e) => updateField("accepted_terms", e.target.checked)}
+                onChange={(e) =>
+                  updateField("accepted_terms", e.target.checked)
+                }
                 required
                 className="mt-0.5 h-4 w-4 rounded border-input text-primary
                            focus:ring-primary/40"
@@ -252,7 +246,9 @@ export default function RegisterPage() {
               <input
                 type="checkbox"
                 checked={form.age_declaration}
-                onChange={(e) => updateField("age_declaration", e.target.checked)}
+                onChange={(e) =>
+                  updateField("age_declaration", e.target.checked)
+                }
                 required
                 className="mt-0.5 h-4 w-4 rounded border-input text-primary
                            focus:ring-primary/40"
@@ -264,13 +260,13 @@ export default function RegisterPage() {
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2">
+            <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900 rounded-xl px-4 py-2">
               {error}
             </p>
           )}
 
           {success && (
-            <p className="text-sm text-green-700 bg-green-50 border border-green-200 rounded-xl px-4 py-2">
+            <p className="text-sm text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950/50 border border-green-200 dark:border-green-900 rounded-xl px-4 py-2">
               {success}
             </p>
           )}
@@ -287,7 +283,10 @@ export default function RegisterPage() {
 
         <p className="text-center mt-6 text-sm text-muted">
           ¿Ya tienes cuenta?{" "}
-          <Link href="/login" className="text-primary font-medium hover:underline">
+          <Link
+            href="/login"
+            className="text-primary font-medium hover:underline"
+          >
             Ingresar
           </Link>
         </p>

@@ -4,6 +4,7 @@ import { CONFIG } from "./config.js";
 import supabasePlugin from "./plugins/supabase.js";
 import authPlugin from "./plugins/auth.js";
 import authRouter from "./modules/auth/auth.router.js";
+import forumRouter from "./modules/forum/forum.router.js";
 
 export class Server {
   public readonly app: FastifyInstance;
@@ -40,6 +41,7 @@ export class Server {
 
   async #registerRoutes(): Promise<void> {
     await this.app.register(authRouter, { prefix: "/api/v1/auth" });
+    await this.app.register(forumRouter, { prefix: "/api/v1/forum" });
 
     this.app.get("/health", async () => ({
       status: "ok",

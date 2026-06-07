@@ -37,6 +37,19 @@
 --   5. Índices
 --   6. Función y triggers de updated_at
 --   7. Comentarios sobre políticas RLS
+--
+-- RELACIÓN CIRCULAR STUDENT ↔ PSEUDONYM (CRÍTICA PARA POSTGREST):
+--   student.active_pseudonym_id → pseudonym.id (FK: student_active_pseudonym_id_fkey, ON DELETE SET NULL)
+--   pseudonym.student_id → student.id (FK: pseudonym_student_id_fkey, ON DELETE CASCADE)
+--
+--   El endpoint /auth/me usa PostgREST embedded join:
+--     pseudonym!student_active_pseudonym_id_fkey(texto, avatar_url)
+--
+--   PostgREST requiere que el nombre de la FK sea EXACTAMENTE "student_active_pseudonym_id_fkey".
+--   Si la FK tiene un nombre auto-generado diferente, PostgREST retorna PGRST200
+--   ("Could not find a relationship between 'student' and 'pseudonym'").
+--
+--   La FK debe recrearse con este nombre exacto si la migración genera un nombre diferente.
 -- ============================================================
 
 

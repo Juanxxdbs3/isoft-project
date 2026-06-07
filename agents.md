@@ -55,6 +55,7 @@ Per-agent instructions live in `.opencode/agents/*.md` — read those before wri
 - Self-referral: `409 ACTIVE_SELF_REFERRAL_EXISTS` if student already has active SELF_REFERRAL case
 - MVP UI roles: `Estudiante` and `Psicólogo` only (Admin/Superadmin via Supabase Studio)
 - AWS-style error format: `{ "error": "SCREAMING_SNAKE_CASE", "message": "..." }`
+- **Circular FK dependency (CRITICAL):** `student.active_pseudonym_id` → `pseudonym.id` (FK name: `student_active_pseudonym_id_fkey`, ON DELETE SET NULL) + `pseudonym.student_id` → `student.id` (ON DELETE CASCADE). PostgREST `/auth/me` embedded join requires exact FK name `student_active_pseudonym_id_fkey`. If auto-generated name differs, recreate with correct name.
 
 ## NLP tests that must always stay green
 
@@ -67,9 +68,10 @@ See `docs/notes/project-status.md` for the full per-service task checklist. Key 
 | Area | State |
 |------|-------|
 | Frontend Fase 0 | ✅ Foundation (shadcn, tokens, domain types) |
-| Frontend Fase 1 | ⚠️ Partial — only landing page (`/`). Login & register pending |
-| Frontend Fase 2+ | 🔲 Forum, psychologist dashboard |
-| Backend | 🔲 Not initialized |
+| Frontend Fase 1 | ✅ Complete — Landing, login, register with validation, Suspense boundaries |
+| Frontend Fase 2 | ✅ Complete — Forum feed with fixed sidebar, profile with localStorage, DiceBear avatars |
+| Frontend Fase 3 | ✅ Partial — Psychologist route group created. Dashboard layout pending |
+| Backend | ⚠️ Partial — Forum CRUD + JWT fix. Auth, Alerts, Cases, Chat pending |
 | NLP engine | ✅ Pipeline + modelo clínico integrados. F1 suicidal 0.816. Modo comunidad pendiente |
 | Schema SQL v1.1 | ✅ Written, not deployed |
 | Infrastructure | 🔲 Supabase not deployed, RLS pending |

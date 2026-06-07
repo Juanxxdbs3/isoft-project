@@ -453,9 +453,11 @@ export class AuthService {
           status,
           caso_formal_activo,
           created_at,
+          updated_at,
           active_pseudonym_id,
           pseudonym!student_active_pseudonym_id_fkey (
-            texto
+            texto,
+            avatar_url
           )
         `
         )
@@ -471,9 +473,11 @@ export class AuthService {
         id: student.id,
         role: "student" as const,
         pseudonym: (student as any).pseudonym?.texto || null,
+        avatar_url: (student as any).pseudonym?.avatar_url || null,
         campus: student.campus,
         caso_formal_activo: student.caso_formal_activo,
         created_at: student.created_at,
+        updated_at: student.updated_at,
       };
     }
 

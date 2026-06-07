@@ -27,6 +27,7 @@ export function PostPagination({ currentPage, totalPages, onPageChange }: PostPa
                    hover:text-foreground hover:bg-surface border border-border
                    disabled:opacity-30 disabled:cursor-not-allowed transition-all"
         aria-label="Página anterior"
+        title="Página anterior"
       >
         <ChevronLeft size={16} />
       </button>
@@ -58,6 +59,7 @@ export function PostPagination({ currentPage, totalPages, onPageChange }: PostPa
                    hover:text-foreground hover:bg-surface border border-border
                    disabled:opacity-30 disabled:cursor-not-allowed transition-all"
         aria-label="Página siguiente"
+        title="Página siguiente"
       >
         <ChevronRight size={16} />
       </button>

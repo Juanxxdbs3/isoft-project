@@ -85,16 +85,22 @@ const authPlugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
       const token = authHeader.slice(7);
 
       try {
-        // Step 1: Verify JWT signature locally
-        const decoded = await request.jwtVerify<{
+        // Step 1: Decode JWT locally (no signature verification — Supabase tokens
+        // are signed with Supabase's own key, not ours). Real verification
+        // is done via Supabase Auth API in step 2.
+        const decoded = fastify.jwt.decode<{
           sub: string;
           role?: string;
           campus?: string;
           app_metadata?: { role?: string; campus?: string };
           user_metadata?: { role?: string; campus?: string };
-        }>();
+        }>(token);
 
-        // Step 2: Extra verification via Supabase Auth API
+        if (!decoded || !decoded.sub) {
+          return sendError(reply, Errors.UNAUTHORIZED("Token inválido"));
+        }
+
+        // Step 2: Verify token via Supabase Auth API
         const { data: userData, error: userError } =
           await fastify.supabase.auth.getUser(token);
 
@@ -130,19 +136,13 @@ const authPlugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
           );
         }
 
-        // Step 4: Set request.user (overrides @fastify/jwt's default user)
+        // Step 4: Set request.user
         request.user = {
           sub: decoded.sub,
           role,
           campus,
         };
       } catch (err: any) {
-        if (err?.code === "FAST_JWT_EXPIRED") {
-          return sendError(reply, Errors.UNAUTHORIZED("Token expirado"));
-        }
-        if (err?.code === "FAST_JWT_INVALID") {
-          return sendError(reply, Errors.UNAUTHORIZED("Token inválido"));
-        }
         request.log.error({ err }, "Authentication error");
         return sendError(reply, Errors.UNAUTHORIZED());
       }

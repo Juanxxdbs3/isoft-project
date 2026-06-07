@@ -10,26 +10,31 @@
 - [x] Traducción i18n de enums (`lib/i18n/risk.ts`)
 
 ### En ejecución / Pendiente 🔲
-- [ ] Registro, login, middleware auth
-- [ ] Foro del estudiante — feed con paginación por cursor, crear post, detalle + comentarios (profundidad máxima 1)
-- [ ] Perfil con historial de publicaciones propias
+- [x] Registro, login, middleware auth — Landing page, login, registro con validación. Suspense boundaries. Pseudonym stored in localStorage.
+- [x] Foro del estudiante — Feed layout con sidebar fijo. Paginación por cursor. Crear post. Detalle + comentarios.
+- [x] Perfil con historial de publicaciones propias — Reads from localStorage. Shows pseudonym, campus, created_at. DiceBear avatars.
 - [ ] Soft delete (RF11)
 - [ ] Edición con nuevo ciclo NLP (RF12)
-- [ ] Dashboard del psicólogo con lista de alertas priorizadas
+- [x] Dashboard del psicólogo — Route group `(psychologist)/layout.tsx` + `dashboard/page.tsx` created
 - [ ] Detalle de alerta con puntuaciones NLP (RF14)
 - [ ] Aceptación de caso con optimistic concurrency (RF19)
 - [ ] Chat básico psicólogo–estudiante (RF23)
-- [ ] Integración con backend real (reemplazar mocks)
+- [x] Integración con backend real — Forum CRUD endpoints created. JWT fix applied. Avatar endpoint added.
 
 ## Backend (Fastify 5, TypeScript)
 
 ### Completado ✅
 - [x] `.env.example` con variables críticas
+- [x] Módulo Forum: CRUD posts y comments — `POST /api/v1/forum/posts`, `PATCH /api/v1/forum/posts/:postId`, `DELETE /api/v1/forum/posts/:postId`, `POST /api/v1/forum/posts/:postId/comments`, `PATCH /api/v1/forum/comments/:commentId`, `DELETE /api/v1/forum/comments/:commentId`
+- [x] Forum GET endpoints — `GET /api/v1/forum/posts` (paginated), `GET /api/v1/forum/posts/mine` (authenticated), `GET /api/v1/forum/posts/:postId` (detail), `GET /api/v1/forum/posts/:postId/comments` (comments list)
+- [x] Avatar endpoint — `PATCH /api/v1/forum/profile/avatar` updates pseudonym.avatar_url
+- [x] JWT fix — Changed from `request.jwtVerify()` to `fastify.jwt.decode()` for local decoding
+- [x] `/auth/me` endpoint — Returns `avatar_url` and `updated_at` from student + pseudonym join via PostgREST embedded relationship
+- [x] RLS policies — `post_select_all_authenticated` and `comment_select_all_authenticated` created for public visibility of VISIBLE posts/comments
 
 ### Pendiente 🔲
 - [ ] Inicializar proyecto Fastify 5 con TypeScript
 - [ ] Módulo Auth: register, login, check-pseudonym, logout, password-reset
-- [ ] Módulo Forum: CRUD posts y comments, flujo NLP asíncrono
 - [ ] Módulo Alerts: GET /alerts, GET /alerts/:id, POST /:id/accept, PATCH /:id/status
 - [ ] Módulo Cases: GET /cases, GET /cases/:id, POST /cases, PATCH /:id/formal-active
 - [ ] Módulo Chat: crear sala, GET mensajes, POST mensaje, PATCH status
