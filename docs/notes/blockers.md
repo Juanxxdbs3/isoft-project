@@ -9,12 +9,13 @@ en `unified_dataset.json`. Fine-tuning del modelo clínico bloqueado hasta resol
 teammate usando una versión actualizada de `prepare_datasets.py`. El modelo alcanzó
 F1 suicidal 0.816 (supera umbral 0.70), F1 depression 0.564 y F1 anxiety 0.596.
 
-## Schema Supabase no desplegado — OPEN
+## Schema Supabase no desplegado — RESOLVED
 
 **Service:** infraestructura
-**Description:** `schema_mindbridge_v1.1.sql` está listo pero no ha sido ejecutado en Supabase.
-Backend no puede conectar BD hasta que esté desplegado y las RLS configuradas.
-**Resolution:** Pendiente. Requiere credenciales de Supabase (URL + service role key).
+**Description:** `schema_mindbridge_v1.1.sql` estaba listo pero no había sido ejecutado en Supabase.
+Backend no podía conectar BD hasta que estuviera desplegado y las RLS configuradas.
+**Resolution:** Resuelto el 2026-06-07. Schema desplegado exitosamente en Supabase. Datos de prueba
+insertados (psicólogo, caso clínico, sala de chat). Triggers Realtime funcionando para chat.
 
 ## Modelo clínico 800MB — despliegue — OPEN
 

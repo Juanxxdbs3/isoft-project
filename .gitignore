@@ -50,7 +50,6 @@ out/
 .env.production.local
 
 # --- Project specific ---
-.agents/
 EntregaFinal/
 .obsidian/
 skills-lock.json

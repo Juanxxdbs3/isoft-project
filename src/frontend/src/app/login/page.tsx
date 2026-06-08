@@ -56,6 +56,10 @@ function LoginContent() {
       localStorage.setItem("role", data.role);
       localStorage.setItem("campus", data.campus);
 
+      // Set cookies for middleware route protection
+      document.cookie = `access_token=${data.access_token}; path=/; max-age=86400; SameSite=Lax`;
+      document.cookie = `role=${data.role}; path=/; max-age=86400; SameSite=Lax`;
+
       // For students, the identifier IS the pseudonym — store it immediately
       if (role === "student") {
         localStorage.setItem("pseudonym", identifier);

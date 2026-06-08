@@ -222,6 +222,11 @@ export interface AlertDetail extends AlertSummary {
   previousAlerts: AlertSummary[];
 }
 
+/** Maps backend sender_role (UPPER_SNAKE_CASE) to ChatMessageItem sender */
+export function mapSenderRole(role: string): "student" | "psychologist" {
+  return role.toLowerCase() as "student" | "psychologist";
+}
+
 /** Mensaje individual dentro de un chat */
 export interface ChatMessageItem {
   id: string;

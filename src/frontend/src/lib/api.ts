@@ -19,6 +19,44 @@ export class ApiError extends Error {
   }
 }
 
+async function handleResponse<T>(res: Response): Promise<T> {
+  const json = await res.json().catch(() => ({}));
+
+  if (res.status === 401) {
+    // Skip 401 redirect for auth endpoints (login, register) — user is not yet authenticated
+    const url = res.url || "";
+    if (url.includes("/auth/login") || url.includes("/auth/register")) {
+      throw new ApiError(
+        401,
+        json.error || "INVALID_CREDENTIALS",
+        json.message || "Credenciales inválidas"
+      );
+    }
+
+    // Clear tokens on unauthorized for protected endpoints
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("pseudonym");
+      document.cookie = "access_token=; path=/; max-age=0";
+      document.cookie = "role=; path=/; max-age=0";
+      window.location.href = "/login";
+    }
+    throw new ApiError(401, "UNAUTHORIZED", "Sesión expirada");
+  }
+
+  if (!res.ok) {
+    throw new ApiError(
+      res.status,
+      json.error || "UNKNOWN_ERROR",
+      json.message || "Error desconocido"
+    );
+  }
+
+  return json.data as T;
+}
+
 export async function apiPost<T>(
   path: string,
   body: unknown,
@@ -35,17 +73,7 @@ export async function apiPost<T>(
     body: JSON.stringify(body),
   });
 
-  const json = await res.json().catch(() => ({}));
-
-  if (!res.ok) {
-    throw new ApiError(
-      res.status,
-      json.error || "UNKNOWN_ERROR",
-      json.message || "Error desconocido"
-    );
-  }
-
-  return json.data as T;
+  return handleResponse<T>(res);
 }
 
 export async function apiPatch<T>(
@@ -64,17 +92,7 @@ export async function apiPatch<T>(
     body: JSON.stringify(body),
   });
 
-  const json = await res.json().catch(() => ({}));
-
-  if (!res.ok) {
-    throw new ApiError(
-      res.status,
-      json.error || "UNKNOWN_ERROR",
-      json.message || "Error desconocido"
-    );
-  }
-
-  return json.data as T;
+  return handleResponse<T>(res);
 }
 
 export async function apiGet<T>(
@@ -91,15 +109,5 @@ export async function apiGet<T>(
     headers,
   });
 
-  const json = await res.json().catch(() => ({}));
-
-  if (!res.ok) {
-    throw new ApiError(
-      res.status,
-      json.error || "UNKNOWN_ERROR",
-      json.message || "Error desconocido"
-    );
-  }
-
-  return json.data as T;
+  return handleResponse<T>(res);
 }

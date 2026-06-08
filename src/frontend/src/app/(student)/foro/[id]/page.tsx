@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ArrowLeft, MessageCircle } from "lucide-react";
 import { CommentThread } from "../../../../components/forum/comment-thread";
 import { apiGet } from "../../../../lib/api";
-import type { CommentItem, PostSummary } from "../../../../types/domain";
+import type { CommentItem, EstadoContenido, PostSummary } from "../../../../types/domain";
 
 export default function PostDetailPage() {
   const params = useParams<{ id: string }>();
@@ -20,12 +20,13 @@ export default function PostDetailPage() {
 
     async function fetchData() {
       try {
+        const token = localStorage.getItem("access_token");
         const [postResult, commentsResult] = await Promise.all([
           apiGet<{ id: string; text: string; createdAt: string; status: string; pseudonym: string }>(
-            `/forum/posts/${params.id}`
+            `/forum/posts/${params.id}`, token || undefined
           ),
           apiGet<{ id: string; text: string; createdAt: string; status: string; pseudonym: string }[]>(
-            `/forum/posts/${params.id}/comments`
+            `/forum/posts/${params.id}/comments`, token || undefined
           ),
         ]);
 
@@ -36,7 +37,7 @@ export default function PostDetailPage() {
           pseudonym: postResult.pseudonym,
           text: postResult.text,
           createdAt: postResult.createdAt,
-          status: postResult.status,
+          status: postResult.status as EstadoContenido,
           commentCount: commentsResult.length,
         });
         setCommentCount(commentsResult.length);
@@ -46,7 +47,7 @@ export default function PostDetailPage() {
             pseudonym: c.pseudonym,
             text: c.text,
             createdAt: c.createdAt,
-            status: c.status,
+            status: c.status as EstadoContenido,
           }))
         );
       } catch {

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { SendHorizonal } from "lucide-react";
 import { apiGet, apiPost, ApiError } from "../../lib/api";
-import type { CommentItem as CommentItemType } from "../../types/domain";
+import type { CommentItem as CommentItemType, EstadoContenido } from "../../types/domain";
 
 interface CommentThreadProps {
   postId: string;
@@ -43,7 +43,7 @@ export function CommentThread({ postId, initialComments = [] }: CommentThreadPro
           pseudonym: c.pseudonym,
           text: c.text,
           createdAt: c.createdAt,
-          status: c.status,
+          status: c.status as EstadoContenido,
         }))
       );
       setNewComment("");

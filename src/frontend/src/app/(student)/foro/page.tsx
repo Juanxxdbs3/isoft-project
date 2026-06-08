@@ -19,7 +19,8 @@ export default function ForumPage() {
   async function fetchPosts() {
     setLoading(true);
     try {
-      const result = await apiGet<{ posts: any[]; total: number }>("/forum/posts");
+      const token = localStorage.getItem("access_token");
+      const result = await apiGet<{ posts: any[]; total: number }>("/forum/posts", token || undefined);
       const mapped: PostSummary[] = result.posts.map((p: any) => ({
         id: p.id,
         pseudonym: p.pseudonym,

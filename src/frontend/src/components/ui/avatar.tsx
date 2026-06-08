@@ -7,14 +7,16 @@ interface AvatarProps {
   seed: string;
   size?: number;
   className?: string;
+  url?: string;
 }
 
-export function Avatar({ seed, size = 32, className = "" }: AvatarProps) {
-  const url = `${AVATAR_BASE}/${STYLE}/svg?seed=${encodeURIComponent(seed)}`;
+export function Avatar({ seed, size = 32, className = "", url }: AvatarProps) {
+  const dicebearUrl = `${AVATAR_BASE}/${STYLE}/svg?seed=${encodeURIComponent(seed)}`;
+  const finalUrl = url || dicebearUrl;
 
   return (
     <Image
-      src={url}
+      src={finalUrl}
       alt={`Avatar de ${seed}`}
       width={size}
       height={size}

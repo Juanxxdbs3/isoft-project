@@ -70,10 +70,13 @@ See `docs/notes/project-status.md` for the full per-service task checklist. Key 
 | Frontend Fase 0 | ✅ Foundation (shadcn, tokens, domain types) |
 | Frontend Fase 1 | ✅ Complete — Landing, login, register with validation, Suspense boundaries |
 | Frontend Fase 2 | ✅ Complete — Forum feed with fixed sidebar, profile with localStorage, DiceBear avatars |
-| Frontend Fase 3 | ✅ Partial — Psychologist route group created. Dashboard layout pending |
-| Backend | ⚠️ Partial — Forum CRUD + JWT fix. Auth, Alerts, Cases, Chat pending |
+| Frontend Fase 3 | ✅ Complete — Psychologist route group, dashboard layout, chat integration |
+| Frontend Fase 4 | ✅ Complete — Settings page, route security, chat widget, avatar modal (12 options) |
+| Backend Auth | ✅ Complete — register, login, JWT fix, me endpoint |
+| Backend Forum | ✅ Complete — CRUD posts + comments, avatar endpoint |
+| Backend Chat | ✅ Complete — message CRUD, room discovery, Realtime triggers |
 | NLP engine | ✅ Pipeline + modelo clínico integrados. F1 suicidal 0.816. Modo comunidad pendiente |
-| Schema SQL v1.1 | ✅ Written, not deployed |
-| Infrastructure | 🔲 Supabase not deployed, RLS pending |
+| Schema SQL v1.1 | ✅ Deployed — Supabase schema, test data, Realtime triggers working |
+| Infrastructure | ✅ Supabase deployed, Realtime configured, test data inserted |
 
-**Active blockers:** see `docs/notes/blockers.md` — schema not deployed, modelo 800MB sin estrategia de despliegue.
+**Active blockers:** see `docs/notes/blockers.md` — modelo 800MB sin estrategia de despliegue.

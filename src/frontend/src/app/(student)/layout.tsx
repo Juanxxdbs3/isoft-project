@@ -1,5 +1,6 @@
 import { ThemeToggle } from "../../components/ui/theme-toggle";
 import { UserBadge } from "../../components/ui/user-badge";
+import { ChatNavItem } from "../../components/navigation/student-nav-items";
 import Link from "next/link";
 import { House, User, ClipboardList, Settings } from "lucide-react";
 
@@ -43,6 +44,7 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
               </Link>
             );
           })}
+          <ChatNavItem />
         </aside>
 
         {/* Main content */}
@@ -101,6 +103,7 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
               </Link>
             );
           })}
+          <ChatNavItem />
         </div>
       </nav>
     </>
