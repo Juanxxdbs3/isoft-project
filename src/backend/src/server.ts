@@ -7,6 +7,7 @@ import authRouter from "./modules/auth/auth.router.js";
 import forumRouter from "./modules/forum/forum.router.js";
 import studentsRouter from "./modules/students/students.router.js";
 import chatRouter from "./modules/chat/chat.router.js";
+import psychologistsRouter from "./modules/psychologists/psychologists.router.js";
 
 export class Server {
   public readonly app: FastifyInstance;
@@ -46,6 +47,7 @@ export class Server {
     await this.app.register(forumRouter, { prefix: "/api/v1/forum" });
     await this.app.register(studentsRouter, { prefix: "/api/v1/students" });
     await this.app.register(chatRouter, { prefix: "/api/v1/chat" });
+    await this.app.register(psychologistsRouter, { prefix: "/api/v1/admin" });
 
     this.app.get("/health", async () => ({
       status: "ok",

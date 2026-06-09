@@ -1,0 +1,356 @@
+﻿isoft-project
++--- .opencode
+|    +--- agents
+|    |    +--- backend.md
+|    |    +--- docs-updater.md
+|    |    +--- frontend.md
+|    |    +--- infraestructure.md
+|    |    +--- nlp.md
+|    |    \--- qa.md
+|    +--- .gitignore
+|    +--- package.json
+|    \--- package-lock.json
++--- docs
+|    +--- contracts
+|    |    +--- contrato_backend_mindbridge_v1.1.md
+|    |    +--- contrato_frontend_mindbridge_v1.2.md
+|    |    \--- contrato_microservicio_nlp_v6.md
+|    +--- diagrams
+|    |    +--- arquitectura-sistema-componentes.png
+|    |    +--- arquitectura-sistema-componentes.txt
+|    |    +--- attention-alerts-module.png
+|    |    +--- attention-alerts-module.txt
+|    |    +--- entidades-del-negocio.png
+|    |    +--- entidades-del-negocio.txt
+|    |    +--- persistence-and-infraestructure.png
+|    |    +--- persistence-and-infraestructure.txt
+|    |    +--- presentacion-e-interfaz.png
+|    |    +--- presentacion-e-interfaz.txt
+|    |    +--- README.md
+|    |    +--- triage-forum-module.png
+|    |    +--- triage-forum-module.txt
+|    |    +--- types.png
+|    |    \--- types.txt
+|    +--- models
+|    |    +--- MindBridge_entity_reference.md
+|    |    \--- mindbridge_schema.sql
+|    +--- notes
+|    |    +--- blockers.md
+|    |    +--- design-decisions.md
+|    |    +--- nlp-dataset-status.md
+|    |    \--- project-status.md
+|    \--- plans
+|         \--- psychologist-module-plan.md
++--- Documentación
+|    +--- Anexos
+|    |    +--- Acta_Entrevista_Estudiante.docx
+|    |    +--- Acta_Entrevista_Estudiante_2.docx
+|    |    +--- Acta_Entrevista_Experto.docx
+|    |    +--- Acta_Entrevista_Experto_2.docx
+|    |    +--- Acta_Entrevista_Experto_3.docx
+|    |    +--- Acuerdos_Base_MindBridge.docx
+|    |    +--- guia_fine_tuning.md
+|    |    +--- MentalRiskEs Form.pdf
+|    |    \--- Plantilla_entrevista_a_experto_y_estudiante.docx
+|    +--- Bibliografía
+|    |    +--- Autoeficacia académica y las barreras para la búsqueda de ayuda  para  problemas  de  salud  mental  en  Estudiantes Universitarios de Lima.pdf
+|    |    +--- College Student’s Academic Help-Seeking Behavior A Systematic Literature Review.pdf
+|    |    +--- Detección temprana de riesgos de salud a partir de minería de textos en Redes Sociales.pdf
+|    |    +--- Help‐seeking intentions  behaviors  and barriers in college.pdf
+|    |    +--- Mental Health Problems and Help-Seeking Behavior Among College Students.pdf
+|    |    +--- MentalRiskES - A New Corpus for Early Detection of Mental.pdf
+|    |    +--- Natural language processing applied to mental illness detection a narrative review.pdf
+|    |    +--- Natural language processing system for rapid detection and intervention of mental health crisis chat messages.pdf
+|    |    \--- PROPIEDADES PSICOMÉTRICAS DEL CUESTIONARIO GENERAL DE BÚSQUEDA DE AYUDA EN UNIVERSITARIOS.pdf
+|    +--- Borradores
+|    |    +--- Images
+|    |    |    +--- arquitectura-sistema-componentes.png
+|    |    |    +--- attention-alerts-module.png
+|    |    |    +--- entidades-del-negocio.png
+|    |    |    +--- persistence-and-infraestructure.png
+|    |    |    +--- presentacion-e-interfaz.png
+|    |    |    +--- triage-forum-module.png
+|    |    |    \--- types.png
+|    |    +--- Obsidian-notes
+|    |    |    +--- .obsidian
+|    |    |    |    +--- app.json
+|    |    |    |    +--- appearance.json
+|    |    |    |    +--- core-plugins.json
+|    |    |    |    +--- graph.json
+|    |    |    |    \--- workspace.json
+|    |    |    +--- Aspectos de frontend y React (ReactDom y React library).md
+|    |    |    +--- Información sobre diseño.md
+|    |    |    +--- OpenCode.md
+|    |    |    \--- Proceso de construcción del dataset.md
+|    |    +--- 4454afbb-5e85-40c7-851f-8521574359eb.png
+|    |    +--- Diseno_MindBridge_UML.eapx
+|    |    +--- EAID_AB682B04_31CC_419e_A695_71EABAE041F9.png
+|    |    +--- GRASP.txt
+|    |    +--- MindBridge_NLP_Mental_Health_.pdf
+|    |    +--- MindBridgeDiagrams.xml
+|    |    \--- Proyecto.docx
+|    +--- Cronograma
+|    |    \--- cronograma_mindbridge_v2.html
+|    \--- Informe
+|         +--- ER_3.docx
+|         +--- Informe_3.docx
+|         \--- Manual del sistema_3.docx
++--- EntregaFinal
+|    +--- Anexos
+|    +--- Código_fuente
+|    +--- Documentación
+|    \--- Instaladores
++--- src
+|    +--- backend
+|    |    +--- scripts
+|    |    |    +--- smoke-test.js
+|    |    |    +--- test-api-contract.js
+|    |    |    +--- test-chat-integration.js
+|    |    |    +--- test-chat-membership.js
+|    |    |    \--- test-nlp-contract.js
+|    |    +--- src
+|    |    |    +--- lib
+|    |    |    |    +--- encryption.ts
+|    |    |    |    +--- errors.ts
+|    |    |    |    \--- student-code.ts
+|    |    |    +--- modules
+|    |    |    |    +--- alerts
+|    |    |    |    +--- auth
+|    |    |    |    |    +--- auth.router.ts
+|    |    |    |    |    +--- auth.schema.ts
+|    |    |    |    |    \--- auth.service.ts
+|    |    |    |    +--- cases
+|    |    |    |    +--- chat
+|    |    |    |    |    +--- chat.router.ts
+|    |    |    |    |    +--- chat.schema.ts
+|    |    |    |    |    \--- chat.service.ts
+|    |    |    |    +--- export
+|    |    |    |    +--- forum
+|    |    |    |    |    +--- forum.router.ts
+|    |    |    |    |    +--- forum.schema.ts
+|    |    |    |    |    \--- forum.service.ts
+|    |    |    |    +--- notifications
+|    |    |    |    +--- students
+|    |    |    |    |    +--- students.router.ts
+|    |    |    |    |    +--- students.schema.ts
+|    |    |    |    |    \--- students.service.ts
+|    |    |    |    \--- triage
+|    |    |    +--- plugins
+|    |    |    |    +--- auth.ts
+|    |    |    |    \--- supabase.ts
+|    |    |    +--- repositories
+|    |    |    +--- types
+|    |    |    |    \--- domain.ts
+|    |    |    +--- app.ts
+|    |    |    +--- config.ts
+|    |    |    \--- server.ts
+|    |    +--- tests
+|    |    +--- .env
+|    |    +--- .env.example
+|    |    +--- .gitignore
+|    |    +--- agent-instructions.md
+|    |    +--- DEVELOPMENT.MD
+|    |    +--- package.json
+|    |    +--- package-lock.json
+|    |    \--- tsconfig.json
+|    +--- frontend
+|    |    +--- public
+|    |    |    +--- forum-empty.svg
+|    |    |    +--- post-card.jpg
+|    |    |    +--- post-card.png
+|    |    |    +--- student-in-laptop.jpg
+|    |    |    +--- student-in-laptop.png
+|    |    |    +--- therapy-sesion.jpg
+|    |    |    \--- therapy-sesion.png
+|    |    +--- scripts
+|    |    |    +--- validate-components.js
+|    |    |    \--- verify-code-quality.js
+|    |    +--- src
+|    |    |    +--- app
+|    |    |    |    +--- (psychologist)
+|    |    |    |    |    +--- dashboard
+|    |    |    |    |    |    +--- chat
+|    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    \--- layout.tsx
+|    |    |    |    +--- (student)
+|    |    |    |    |    +--- chat
+|    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    +--- configuracion
+|    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    +--- foro
+|    |    |    |    |    |    +--- [id]
+|    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    +--- perfil
+|    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    \--- layout.tsx
+|    |    |    |    +--- login
+|    |    |    |    |    \--- page.tsx
+|    |    |    |    +--- registro
+|    |    |    |    |    \--- page.tsx
+|    |    |    |    +--- terminos
+|    |    |    |    |    \--- page.tsx
+|    |    |    |    +--- favicon.ico
+|    |    |    |    +--- globals.css
+|    |    |    |    +--- layout.tsx
+|    |    |    |    \--- page.tsx
+|    |    |    +--- components
+|    |    |    |    +--- chat
+|    |    |    |    |    +--- chat-bubble.tsx
+|    |    |    |    |    +--- chat-header.tsx
+|    |    |    |    |    +--- chat-input.tsx
+|    |    |    |    |    +--- chat-message.tsx
+|    |    |    |    |    +--- chat-widget.tsx
+|    |    |    |    |    \--- index.ts
+|    |    |    |    +--- forum
+|    |    |    |    |    +--- comment-thread.tsx
+|    |    |    |    |    +--- create-post-form.tsx
+|    |    |    |    |    +--- post-card.tsx
+|    |    |    |    |    +--- post-pagination.tsx
+|    |    |    |    |    \--- risk-badge.tsx
+|    |    |    |    +--- navigation
+|    |    |    |    |    \--- student-nav-items.tsx
+|    |    |    |    \--- ui
+|    |    |    |         +--- avatar.tsx
+|    |    |    |         +--- avatar-modal.tsx
+|    |    |    |         +--- button.tsx
+|    |    |    |         +--- theme-toggle.tsx
+|    |    |    |         \--- user-badge.tsx
+|    |    |    +--- lib
+|    |    |    |    +--- i18n
+|    |    |    |    |    \--- risk.ts
+|    |    |    |    +--- mock
+|    |    |    |    |    +--- comments.json
+|    |    |    |    |    +--- posts.json
+|    |    |    |    |    \--- profile.json
+|    |    |    |    +--- api.ts
+|    |    |    |    +--- campus.ts
+|    |    |    |    +--- student-code.ts
+|    |    |    |    +--- supabase.ts
+|    |    |    |    \--- utils.ts
+|    |    |    +--- types
+|    |    |    |    \--- domain.ts
+|    |    |    \--- middleware.ts
+|    |    +--- .env.local
+|    |    +--- .gitignore
+|    |    +--- agent-instructions.md
+|    |    +--- components.json
+|    |    +--- DEVELOPMENT.MD
+|    |    +--- eslint.config.mjs
+|    |    +--- next.config.ts
+|    |    +--- next-env.d.ts
+|    |    +--- package.json
+|    |    +--- package-lock.json
+|    |    +--- postcss.config.mjs
+|    |    +--- README.md
+|    |    +--- tailwind.config.ts
+|    |    +--- tsconfig.json
+|    |    \--- tsconfig.tsbuildinfo
+|    \--- nlp_engine
+|         +--- data
+|         |    +--- conceptual_validation
+|         |    |    +--- notebooks
+|         |    |    |    \--- phase2_validation.ipynb
+|         |    |    +--- phase2_results backup.json
+|         |    |    \--- phase2_validate.py
+|         |    +--- emoji_map.json
+|         |    +--- en_markers.txt
+|         |    \--- immediate_risk_expressions.txt
+|         +--- data_collection
+|         |    +--- cleaned
+|         |    |    +--- dataset_stats.json
+|         |    |    +--- needs_annotation.json
+|         |    |    +--- sample_suicida.json
+|         |    |    +--- training_dataset.json
+|         |    |    \--- unified_dataset.json
+|         |    +--- raw
+|         |    +--- sources
+|         |    |    +--- kaggle_depression_tweets.csv
+|         |    |    +--- manual_anxiety.json
+|         |    |    \--- suicide_comments_es.csv
+|         |    +--- build_training_dataset.py
+|         |    \--- prepare_datasets.py
+|         +--- notebooks
+|         +--- src
+|         |    +--- __pycache__
+|         |    |    +--- __init__.cpython-313.pyc
+|         |    |    +--- config.cpython-313.pyc
+|         |    |    \--- main.cpython-313.pyc
+|         |    +--- models
+|         |    |    +--- __pycache__
+|         |    |    |    +--- __init__.cpython-313.pyc
+|         |    |    |    \--- clinical.cpython-313.pyc
+|         |    |    +--- clinical_model_v1
+|         |    |    |    +--- classifier_heads.pt
+|         |    |    |    +--- config.json
+|         |    |    |    +--- model.safetensors
+|         |    |    |    +--- special_tokens_map.json
+|         |    |    |    +--- tokenizer.json
+|         |    |    |    +--- tokenizer_config.json
+|         |    |    |    +--- training_metadata.json
+|         |    |    |    \--- vocab.txt
+|         |    |    +--- __init__.py
+|         |    |    \--- clinical.py
+|         |    +--- orchestration
+|         |    |    +--- __pycache__
+|         |    |    |    +--- __init__.cpython-313.pyc
+|         |    |    |    +--- pipeline.cpython-313.pyc
+|         |    |    |    +--- preprocessor.cpython-313.pyc
+|         |    |    |    \--- safety_filter.cpython-313.pyc
+|         |    |    +--- __init__.py
+|         |    |    +--- pipeline.py
+|         |    |    +--- preprocessor.py
+|         |    |    \--- safety_filter.py
+|         |    +--- routers
+|         |    |    +--- __pycache__
+|         |    |    |    +--- __init__.cpython-313.pyc
+|         |    |    |    +--- analysis.cpython-313.pyc
+|         |    |    |    \--- health.cpython-313.pyc
+|         |    |    +--- __init__.py
+|         |    |    +--- analysis.py
+|         |    |    \--- health.py
+|         |    +--- schemas
+|         |    |    +--- __pycache__
+|         |    |    |    +--- __init__.cpython-313.pyc
+|         |    |    |    +--- request.cpython-313.pyc
+|         |    |    |    \--- response.cpython-313.pyc
+|         |    |    +--- __init__.py
+|         |    |    +--- request.py
+|         |    |    \--- response.py
+|         |    +--- stubs
+|         |    |    +--- __pycache__
+|         |    |    |    +--- __init__.cpython-313.pyc
+|         |    |    |    \--- model_stub.cpython-313.pyc
+|         |    |    +--- __init__.py
+|         |    |    \--- model_stub.py
+|         |    +--- __init__.py
+|         |    +--- config.py
+|         |    \--- main.py
+|         +--- tests
+|         |    +--- __pycache__
+|         |    |    +--- conftest.cpython-313-pytest-9.0.3.pyc
+|         |    |    \--- test_pipeline.cpython-313-pytest-9.0.3.pyc
+|         |    +--- conftest.py
+|         |    \--- test_pipeline.py
+|         +--- .env
+|         +--- .env.example
+|         +--- .gitignore
+|         +--- agent-instructions.md
+|         +--- DEVELOPMENT.MD
+|         +--- readme.md
+|         \--- requirements.txt
++--- .gitattributes
++--- .gitignore
++--- agents.md
++--- Design.md
++--- FINAL_TEST_SUMMARY.md
++--- prompts.md
++--- skills-lock.json
++--- SPEC.md
++--- TEST_EXECUTION_REPORT.md
++--- TEST_GUIDE.md
++--- TEST_INDEX.md
++--- TEST_SUMMARY.md
++--- tree.txt
+\--- tree-skip.ps1

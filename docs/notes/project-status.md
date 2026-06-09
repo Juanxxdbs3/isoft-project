@@ -13,6 +13,7 @@
 - [x] Perfil con historial de publicaciones propias — localStorage, DiceBear avatars, fecha membresía
 - [x] Avatar modal interactivo — Rejilla 6 estilos DiceBear (open-peeps, bottts, avataaars, identicon, adventurer, lorelei). Reemplaza input de texto manual.
 - [x] Dashboard del psicólogo — Route group `(psychologist)/layout.tsx` + `dashboard/page.tsx` NOTA: AÚN NO TIENE NINGUNA FUNCIONALIDAD, SOLO HAY UN ARCHIVO INICIAL.
+- [x] Tema de psicólogo aplicado al layout — Clase `.psychologist-theme` en `<div>` raíz de `(psychologist)/layout.tsx` (Sesión 1.3)
 - [x] Integración con backend real — Forum CRUD, JWT fix, avatar endpoint
 - [x] TypeScript limpio — `npx tsc --noEmit` pasa sin errores
 - [x] ChatWidget componente modular (`components/chat/chat-widget.tsx`) — props `roomId`, `currentUserId`, `currentUserRole`. Responsive (flotante desktop, fullscreen mobile). Conexión Realtime vía Supabase broadcast.
@@ -69,6 +70,14 @@
 - [x] `rooms/active` registrado antes de `rooms/:roomId` para evitar route conflict
 - [x] Forum service retorna `avatar_url` en todos los endpoints post/comment
 
+### Completado ✅ (Sesión 1.1)
+
+- [x] Módulo Psychologists (provisioning): `POST /api/v1/admin/psychologists` protegido por `X-Admin-Secret`
+- [x] `repositories/interfaces.ts` con `IPsychologistRepository`
+- [x] `repositories/psychologist.repository.ts` — `SupabasePsychologistRepository`
+- [x] `lib/roles.ts` — lógica compartida `getPsicologoRolId()` / `getEstudianteRolId()` (DRY)
+- [x] `auth.service.ts` refactorizado para usar `lib/roles.ts`
+
 ### Pendiente 🔲
 
 - [ ] Módulo Alerts: GET /alerts, GET /alerts/:id, POST /:id/accept, PATCH /:id/status
@@ -78,6 +87,7 @@
 - [ ] Módulo Psychologist Settings: forum-participation, email-alerts
 - [ ] Cola de reintentos NLP (3 intentos, backoff exponencial)
 - [ ] Tests de integración por módulo
+- [ ] Migrar `auth.router.ts` de `NLP_SERVICE_BEARER_TOKEN` a `ADMIN_SECRET` para password-reset
 
 ## Motor NLP (Python 3.13, FastAPI, BETO, spaCy)
 

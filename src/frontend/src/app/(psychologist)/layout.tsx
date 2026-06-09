@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function PsychologistLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <div className="psychologist-theme min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-6">
@@ -33,6 +33,6 @@ export default function PsychologistLayout({ children }: { children: React.React
         </div>
       </header>
       <main className="max-w-7xl mx-auto px-4 py-6">{children}</main>
-    </>
+    </div>
   );
 }
