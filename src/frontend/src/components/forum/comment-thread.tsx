@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SendHorizonal } from "lucide-react";
+import { Avatar } from "../ui/avatar";
 import { apiGet, apiPost, ApiError } from "../../lib/api";
 import type { CommentItem as CommentItemType, EstadoContenido } from "../../types/domain";
 
@@ -34,7 +35,7 @@ export function CommentThread({ postId, initialComments = [] }: CommentThreadPro
 
       // Refetch comments after successful creation
       const result = await apiGet<
-        { id: string; text: string; createdAt: string; status: string; pseudonym: string }[]
+        { id: string; text: string; createdAt: string; status: string; pseudonym: string; avatar_url?: string }[]
       >(`/forum/posts/${postId}/comments`, token || undefined);
 
       setComments(
@@ -44,6 +45,7 @@ export function CommentThread({ postId, initialComments = [] }: CommentThreadPro
           text: c.text,
           createdAt: c.createdAt,
           status: c.status as EstadoContenido,
+          avatarUrl: c.avatar_url || undefined,
         }))
       );
       setNewComment("");
@@ -62,11 +64,7 @@ export function CommentThread({ postId, initialComments = [] }: CommentThreadPro
     <div className="space-y-4">
       {comments.map((comment) => (
         <div key={comment.id} className="flex gap-3">
-          <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-            <span className="text-xs font-bold text-primary">
-              {comment.pseudonym.charAt(0).toUpperCase()}
-            </span>
-          </div>
+          <Avatar seed={comment.pseudonym} size={28} url={comment.avatarUrl} className="shrink-0 mt-0.5" />
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
               <span className="text-xs font-semibold text-foreground">{comment.pseudonym}</span>

@@ -9,7 +9,7 @@ import { MessagesQuery } from "./chat.schema.js";
 export class ChatService {
   constructor(
     private readonly supabase: SupabaseClient,
-    private readonly logger: FastifyBaseLogger
+    private readonly logger: FastifyBaseLogger,
   ) {}
 
   // ── Helpers ──────────────────────────
@@ -21,7 +21,7 @@ export class ChatService {
    */
   private async verifyRoomMembership(
     roomId: string,
-    userId: string
+    userId: string,
   ): Promise<void> {
     const { data, error } = await this.supabase
       .from("chat_room")
@@ -41,7 +41,7 @@ export class ChatService {
     if (!isMember) {
       this.logger.warn(
         { roomId, userId },
-        "User is not a member of this chat room"
+        "User is not a member of this chat room",
       );
       throw Errors.FORBIDDEN("No eres miembro de esta sala de chat");
     }
@@ -58,7 +58,7 @@ export class ChatService {
     senderId: string,
     senderRole: string,
     textContent: string,
-    type: string = "STANDARD_TEXT"
+    type: string = "STANDARD_TEXT",
   ) {
     // Verify the user is a member of this room
     await this.verifyRoomMembership(roomId, senderId);
@@ -66,7 +66,7 @@ export class ChatService {
     const { data, error } = await this.supabase
       .from("chat_message")
       .insert({
-        room_id: roomId,
+        chat_room_id: roomId,
         sender_id: senderId,
         sender_role: senderRole,
         text_content: textContent,
@@ -88,11 +88,7 @@ export class ChatService {
    * Verifies room membership first.
    * Returns messages sorted oldest-first.
    */
-  async getMessages(
-    roomId: string,
-    userId: string,
-    query: MessagesQuery
-  ) {
+  async getMessages(roomId: string, userId: string, query: MessagesQuery) {
     // Verify the user is a member of this room
     await this.verifyRoomMembership(roomId, userId);
 
@@ -100,8 +96,10 @@ export class ChatService {
 
     let dbQuery = this.supabase
       .from("chat_message")
-      .select("id, room_id, sender_id, sender_role, text_content, type, created_at")
-      .eq("room_id", roomId)
+      .select(
+        "id, chat_room_id, sender_id, sender_role, text_content, type, created_at",
+      )
+      .eq("chat_room_id", roomId)
       .order("created_at", { ascending: false })
       .limit(limit);
 
@@ -119,7 +117,7 @@ export class ChatService {
     // Sort ascending so oldest is first
     const messages = (data || []).sort(
       (a: any, b: any) =>
-        new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
     );
 
     return messages;

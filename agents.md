@@ -39,7 +39,7 @@ Per-agent instructions live in `.opencode/agents/*.md` — read those before wri
 ## Architecture rules that differ from defaults
 
 - **NLP risk_level** values are Spanish strings: `"bajo"`, `"medio"`, `"alto"`, `"alto_por_filtro_seguridad"`
-- **NLP endpoint** is `/analizar` (Spanish); rename to `/api/v1/analyze` when replacing ModelStub
+- **NLP endpoint** is `/api/v1/analyze` (replaces old `/analizar`)
 - **NLP schema** uses bilingual field names: `id_publicacion` on wire, `publication_id` in Python
 - **Frontend domain types** mix Spanish (`Publicacion`) and English (`PostSummary`) naming — see `src/frontend/src/types/domain.ts`
 - **Enums** are English `UPPER_SNAKE_CASE` in DB/API; translated via `lib/i18n/risk.ts` for UI
@@ -47,6 +47,12 @@ Per-agent instructions live in `.opencode/agents/*.md` — read those before wri
 - **Content moderation**: immediately visible (`status = VISIBLE`); moderation is retroactive
 - **Psychologist shifts**: SHIFT_1 07:00–14:59, SHIFT_2 15:00–21:59 (America/Bogota UTC-5). HIGH alerts notify all campus psychologists; LOW/MEDIUM only active shift
 - **Student codes**: encrypted with AES-256-GCM, never persisted or logged in plaintext
+- **Edge middleware** protects routes with narrow matchers: `/foro`, `/perfil`, `/chat`, `/configuracion`, `/panel`, `/dashboard`; login sets `access_token`/`role` cookies
+- **Student layout** is async server component with `cookies()` + `redirect()` (no client-side `<AuthGuard>`)
+- **Backend auth middleware** falls back to DB query when JWT metadata missing (queries `student` then `psychologist` table)
+- **401 interceptor** in `api.ts` excludes `/auth/login` and `/auth/register` from redirect loop
+- **Chat service** uses `chat_room_id` column; membership check via `case:clinical_case!inner(student_id)` join; `rooms/active` registered before `rooms/:roomId` to avoid route conflict
+- **Forum endpoints** return `avatar_url` in all post/comment responses
 
 ## Critical constraints
 

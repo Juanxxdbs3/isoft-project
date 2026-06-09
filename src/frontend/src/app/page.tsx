@@ -215,24 +215,24 @@ function HowItWorks() {
 // ============================================================
 function PsychologistStrip() {
   return (
-    <section id="bienestar" className="py-14 bg-primary">
+    <section id="bienestar" className="py-14 bg-footer-bg">
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
-          <p className="text-xs font-semibold text-white/60 uppercase tracking-widest mb-2">
+          <p className="text-xs font-semibold text-footer-text/60 uppercase tracking-widest mb-2">
             Equipo de Bienestar
           </p>
-          <h3 className="text-2xl font-bold font-display text-white">
+          <h3 className="text-2xl font-bold font-display text-footer-text">
             ¿Eres parte del equipo de bienestar?
           </h3>
-          <p className="text-white/70 mt-1 text-sm">
+          <p className="text-footer-text/70 mt-1 text-sm">
             Accede al panel de alertas y gestiona los casos desde tu perfil.
           </p>
         </div>
 
         <Link
           href="/login?role=psychologist"
-          className="shrink-0 px-6 py-3 bg-white/15 hover:bg-white/25 text-white
-                     text-sm font-medium rounded-full border border-white/30 transition-all
+          className="shrink-0 px-6 py-3 bg-footer-text/15 hover:bg-footer-text/25 text-footer-text
+                     text-sm font-medium rounded-full border border-footer-text/30 transition-all
                      hover:-translate-y-0.5"
         >
           Acceder como psicólogo →
@@ -251,27 +251,27 @@ const developers = ["Juan Diego Bello", "Samuel Movilla", "Steven Pacheco"];
 
 function Footer() {
   return (
-    <footer className="bg-foreground border-t border-white/10">
+    <footer className="bg-footer-bg border-t border-footer-text/10">
       <div className="max-w-6xl mx-auto px-6 pt-12 pb-6">
-        <div className="grid md:grid-cols-3 gap-8 pb-8 border-b border-white/10">
+        <div className="grid md:grid-cols-3 gap-8 pb-8 border-b border-footer-text/10">
           {/* Columna 1 — Proyecto */}
           <div>
-            <h3 className="text-white font-bold text-xl font-display mb-2">
+            <h3 className="text-footer-text font-bold text-xl font-display mb-2">
               MindBridge
             </h3>
-            <p className="text-white/50 text-sm leading-relaxed">
+            <p className="text-footer-text/50 text-sm leading-relaxed">
               Construyendo puentes de empatía y salud mental universitaria.
             </p>
           </div>
 
           {/* Columna 2 — Desarrolladores */}
           <div>
-            <p className="text-white/40 text-xs uppercase tracking-widest font-semibold mb-3">
+            <p className="text-footer-text/40 text-xs uppercase tracking-widest font-semibold mb-3">
               Desarrollado por
             </p>
             <ul className="space-y-1">
               {developers.map((name) => (
-                <li key={name} className="text-sm text-white/60">
+                <li key={name} className="text-sm text-footer-text/60">
                   {name}
                 </li>
               ))}
@@ -280,22 +280,22 @@ function Footer() {
 
           {/* Columna 3 — Institución */}
           <div className="md:text-right">
-            <p className="text-white/40 text-xs uppercase tracking-widest font-semibold mb-3">
+            <p className="text-footer-text/40 text-xs uppercase tracking-widest font-semibold mb-3">
               Institución
             </p>
-            <p className="text-sm text-white/70 font-medium">
+            <p className="text-sm text-footer-text/70 font-medium">
               Universidad de Cartagena
             </p>
-            <p className="text-sm text-white/50">
+            <p className="text-sm text-footer-text/50">
               Programa de Ingeniería en Sistemas
             </p>
-            <p className="text-sm text-white/50 mt-1">
+            <p className="text-sm text-footer-text/50 mt-1">
               Cartagena, Piedra Bolívar
             </p>
             <p className="mt-3">
               <Link
                 href="#"
-                className="text-xs text-white/40 hover:text-white/70 transition-colors underline underline-offset-2"
+                className="text-xs text-footer-text/40 hover:text-footer-text/70 transition-colors underline underline-offset-2"
               >
                 Términos y condiciones
               </Link>
@@ -303,7 +303,7 @@ function Footer() {
           </div>
         </div>
 
-        <p className="pt-6 text-center text-xs text-white/30">
+        <p className="pt-6 text-center text-xs text-footer-text/30">
           © 2026 MindBridge · WCAG 2.2 · Ley 1581 de 2012 · Protección de datos
           confidenciales.
         </p>

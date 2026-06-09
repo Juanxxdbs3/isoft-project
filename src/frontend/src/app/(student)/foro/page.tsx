@@ -28,6 +28,7 @@ export default function ForumPage() {
         createdAt: p.createdAt,
         status: p.status,
         commentCount: 0,
+        avatarUrl: p.avatar_url || undefined,
       }));
       setPosts(mapped);
       setTotal(result.total);

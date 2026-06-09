@@ -172,6 +172,7 @@ export interface PostSummary {
   createdAt: string;
   status: EstadoContenido;
   commentCount: number;
+  avatarUrl?: string;
 }
 
 /** Detalle de publicación con su hilo de comentarios */
@@ -186,6 +187,7 @@ export interface CommentItem {
   createdAt: string;
   status: EstadoContenido;
   citedCommentId?: string;
+  avatarUrl?: string;
 }
 
 /** Panel del psicólogo: resumen de alerta sin datos identificativos.

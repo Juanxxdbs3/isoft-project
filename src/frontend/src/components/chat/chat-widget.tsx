@@ -18,7 +18,6 @@ interface ChatWidgetProps {
 export function ChatWidget({ roomId, currentUserId, currentUserRole }: ChatWidgetProps) {
   const [messages, setMessages] = useState<ChatMessageItem[]>([]);
   const [isMinimized, setIsMinimized] = useState(true);
-  const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -107,32 +106,27 @@ export function ChatWidget({ roomId, currentUserId, currentUserRole }: ChatWidge
   }, [roomId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // === Send message ===
-  async function handleSend(text: string) {
-    if (!text.trim() || sending) return;
-    setSending(true);
+  function handleSend(text: string) {
+    if (!text.trim()) return;
     setError(null);
 
-    try {
-      const token =
-        typeof window !== "undefined"
-          ? localStorage.getItem("access_token")
-          : null;
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("access_token")
+        : null;
 
-      await apiPost(
-        `/chat/rooms/${roomId}/messages`,
-        { text_content: text.trim() },
-        token || undefined,
-      );
-      // Realtime broadcast will append the message automatically
-    } catch (err) {
+    apiPost(
+      `/chat/rooms/${roomId}/messages`,
+      { text_content: text.trim() },
+      token || undefined,
+    ).catch((err) => {
       if (err instanceof ApiError) {
         setError(err.message);
       } else {
         setError("Error al enviar mensaje");
       }
-    } finally {
-      setSending(false);
-    }
+    });
+    // Realtime broadcast will append the message automatically
   }
 
   // === Toggle minimise / expand ===
@@ -226,7 +220,7 @@ export function ChatWidget({ roomId, currentUserId, currentUserRole }: ChatWidge
             </div>
 
             {/* Input */}
-            <ChatInput onSend={handleSend} disabled={sending} />
+            <ChatInput onSend={handleSend} />
 
             {/* Error banner inside card */}
             {error && messages.length > 0 && (
@@ -257,7 +251,7 @@ export function ChatWidget({ roomId, currentUserId, currentUserRole }: ChatWidge
             </div>
 
             {/* Input + error */}
-            <ChatInput onSend={handleSend} disabled={sending} />
+            <ChatInput onSend={handleSend} />
             {error && messages.length > 0 && (
               <div className="px-3 pb-2">
                 <p className="text-xs text-red-500">{error}</p>

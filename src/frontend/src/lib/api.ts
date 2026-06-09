@@ -6,7 +6,7 @@ function getApiBase(): string {
   return "http://localhost:3001/api/v1";
 }
 
-const API_BASE = getApiBase();
+export const API_BASE = getApiBase();
 
 export class ApiError extends Error {
   constructor(

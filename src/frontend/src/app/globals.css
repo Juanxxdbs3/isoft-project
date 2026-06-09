@@ -23,6 +23,10 @@
 
   --font-display: var(--font-nunito), "Nunito", sans-serif;
   --font-sans: var(--font-inter), "Inter", sans-serif;
+
+  --footer-bg: #0f172a;
+  --footer-text: #e5e7eb;
+  --footer-muted: #9ca3af;
 }
 
 /* Modo Oscuro Estudiante */
@@ -100,6 +104,10 @@
 
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
+
+  --color-footer-bg: var(--footer-bg);
+  --color-footer-text: var(--footer-text);
+  --color-footer-muted: var(--footer-muted);
 }
 
 /* ============================================================

@@ -38,15 +38,16 @@ function ProfileContent() {
     // Fetch user's posts from API
     const token = localStorage.getItem("access_token");
     if (token) {
-      apiGet<{ posts: any[] }>("/forum/posts/mine", token)
-        .then((result) => {
-          const mapped: PostSummary[] = result.posts.map((p: any) => ({
+      apiGet<any[]>("/forum/posts/mine", token)
+        .then((posts) => {
+          const mapped: PostSummary[] = posts.map((p: any) => ({
             id: p.id,
             pseudonym: p.pseudonym,
             text: p.text,
             createdAt: p.createdAt,
             status: p.status,
             commentCount: 0,
+            avatarUrl: p.avatar_url || undefined,
           }));
           setUserPosts(mapped);
         })

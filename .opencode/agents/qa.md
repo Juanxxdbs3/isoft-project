@@ -1,7 +1,7 @@
 ---
 description: Writes and runs tests for MindBridge services
 mode: subagent
-model: github-copilot/claude-haiku-4.5
+model: opencode/deepseek-v4-flash-free
 temperature: 0.1
 tools:
   write: true

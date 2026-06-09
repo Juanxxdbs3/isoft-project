@@ -301,7 +301,8 @@ export class ForumService {
         student:student_id (
           campus,
           pseudonym:student_active_pseudonym_id_fkey (
-            texto
+            texto,
+            avatar_url
           )
         )
       `,
@@ -324,6 +325,7 @@ export class ForumService {
       status: post.status,
       pseudonym: post.student?.pseudonym?.texto || "Anónimo",
       campus: post.student?.campus || null,
+      avatar_url: post.student?.pseudonym?.avatar_url || null,
     }));
 
     return { posts, total: count || 0, page, limit };
@@ -344,7 +346,8 @@ export class ForumService {
         student:student_id (
           campus,
           pseudonym:student_active_pseudonym_id_fkey (
-            texto
+            texto,
+            avatar_url
           )
         )
       `
@@ -365,6 +368,7 @@ export class ForumService {
       status: post.status,
       pseudonym: post.student?.pseudonym?.texto || "Anónimo",
       campus: post.student?.campus || null,
+      avatar_url: post.student?.pseudonym?.avatar_url || null,
     }));
 
     return posts;
@@ -385,7 +389,8 @@ export class ForumService {
         student:student_id (
           campus,
           pseudonym:student_active_pseudonym_id_fkey (
-            texto
+            texto,
+            avatar_url
           )
         )
       `
@@ -406,6 +411,7 @@ export class ForumService {
       status: data.status,
       pseudonym: (data as any).student?.pseudonym?.texto || "Anónimo",
       campus: (data as any).student?.campus || null,
+      avatar_url: (data as any).student?.pseudonym?.avatar_url || null,
     };
   }
 
@@ -423,7 +429,8 @@ export class ForumService {
         status,
         student:student_id (
           pseudonym:student_active_pseudonym_id_fkey (
-            texto
+            texto,
+            avatar_url
           )
         )
       `
@@ -443,6 +450,7 @@ export class ForumService {
       createdAt: comment.created_at,
       status: comment.status,
       pseudonym: comment.student?.pseudonym?.texto || "Anónimo",
+      avatar_url: comment.student?.pseudonym?.avatar_url || null,
     }));
   }
 }

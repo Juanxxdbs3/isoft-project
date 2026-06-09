@@ -1,7 +1,7 @@
 ---
 description: Updates project documentation after tasks are completed
 mode: subagent
-model: github-copilot/claude-haiku-4.5
+model: opencode/deepseek-v4-flash-free
 temperature: 0.3
 tools:
   write: true
@@ -22,6 +22,7 @@ After another agent completes a significant task and explicitly invokes you.
 Move completed task from `🔲` or `🔄` to `✅`.
 Mark checkbox: `- [ ]` → `- [x]`.
 Do not rephrase tasks.
+Search in the document if the section you are going to write in already exists and append in the existing section, do no duplicate it.
 
 ### docs/notes/design-decisions.md
 

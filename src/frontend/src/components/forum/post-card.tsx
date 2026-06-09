@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
+import { Avatar } from "../ui/avatar";
 import type { PostSummary } from "../../types/domain";
 
 interface PostCardProps {
@@ -13,9 +14,10 @@ export function PostCard({ post }: PostCardProps) {
       className="block bg-surface border border-border rounded-2xl p-5
                  hover:border-primary/30 hover:shadow-sm transition-all"
     >
-      <div className="flex items-start justify-between mb-2">
+      <div className="flex items-center gap-2 mb-2">
+        <Avatar seed={post.pseudonym} size={24} url={post.avatarUrl} className="shrink-0" />
         <span className="text-sm font-semibold text-primary">{post.pseudonym}</span>
-        <span className="text-xs text-muted">{formatDate(post.createdAt)}</span>
+        <span className="text-xs text-muted ml-auto">{formatDate(post.createdAt)}</span>
       </div>
       <p className="text-sm text-foreground leading-relaxed line-clamp-3 mb-3">
         {post.text}

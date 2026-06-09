@@ -35,8 +35,8 @@ async function getRolId(
     .single();
 
   if (error || !data) {
-    logger.error({ err: error, nombre }, "Failed to fetch role ID");
-    throw Errors.INTERNAL_SERVER_ERROR("Error de configuración: roles no encontrados");
+    logger.error({ err: error, rolName: nombre }, `Rol "${nombre}" no encontrado en BD. Verifica que exista en public.rol`);
+    throw Errors.INTERNAL_SERVER_ERROR(`Error de configuración: rol "${nombre}" no encontrado`);
   }
 
   return data.id;

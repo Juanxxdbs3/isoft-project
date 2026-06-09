@@ -22,10 +22,10 @@ export default function PostDetailPage() {
       try {
         const token = localStorage.getItem("access_token");
         const [postResult, commentsResult] = await Promise.all([
-          apiGet<{ id: string; text: string; createdAt: string; status: string; pseudonym: string }>(
+          apiGet<{ id: string; text: string; createdAt: string; status: string; pseudonym: string; avatar_url?: string }>(
             `/forum/posts/${params.id}`, token || undefined
           ),
-          apiGet<{ id: string; text: string; createdAt: string; status: string; pseudonym: string }[]>(
+          apiGet<{ id: string; text: string; createdAt: string; status: string; pseudonym: string; avatar_url?: string }[]>(
             `/forum/posts/${params.id}/comments`, token || undefined
           ),
         ]);
@@ -39,6 +39,7 @@ export default function PostDetailPage() {
           createdAt: postResult.createdAt,
           status: postResult.status as EstadoContenido,
           commentCount: commentsResult.length,
+          avatarUrl: postResult.avatar_url || undefined,
         });
         setCommentCount(commentsResult.length);
         setComments(
@@ -48,6 +49,7 @@ export default function PostDetailPage() {
             text: c.text,
             createdAt: c.createdAt,
             status: c.status as EstadoContenido,
+            avatarUrl: c.avatar_url || undefined,
           }))
         );
       } catch {

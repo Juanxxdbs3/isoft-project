@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { apiGet, apiPatch, ApiError } from "@/lib/api";
+import { apiGet, apiPatch, ApiError, API_BASE } from "@/lib/api";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
 
@@ -128,7 +128,7 @@ export default function SettingsPage() {
 
     try {
       await apiPatch<PatchResponse>(
-        "/api/v1/students/me",
+        "/students/me",
         {
           nombre_completo: nombreCompleto || undefined,
           programa: programa || undefined,
@@ -160,7 +160,7 @@ export default function SettingsPage() {
     setFeedbackPseud(null);
 
     try {
-      await apiPatch<PatchResponse>("/api/v1/students/me", { pseudonym: trimmed }, token);
+      await apiPatch<PatchResponse>("/students/me", { pseudonym: trimmed }, token);
       localStorage.setItem("pseudonym", trimmed);
       setFeedbackPseud({ type: "success", text: "Seudónimo actualizado correctamente." });
     } catch (err) {
@@ -192,7 +192,7 @@ export default function SettingsPage() {
     setFeedbackPw(null);
 
     try {
-      await apiPatch<PatchResponse>("/api/v1/students/me", { password: newPassword }, token);
+      await apiPatch<PatchResponse>("/students/me", { password: newPassword }, token);
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -226,7 +226,7 @@ export default function SettingsPage() {
     setFeedbackDelete(null);
 
     try {
-      const res = await fetch("/api/v1/students/me", {
+      const res = await fetch(`${API_BASE}/students/me`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

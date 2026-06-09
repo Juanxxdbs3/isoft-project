@@ -86,6 +86,24 @@ See contract §14 for full NLP request/response schema.
 Use AES-256-GCM. Key from `CONFIG.STUDENT_CODE_ENCRYPTION_KEY`.
 The encrypted code is stored; the plain code is never persisted or logged.
 
+## Supabase client usage
+
+Two clients exist in `plugins/supabase.ts`:
+
+- `supabase` (anon key) — respects RLS; use for all authenticated user operations
+- `supabaseAdmin` (service_role key) — bypasses RLS; use ONLY for:
+  - Inserting `public.student` during registration
+  - Inserting `public.psychologist` during admin provisioning
+  - Any server write that must occur before user auth exists
+
+Never use supabaseAdmin for reads that enforce data isolation.
+Never import or reference supabaseAdmin in frontend code.
+
+## Column names — always verify against schema
+
+Before writing any query, verify column names in `docs/models/mindbridge_schema.sql`.
+For example, the correct column for chat room reference in `chat_message` is `chat_room_id`, not `room_id`.
+
 ## Tests
 
 At minimum one integration test per endpoint: happy path + primary error case.

@@ -118,12 +118,44 @@ const authPlugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
         // Step 3: Extract role and campus from metadata
         const appMetadata = decoded.app_metadata || {};
         const userMetadata = decoded.user_metadata || {};
-        const role = (appMetadata.role ||
+        let role = (appMetadata.role ||
           userMetadata.role ||
-          decoded.role) as "student" | "psychologist";
-        const campus = (appMetadata.campus ||
+          decoded.role) as "student" | "psychologist" | undefined;
+        let campus = (appMetadata.campus ||
           userMetadata.campus ||
-          decoded.campus) as UdecCampus;
+          decoded.campus) as UdecCampus | undefined;
+
+        // Fallback: query DB if metadata is missing (users created directly
+        // in Supabase Studio often lack metadata).
+        if (!role || !campus) {
+          try {
+            // Try student table
+            const { data: studentData } = await fastify.supabase
+              .from("student")
+              .select("campus")
+              .eq("id", decoded.sub)
+              .maybeSingle();
+
+            if (studentData) {
+              role = "student";
+              campus = studentData.campus as UdecCampus;
+            } else {
+              // Try psychologist table
+              const { data: psychData } = await fastify.supabase
+                .from("psychologist")
+                .select("campus")
+                .eq("id", decoded.sub)
+                .maybeSingle();
+
+              if (psychData) {
+                role = "psychologist";
+                campus = psychData.campus as UdecCampus;
+              }
+            }
+          } catch (dbErr) {
+            request.log.error({ err: dbErr }, "DB fallback for auth metadata failed");
+          }
+        }
 
         if (!role || !campus) {
           request.log.warn(

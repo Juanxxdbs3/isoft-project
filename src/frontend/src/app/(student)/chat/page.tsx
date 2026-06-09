@@ -1,73 +1,104 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ChatWidget } from "../../../components/chat/chat-widget";
-import { apiGet } from "../../../lib/api";
+import { useState, useRef, useEffect } from "react";
+import { ChatHeader } from "../../../components/chat/chat-header";
+import { ChatMessage } from "../../../components/chat/chat-message";
+import { ChatInput } from "../../../components/chat/chat-input";
 
-export default function ChatPage() {
-  const [roomId, setRoomId] = useState<string | null>(null);
-  const [userId, setUserId] = useState<string>("");
-  const [loading, setLoading] = useState(true);
+interface MockMessage {
+  id: string;
+  text: string;
+  sender: "student" | "psychologist";
+  sentAt: Date;
+  senderPseudonym: string;
+  senderAvatarUrl?: string;
+}
+
+const AVATAR_BASE = process.env.NEXT_PUBLIC_AVATAR_BASE_URL || "https://api.dicebear.com/10.x";
+const PSYCHOLOGIST_NAME = "Equipo de Bienestar Universitario";
+
+const INITIAL_MESSAGES: MockMessage[] = [
+  {
+    id: "1",
+    text: "¡Bienvenido al chat de apoyo! Soy parte del equipo de bienestar universitario. ¿Cómo te sientes hoy?",
+    sender: "psychologist",
+    sentAt: new Date(Date.now() - 3600000),
+    senderPseudonym: PSYCHOLOGIST_NAME,
+    senderAvatarUrl: `${AVATAR_BASE}/open-peeps/svg?seed=equipo-bienestar`,
+  },
+  {
+    id: "2",
+    text: "Hola, gracias. La verdad he estado un poco ansioso últimamente.",
+    sender: "student",
+    sentAt: new Date(Date.now() - 1800000),
+    senderPseudonym: "",
+  },
+  {
+    id: "3",
+    text: "Entiendo cómo te sientes. La ansiedad es algo muy común entre estudiantes. ¿Te gustaría contarme más sobre lo que te preocupa?",
+    sender: "psychologist",
+    sentAt: new Date(Date.now() - 900000),
+    senderPseudonym: PSYCHOLOGIST_NAME,
+    senderAvatarUrl: `${AVATAR_BASE}/open-peeps/svg?seed=equipo-bienestar`,
+  },
+];
+
+function generateId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+}
+
+export default function StudentChatPage() {
+  const [messages, setMessages] = useState<MockMessage[]>(INITIAL_MESSAGES);
+  const [pseudonym, setPseudonym] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const token =
-      typeof window !== "undefined"
-        ? localStorage.getItem("access_token")
-        : null;
-
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-
-    async function init() {
-      try {
-        // Fetch user id and active case info
-        const me = await apiGet<{ id: string; caso_formal_activo?: boolean }>(
-          "/auth/me",
-          token || undefined,
-        );
-        setUserId(me.id);
-
-        // Fetch active chat room
-        const room = await apiGet<{ roomId: string } | null>(
-          "/chat/rooms/active",
-          token || undefined,
-        );
-        if (room?.roomId) {
-          setRoomId(room.roomId);
-        }
-      } catch {
-        // No active room or auth error — show empty state
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    init();
+    setPseudonym(localStorage.getItem("pseudonym") || "Estudiante");
   }, []);
 
-  if (loading) {
-    return (
-      <p className="text-sm text-muted text-center py-10">Cargando chat…</p>
-    );
-  }
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-  if (!roomId) {
-    return (
-      <p className="text-sm text-muted text-center py-10">
-        No tienes un chat activo en este momento.
-      </p>
-    );
+  function handleSend(text: string) {
+    const newMsg: MockMessage = {
+      id: generateId(),
+      text,
+      sender: "student",
+      sentAt: new Date(),
+      senderPseudonym: pseudonym,
+    };
+    setMessages((prev) => [...prev, newMsg]);
   }
 
   return (
-    <div className="h-[calc(100vh-8rem)]">
-      <ChatWidget
-        roomId={roomId}
-        currentUserId={userId}
-        currentUserRole="student"
+    <div className="flex flex-col h-[calc(100dvh-8rem)]">
+      {/* Header */}
+      <ChatHeader
+        name={PSYCHOLOGIST_NAME}
+        avatarUrl={`${AVATAR_BASE}/open-peeps/svg?seed=equipo-bienestar`}
+        status="conectado"
       />
+
+      {/* Messages area */}
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-background">
+        {messages.map((msg) => (
+          <ChatMessage
+            key={msg.id}
+            text={msg.text}
+            isOwn={msg.sender === "student"}
+            sentAt={msg.sentAt}
+            senderPseudonym={msg.senderPseudonym}
+            senderAvatarUrl={msg.sender === "psychologist" ? msg.senderAvatarUrl : undefined}
+          />
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input area */}
+      <div className="border-t border-border bg-surface">
+        <ChatInput onSend={handleSend} />
+      </div>
     </div>
   );
 }

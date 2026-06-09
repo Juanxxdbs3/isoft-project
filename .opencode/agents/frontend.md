@@ -102,6 +102,39 @@ as a separate Client Component rather than marking the whole parent as client.
    Client Component for the form.
 6. Component names: PascalCase. File names: same as component name.
 
+## Theming — MANDATORY
+
+All color adjustments go through CSS custom properties in `globals.css`.
+Do NOT use Tailwind arbitrary values (e.g., `bg-[#color]`) for theming.
+Do NOT add `style={{ color: '...' }}` inline for theme-related colors.
+If a token is missing, define it in `globals.css` under the appropriate theme block, then use the generated Tailwind class.
+
+## Reusable UI building blocks
+
+The following elements must be standalone components, not repeated inline:
+
+- `Sidebar` (student and psychologist variants via props/slots) → `components/navigation/sidebar.tsx`
+- `ThemeToggle` → `components/ui/theme-toggle.tsx` (already exists; import it everywhere needed)
+- `UserBadge` (avatar + pseudonym) → `components/ui/user-badge.tsx`
+- `RiskBadge` → `components/forum/risk-badge.tsx` (already exists)
+
+Never duplicate layout structure. If two pages share a header or sidebar pattern, extract it.
+
+## Middleware location
+
+`middleware.ts` must live at `src/middleware.ts` (inside the src directory).
+Do NOT place it at the project root or outside `src/`.
+
+## API calls — URL construction
+
+Never construct API URLs manually in components or pages.
+Always use the helper functions from `src/lib/api.ts`: `apiGet`, `apiPost`, `apiPatch`, `apiDelete`.
+These functions prepend `API_BASE` automatically.
+Endpoint paths passed to these functions must NOT include the `/api/v1` prefix. Examples:
+
+- Correct: `apiPatch("/students/me", body, token)`
+- Wrong: `apiPatch("/api/v1/students/me", body, token)`
+
 ## Do NOT do this
 
 - Do NOT add `"use client"` to a layout, page, or wrapper component just because
@@ -116,11 +149,13 @@ as a separate Client Component rather than marking the whole parent as client.
 Always use `lucide-react` for all icons. It's already a dependency via shadcn/ui.
 
 Import pattern:
+
 ```tsx
-import { Heart, MessageCircle, AlertTriangle } from 'lucide-react'
+import { Heart, MessageCircle, AlertTriangle } from "lucide-react";
 ```
 
 Usage:
+
 ```tsx
 <Heart size={20} className="text-primary" />
 ```

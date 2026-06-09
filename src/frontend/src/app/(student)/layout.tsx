@@ -1,111 +1,71 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+import { House, User, ClipboardList, Settings } from "lucide-react";
 import { ThemeToggle } from "../../components/ui/theme-toggle";
 import { UserBadge } from "../../components/ui/user-badge";
 import { ChatNavItem } from "../../components/navigation/student-nav-items";
-import Link from "next/link";
-import { House, User, ClipboardList, Settings } from "lucide-react";
 
 const navItems = [
-  { href: "/foro", label: "Inicio", icon: House },
-  { href: "/perfil", label: "Mi Perfil", icon: User },
-  { href: "/perfil?tab=posts", label: "Mis Publicaciones", icon: ClipboardList },
-  { href: "/configuracion", label: "Configuración", icon: Settings },
+  { href: "/foro", icon: House, label: "Inicio" },
+  { href: "/perfil", icon: User, label: "Mi Perfil" },
+  { href: "/perfil?tab=posts", icon: ClipboardList, label: "Mis Publicaciones" },
+  { href: "/configuracion", icon: Settings, label: "Configuración" },
 ];
 
-export default function StudentLayout({ children }: { children: React.ReactNode }) {
+export default async function StudentLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("access_token")?.value;
+  if (!token) redirect("/login");
+
   return (
-    <>
+    <div className="min-h-screen bg-background">
       {/* Top bar */}
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link href="/foro" className="text-lg font-bold font-display text-primary">
-            MindBridge
-          </Link>
-          <div className="flex items-center gap-3">
-            <UserBadge />
-            <ThemeToggle />
-          </div>
+      <header className="fixed top-0 left-0 right-0 h-14 bg-surface border-b border-border flex items-center justify-between px-4 z-30">
+        <Link href="/foro" className="flex items-center gap-2">
+          <span className="text-sm font-bold font-display text-foreground tracking-tight">MindBridge</span>
+        </Link>
+        <div className="flex items-center gap-2">
+          <UserBadge />
+          <ThemeToggle />
         </div>
       </header>
 
-      <div className="flex">
-        {/* Side nav (desktop) — fixed to left edge */}
-        <aside className="hidden md:flex flex-col fixed left-0 top-14 w-56 min-h-[calc(100vh-3.5rem)] bg-sidebar border-r border-border py-6 px-3 gap-1 z-30">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium
-                            text-muted hover:text-foreground hover:bg-primary/5 transition-all"
-              >
-                <Icon size={18} />
-                {item.label}
-              </Link>
-            );
-          })}
+      {/* Desktop sidebar */}
+      <aside className="hidden md:flex fixed left-0 top-14 bottom-0 w-56 flex-col bg-sidebar border-r border-border z-20">
+        <nav className="flex-1 flex flex-col gap-1 p-3">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-muted hover:text-foreground hover:bg-surface transition-colors"
+            >
+              <item.icon size={18} />
+              {item.label}
+            </Link>
+          ))}
           <ChatNavItem />
-        </aside>
+        </nav>
+      </aside>
 
-        {/* Main content */}
-        <main className="flex-1 min-w-0 pl-0 md:pl-56">
-          <div className="max-w-6xl mx-auto px-4 pt-4 pb-24 md:pb-6">
-            <div className="flex flex-col lg:flex-row gap-6">
-              {/* Children column */}
-              <div className="flex-1 min-w-0">{children}</div>
+      {/* Main content */}
+      <main className="pt-14 md:pl-56 pb-24 md:pb-6">
+        <div className="max-w-4xl mx-auto px-4 py-6">{children}</div>
+      </main>
 
-              {/* Right sidebar — Bienestar card */}
-              <aside className="hidden lg:block w-64 shrink-0">
-                <div className="sticky top-20 bg-surface border border-border rounded-2xl pl-5 pr-3 py-5 space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-lg">💚</span>
-                  </div>
-                  <h3 className="text-sm font-bold font-display text-foreground">
-                    Bienestar Universitario
-                  </h3>
-                  <div className="space-y-2 text-xs text-muted">
-                    <div className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                      <span>Taller de manejo del estrés — 12 jun</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />
-                      <span>Grupo de apoyo semanal — 14 jun</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                      <span>Charla: Salud mental en época de exámenes — 18 jun</span>
-                    </div>
-                  </div>
-                  <p className="text-[10px] text-muted/60 pt-1 border-t border-border">
-                    Eventos organizados por el Área de Psicología
-                  </p>
-                </div>
-              </aside>
-            </div>
-          </div>
-        </main>
-      </div>
-
-      {/* Bottom nav (mobile) */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-surface border-t border-border md:hidden">
-        <div className="flex items-center justify-around h-16 px-2">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex flex-col items-center gap-0.5 text-muted hover:text-primary transition-colors"
-              >
-                <Icon size={20} />
-                <span className="text-[10px] font-medium">{item.label}</span>
-              </Link>
-            );
-          })}
-          <ChatNavItem />
-        </div>
+      {/* Mobile bottom nav */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface border-t border-border flex items-center justify-around px-2 z-40">
+        {navItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="flex flex-col items-center gap-0.5 text-[10px] text-muted hover:text-foreground transition-colors"
+          >
+            <item.icon size={20} />
+            {item.label}
+          </Link>
+        ))}
       </nav>
-    </>
+    </div>
   );
 }

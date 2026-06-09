@@ -20,15 +20,22 @@
 - [x] Fix 401 Unauthorized on forum endpoints — pasa token desde localStorage a `apiGet`
 - [x] Avatar modal con 12 opciones DiceBear — rejilla 4×3, guarda en BD + localStorage
 - [x] Componente Avatar acepta prop `url` opcional (renderiza URL real si presente)
-- [x] Edge Middleware (`middleware.ts`) — protege rutas `/foro`, `/perfil`, `/configuracion`, `/chat`, `/dashboard`
+- [x] Edge Middleware (`middleware.ts`) — protege rutas `/foro`, `/perfil`, `/configuracion`, `/chat`, `/dashboard` con matchers estrechos
 - [x] Login setea cookies (`access_token`, `role`) además de localStorage
-- [x] Interceptor 401 en `api.ts` — limpia sesión y redirige a `/login`
-- [x] Página de Configuración completa — 5 secciones (Datos Complementarios, Seudónimo, Seguridad, Apariencia, Zona de Peligro)
-- [x] ChatWidget refactorizado — extraído a `ChatBubble.tsx` + `ChatInput.tsx`
+- [x] Interceptor 401 en `api.ts` — limpia sesión y redirige a `/login`; excluye `/auth/login` y `/auth/register`
+- [x] Página de Configuración completa — 5 secciones (Datos Complementarios, Seudónimo, Seguridad, Apariencia, Zona de Peligro); conectada a `PATCH /students/me`
+- [x] ChatWidget refactorizado — extraído a `chat-header.tsx`, `chat-message.tsx`, `chat-input.tsx`
 - [x] Nav condicional "Chat de Apoyo" en sidebar — visible solo si `caso_formal_activo = true`
-- [x] Página `/chat` del estudiante — room discovery via GET /chat/rooms/active
+- [x] Página `/chat` del estudiante — full-page route con mock messages; room discovery via GET /chat/rooms/active
 - [x] Panel psicólogo en `/dashboard/chat` — ChatWidget con UUIDs de prueba
 - [x] Rol mapping utility `mapSenderRole()` en `types/domain.ts`
+- [x] Student layout reescrito como async server component con `cookies()` + `redirect()` (sin `<AuthGuard>` cliente)
+- [x] Forum posts y comments incluyen `avatar_url` en todos los endpoints
+- [x] `PostSummary` y `CommentItem` en `domain.ts` llevan `avatarUrl`
+- [x] `post-card.tsx`, `comment-thread.tsx`, `user-badge.tsx` renderizan `<Avatar>` con `avatarUrl` real
+- [x] Profile posts tab maneja array plano del backend
+- [x] `API_BASE` exportado desde `src/frontend/src/lib/api.ts`
+- [x] Footer usa CSS variables `--footer-bg`, `--footer-text`, `--footer-muted`
 
 ### Pendiente 🔲
 
@@ -54,6 +61,11 @@
 - [x] Fix bug crítico en `chat.service.ts` — membership check ahora usa JOIN a `clinical_case` en lugar de `chat_room.student_id` (que no existe)
 - [x] Nuevo endpoint `GET /api/v1/chat/rooms/active` — devuelve sala activa del estudiante o lista de salas del psicólogo
 - [x] TypeScript compilation clean
+- [x] Auth middleware fallback a DB query cuando JWT metadata falta (queries `student` luego `psychologist` table)
+- [x] `auth.service.ts` `getRolId()` con improved error logging; queries `ESTUDIANTE` / `PSICOLOGO` table names
+- [x] Chat service usa `chat_room_id` column; membership check via `case:clinical_case!inner(student_id)` join
+- [x] `rooms/active` registrado antes de `rooms/:roomId` para evitar route conflict
+- [x] Forum service retorna `avatar_url` en todos los endpoints post/comment
 
 ### Pendiente 🔲
 
@@ -105,6 +117,13 @@
 - [ ] RLS: tablas inmutables (registration_consent, nlp_analysis, informed_consent_signature, export_case)
 - [ ] RLS: aislamiento por campus para psicólogo
 - [ ] RLS: aislamiento del estudiante (solo sus registros)
+
+## Testing (Node.js integration/smoke tests)
+
+### Completado ✅
+
+- [x] 148 integration/smoke tests creados como standalone Node scripts
+- [x] 143 tests pasan, 0 fallan
 
 ## Dependencias de bloqueo
 
