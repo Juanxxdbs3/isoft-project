@@ -86,6 +86,8 @@ See `docs/notes/project-status.md` for the full per-service task checklist. Key 
 | NLP engine | ✅ Pipeline + modelo clínico integrados. F1 suicidal 0.816. Modo comunidad pendiente |
 | Schema SQL v1.1 | ✅ Deployed — Supabase schema, test data, Realtime triggers working |
 | Infrastructure | ✅ Supabase deployed, Realtime configured, test data inserted |
-| Stabilization Sprint (2026-06-09) | ✅ Complete — 9-point plan: comment count, case-insensitive pseudonyms, account deletion, signOut on logout, avatar preservation, CORS, custom scrollbar, dynamic avatar sync, mobile navbar |
+| Stabilization Sprint (2026-06-09) | ✅ Complete — 12-point plan: comment count, case-insensitive pseudonyms, account deletion, signOut on logout, avatar preservation, CORS, custom scrollbar, dynamic avatar sync, mobile navbar, freeze pseudonyms, DELETED login message, edit/delete own posts |
 
 **Active blockers:** see `docs/notes/blockers.md` — modelo 800MB sin estrategia de despliegue.
+
+**Next up:** Psychologist module — see `docs/plans/psychologist-module-plan.md`

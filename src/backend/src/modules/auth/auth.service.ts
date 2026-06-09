@@ -343,7 +343,7 @@ export class AuthService {
         throw Errors.ACCOUNT_SUSPENDED();
       }
       if (studentData.status === "DELETED") {
-        throw Errors.INVALID_CREDENTIALS();
+        throw Errors.FORBIDDEN("Esta cuenta fue eliminada");
       }
 
       // Decrypt the student code to form the email
@@ -378,7 +378,7 @@ export class AuthService {
         throw Errors.ACCOUNT_SUSPENDED();
       }
       if (psychData.status === "DELETED") {
-        throw Errors.INVALID_CREDENTIALS();
+        throw Errors.FORBIDDEN("Esta cuenta fue eliminada");
       }
 
       email = psychData.correo_institucional;
@@ -613,6 +613,18 @@ export class AuthService {
     if (updateError) {
       this.logger.error({ err: updateError, userId }, "Failed to update student status to DELETED");
       throw Errors.INTERNAL_SERVER_ERROR("Error al eliminar la cuenta");
+    }
+
+    // Deactivate all active pseudonyms for audit trail
+    const { error: pseudonymError } = await this.supabaseAdmin
+      .from("pseudonym")
+      .update({ status: "HISTORICAL", deactivated_at: new Date().toISOString() })
+      .eq("student_id", userId)
+      .eq("status", "ACTIVE");
+
+    if (pseudonymError) {
+      this.logger.error({ err: pseudonymError, userId }, "Failed to deactivate pseudonyms on account deletion");
+      // Non-fatal: student already marked DELETED
     }
 
     this.logger.info({ userId }, "Student account deleted successfully");

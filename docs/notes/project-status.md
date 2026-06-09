@@ -44,6 +44,8 @@
 - [ ] Detalle de alerta con puntuaciones NLP (RF14)
 - [ ] Aceptación de caso con optimistic concurrency (RF19)
 - [ ] Integrar ChatWidget en páginas de psicólogo y estudiante (RF23)
+- [ ] Utilizar modals en lugar de tipos prefefinidos del navegador/javascript para los alert () o ventanas de confirmación (hasta ahora he identificado una al eliminar un post del foro)
+- Cada vez que se realice una acción por parte del usuario o del sistema, mostrar una notificación emergente que se oculta en un corto tiempo y cuyo propósito es informar el estado de la acción que se realizó: si falló, si se completó, o si faltó algo. Esto con el propósito de cumplir con el principio que informa al usuario el estado de la app a medida que la usa.
 
 ## Backend (Fastify 5, TypeScript)
 
@@ -127,7 +129,7 @@
 
 ## Stabilization Sprint (2026-06-09)
 
-The ninth stabilization sprint resolved 9 issues across backend, frontend and infrastructure.
+The ninth stabilization sprint resolved 12 issues across backend, frontend and infrastructure.
 
 ### Completado ✅
 
@@ -140,6 +142,9 @@ The ninth stabilization sprint resolved 9 issues across backend, frontend and in
 - [x] **G — Custom scrollbar**: `.custom-scrollbar` class with `::-webkit-scrollbar` rules in `globals.css`; applied to chat message containers
 - [x] **H — Dynamic avatar sync**: Avatar modal dispatches `CustomEvent('avatar-changed')`; `UserBadge` listens and updates state reactively
 - [x] **I — Mobile Navbar**: Landing page "Ingresar" text hidden on mobile, replaced with `LogIn` icon; responsive padding/text sizing
+- [x] **J — Freeze pseudonyms on account deletion**: Backend deactivates all ACTIVE pseudonyms to HISTORICAL when account is deleted
+- [x] **K — DELETED account login message**: Backend returns FORBIDDEN "Esta cuenta fue eliminada" instead of generic invalid credentials; frontend displays the message
+- [x] **L — Edit/Delete own posts**: Frontend PostCard shows edit/delete buttons for own posts; backend PATCH/DELETE endpoints already existed
 
 ## Dependencias de bloqueo
 
