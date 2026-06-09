@@ -21,6 +21,12 @@ export default function PsychologistLayout({ children }: { children: React.React
               >
                 Chat
               </Link>
+              <Link
+                href="/foro"
+                className="text-muted hover:text-foreground transition-colors font-medium"
+              >
+                Foro
+              </Link>
             </nav>
           </div>
           <ThemeToggle />

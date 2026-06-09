@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Shield } from "lucide-react";
+import { ThemeToggle } from "../components/ui/theme-toggle";
 
 // ============================================================
 // NAVBAR
@@ -29,6 +30,7 @@ function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Link
             href="/login"
             className="text-sm font-medium text-muted hover:text-foreground transition-colors"

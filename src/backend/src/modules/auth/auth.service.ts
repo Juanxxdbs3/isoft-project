@@ -85,7 +85,8 @@ function generatePseudonym(): string {
 // ──────────────────────────────────────
 export class AuthService {
   constructor(
-    private readonly supabase: SupabaseClient,
+    private readonly supabaseAdmin: SupabaseClient,
+    private readonly supabaseAnon: SupabaseClient,
     private readonly logger: FastifyBaseLogger
   ) {}
 
@@ -116,8 +117,8 @@ export class AuthService {
       throw Errors.VALIDATION_ERROR(codeValidationError);
     }
 
-    // ── Check pseudonym not taken ──
-    const { data: existingPseudonym } = await this.supabase
+    // ── Check pseudonym not taken (admin, RLS bloquea lecturas anónimas) ──
+    const { data: existingPseudonym } = await this.supabaseAdmin
       .from("pseudonym")
       .select("id")
       .eq("texto", finalPseudonym)
@@ -127,10 +128,10 @@ export class AuthService {
       throw Errors.PSEUDONYM_ALREADY_TAKEN();
     }
 
-    // ── Check student code not already registered ──
+    // ── Check student code not already registered (admin, reads encrypted codes) ──
     const codeHash = computeStudentCodeHash(student_code, CONFIG.STUDENT_CODE_ENCRYPTION_KEY);
 
-    const { data: allStudents } = await this.supabase
+    const { data: allStudents } = await this.supabaseAdmin
       .from("student")
       .select("codigo_estudiante_encrypted");
 
@@ -169,9 +170,9 @@ export class AuthService {
       CONFIG.STUDENT_CODE_ENCRYPTION_KEY
     );
 
-    // ── Get ESTUDIANTE role ID ──
+    // ── Get ESTUDIANTE role ID (admin, RLS bloquea consultas anónimas a rol) ──
     const estudianteRolId = await getEstudianteRolId(
-      this.supabase,
+      this.supabaseAdmin,
       this.logger
     );
 
@@ -179,7 +180,7 @@ export class AuthService {
     const authEmail = `${student_code}@mindbridge.local`;
 
     const { data: authData, error: authError } =
-      await this.supabase.auth.admin.createUser({
+      await this.supabaseAdmin.auth.admin.createUser({
         email: authEmail,
         password,
         email_confirm: true,
@@ -208,8 +209,8 @@ export class AuthService {
 
     const authUserId = authData.user.id;
 
-    // ── Insert student row (id = auth user id) ──
-    const { error: studentError } = await this.supabase.from("student").insert({
+    // ── Insert student row (admin, bypass RLS) ──
+    const { error: studentError } = await this.supabaseAdmin.from("student").insert({
       id: authUserId,
       codigo_estudiante_encrypted: encryptedCode,
       campus,
@@ -222,14 +223,14 @@ export class AuthService {
     if (studentError) {
       this.logger.error({ err: studentError }, "Failed to insert student");
       // Rollback: delete auth user
-      await this.supabase.auth.admin.deleteUser(authUserId).catch((e) => {
+      await this.supabaseAdmin.auth.admin.deleteUser(authUserId).catch((e) => {
         this.logger.error({ err: e }, "Failed to rollback auth user");
       });
       throw Errors.INTERNAL_SERVER_ERROR("Error al crear el perfil de estudiante");
     }
 
-    // ── Insert pseudonym ──
-    const { data: pseudonymData, error: pseudonymError } = await this.supabase
+    // ── Insert pseudonym (admin, bypass RLS) ──
+    const { data: pseudonymData, error: pseudonymError } = await this.supabaseAdmin
       .from("pseudonym")
       .insert({
         student_id: authUserId,
@@ -242,15 +243,15 @@ export class AuthService {
     if (pseudonymError || !pseudonymData) {
       this.logger.error({ err: pseudonymError }, "Failed to insert pseudonym");
       // Cleanup
-      await this.supabase.from("student").delete().eq("id", authUserId).catch(() => {});
-      await this.supabase.auth.admin.deleteUser(authUserId).catch(() => {});
+      await this.supabaseAdmin.from("student").delete().eq("id", authUserId).catch(() => {});
+      await this.supabaseAdmin.auth.admin.deleteUser(authUserId).catch(() => {});
       throw Errors.INTERNAL_SERVER_ERROR(
         "Error al crear el seudónimo"
       );
     }
 
     // ── Update student with active_pseudonym_id ──
-    const { error: updateError } = await this.supabase
+    const { error: updateError } = await this.supabaseAdmin
       .from("student")
       .update({ active_pseudonym_id: pseudonymData.id })
       .eq("id", authUserId);
@@ -263,8 +264,8 @@ export class AuthService {
       // Non-fatal: student can still be found via pseudonym
     }
 
-    // ── Insert registration_consent ──
-    const { error: consentError } = await this.supabase
+    // ── Insert registration_consent (admin, bypass RLS) ──
+    const { error: consentError } = await this.supabaseAdmin
       .from("registration_consent")
       .insert({
         student_id: authUserId,
@@ -308,11 +309,12 @@ export class AuthService {
   async login(data: LoginBody) {
     const { identifier, password, role } = data;
 
+    let userId: string;
     let email: string;
 
     if (role === "student") {
-      // Look up pseudonym
-      const { data: pseudonymData, error: pseudonymError } = await this.supabase
+      // Look up pseudonym (admin, RLS bloquea lecturas anónimas)
+      const { data: pseudonymData, error: pseudonymError } = await this.supabaseAdmin
         .from("pseudonym")
         .select("student_id, texto")
         .eq("texto", identifier)
@@ -323,11 +325,13 @@ export class AuthService {
         throw Errors.INVALID_CREDENTIALS();
       }
 
-      // Get student record to decrypt the code
-      const { data: studentData, error: studentError } = await this.supabase
+      const studentId = pseudonymData.student_id;
+
+      // Get student record to decrypt the code (admin)
+      const { data: studentData, error: studentError } = await this.supabaseAdmin
         .from("student")
         .select("codigo_estudiante_encrypted, status")
-        .eq("id", pseudonymData.student_id)
+        .eq("id", studentId)
         .single();
 
       if (studentError || !studentData) {
@@ -351,14 +355,16 @@ export class AuthService {
         email = `${decryptedCode}@mindbridge.local`;
       } catch {
         this.logger.error(
-          { studentId: pseudonymData.student_id },
+          { studentId },
           "Failed to decrypt student code during login"
         );
         throw Errors.INTERNAL_SERVER_ERROR("Error al procesar credenciales");
       }
+
+      userId = studentId;
     } else {
-      // Psychologist: identifier is the institutional email
-      const { data: psychData, error: psychError } = await this.supabase
+      // Psychologist: identifier is the institutional email (admin, RLS bloquea lecturas anónimas)
+      const { data: psychData, error: psychError } = await this.supabaseAdmin
         .from("psychologist")
         .select("id, status, correo_institucional")
         .eq("correo_institucional", identifier)
@@ -376,11 +382,12 @@ export class AuthService {
       }
 
       email = psychData.correo_institucional;
+      userId = psychData.id;
     }
 
     // Sign in with Supabase Auth
     const { data: authData, error: authError } =
-      await this.supabase.auth.signInWithPassword({
+      await this.supabaseAnon.auth.signInWithPassword({
         email,
         password,
       });
@@ -397,17 +404,32 @@ export class AuthService {
       throw Errors.INVALID_CREDENTIALS();
     }
 
-    // Get campus from user metadata or from DB
-    const metadata = authData.user?.user_metadata || {};
-    const appMetadata = authData.user?.app_metadata || {};
-    const campus = (appMetadata.campus ||
-      metadata.campus) as UdecCampus;
+    // Fetch campus from DB using admin client (bypasses RLS, safe after auth)
+    let campus: UdecCampus;
+
+    if (role === "student") {
+      const { data: profile } = await this.supabaseAdmin
+        .from("student")
+        .select("campus")
+        .eq("id", userId)
+        .single();
+
+      campus = (profile?.campus || "CLAUSTRO_SAN_AGUSTIN") as UdecCampus;
+    } else {
+      const { data: profile } = await this.supabaseAdmin
+        .from("psychologist")
+        .select("campus")
+        .eq("id", userId)
+        .single();
+
+      campus = (profile?.campus || "CLAUSTRO_SAN_AGUSTIN") as UdecCampus;
+    }
 
     return {
       access_token: authData.session.access_token,
       refresh_token: authData.session.refresh_token,
       role,
-      campus: campus || "CLAUSTRO_SAN_AGUSTIN",
+      campus,
     };
   }
 
@@ -423,7 +445,7 @@ export class AuthService {
       return { available: false };
     }
 
-    const { data, error } = await this.supabase
+    const { data, error } = await this.supabaseAdmin
       .from("pseudonym")
       .select("id")
       .eq("texto", pseudonym)
@@ -444,7 +466,7 @@ export class AuthService {
    */
   async getProfile(userId: string, role: UserRole) {
     if (role === "student") {
-      const { data: student, error: studentError } = await this.supabase
+      const { data: student, error: studentError } = await this.supabaseAdmin
         .from("student")
         .select(
           `
@@ -482,7 +504,7 @@ export class AuthService {
     }
 
     if (role === "psychologist") {
-      const { data: psychologist, error: psychError } = await this.supabase
+      const { data: psychologist, error: psychError } = await this.supabaseAdmin
         .from("psychologist")
         .select(
           `
@@ -526,7 +548,7 @@ export class AuthService {
    * POST /auth/logout
    */
   async logout(refreshToken: string): Promise<void> {
-    const { error } = await this.supabase.auth.admin.signOut(refreshToken);
+    const { error } = await this.supabaseAdmin.auth.admin.signOut(refreshToken);
     if (error) {
       this.logger.warn({ err: error }, "Logout failed");
       // Non-fatal: token will expire naturally
@@ -540,7 +562,7 @@ export class AuthService {
     studentId: string,
     newPassword: string
   ): Promise<{ reset: boolean }> {
-    const { error } = await this.supabase.auth.admin.updateUserById(
+    const { error } = await this.supabaseAdmin.auth.admin.updateUserById(
       studentId,
       { password: newPassword }
     );

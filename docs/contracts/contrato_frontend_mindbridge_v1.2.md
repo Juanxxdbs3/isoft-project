@@ -12,13 +12,14 @@
 
 ## Historial de versiones
 
-| Versión | Fecha      | Descripción                                                                                                                                                                                                                                                                                                                                                              |
-| ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1.4     | 07-06-2026 | Forum GET endpoints completados: `GET /api/v1/forum/posts` (paginated, no auth), `GET /api/v1/forum/posts/mine` (JWT), `GET /api/v1/forum/posts/:postId` (detail), `GET /api/v1/forum/posts/:postId/comments` (comments list). PostgREST nested join pattern documented for pseudonym resolution via `student_active_pseudonym_id_fkey`. RLS policies `post_select_all_authenticated` y `comment_select_all_authenticated` implementadas. |
+| Versión | Fecha      | Descripción                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| ------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1.5     | 09-06-2026 | Se ha añadido la sección de supabase realtime strategy para las indicaciones del módulo de chat.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| 1.4     | 07-06-2026 | Forum GET endpoints completados: `GET /api/v1/forum/posts` (paginated, no auth), `GET /api/v1/forum/posts/mine` (JWT), `GET /api/v1/forum/posts/:postId` (detail), `GET /api/v1/forum/posts/:postId/comments` (comments list). PostgREST nested join pattern documented for pseudonym resolution via `student_active_pseudonym_id_fkey`. RLS policies `post_select_all_authenticated` y `comment_select_all_authenticated` implementadas.                                                                                                                                                                                                                                     |
 | 1.3     | 07-06-2026 | Fase 1 completada: login y registro con validación, Suspense boundaries, pseudonym stored in localStorage. Fase 2 completada: forum feed con sidebar fijo (fixed left-0 top-14), main content con pl-56, DiceBear avatars integrados. Fase 3 iniciada: psychologist route group creado. Backend forum CRUD endpoints implementados. JWT fix (fastify.jwt.decode). Avatar endpoint agregado. API URL fija a `http://localhost:3001/api/v1`. CAMPUS extraído a `src/frontend/src/lib/campus.ts`. Validación de student code mejorada (entry period, special community, admission position). Dark mode colors centralizados en globals.css. Hardcoded dark: overrides removidos. |
-| 1.2     | 04-06-2026 | Integración de principios de diseño UI (Nielsen, Shneiderman, leyes cognitivas) como fundamento explícito de las decisiones visuales y de densidad. Cierre de decisiones de diseño pendientes de v1.1. Estandarización del sistema de tokens para coincidir con convención de código en inglés del proyecto. Actualización del roadmap al estado actual de construcción. |
-| 1.1     | 27-05-2026 | Actualización del árbol de directorios con el flag --src-dir bajo Next.js 15. Cierre formal de la Paleta Verde como sistema cromático productivo y la Paleta Lavanda como alternativa de contraste en salud mental. Integración del rol del BFF en Next.js conviviendo con la API en Fastify.                                                                            |
-| 1.0     | 18-05-2026 | Primera versión del contrato: principios visuales, sistema de color con modo oscuro, mapa de pantallas del estudiante, estrategia de datos mock, roadmap de seis fases.                                                                                                                                                                                                  |
+| 1.2     | 04-06-2026 | Integración de principios de diseño UI (Nielsen, Shneiderman, leyes cognitivas) como fundamento explícito de las decisiones visuales y de densidad. Cierre de decisiones de diseño pendientes de v1.1. Estandarización del sistema de tokens para coincidir con convención de código en inglés del proyecto. Actualización del roadmap al estado actual de construcción.                                                                                                                                                                                                                                                                                                      |
+| 1.1     | 27-05-2026 | Actualización del árbol de directorios con el flag --src-dir bajo Next.js 15. Cierre formal de la Paleta Verde como sistema cromático productivo y la Paleta Lavanda como alternativa de contraste en salud mental. Integración del rol del BFF en Next.js conviviendo con la API en Fastify.                                                                                                                                                                                                                                                                                                                                                                                 |
+| 1.0     | 18-05-2026 | Primera versión del contrato: principios visuales, sistema de color con modo oscuro, mapa de pantallas del estudiante, estrategia de datos mock, roadmap de seis fases.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 
 ---
 
@@ -340,17 +341,17 @@ Un UI Process Component puede contener UI Components como `children`. Un UI Comp
 
 ### 7.1 Rol estudiante
 
-| Ruta             | Archivo                                 | RF asociados |
-| ---------------- | --------------------------------------- | ------------ |
-| `/`              | `app/page.tsx`                          | —            |
-| `/registro`      | `app/(auth)/register/page.tsx`          | RF01, RF02   |
-| `/login`         | `app/(auth)/login/page.tsx`             | —            |
-| `/foro`          | `app/(student)/foro/page.tsx`           | RF07, RF08   |
-| `/foro/[id]`     | `app/(student)/foro/[id]/page.tsx`      | RF08, RF12   |
-| `/perfil`        | `app/(student)/perfil/page.tsx`         | RF11, RF22   |
-| `/configuracion` | `app/(student)/configuracion/page.tsx`  | —            |
-| `/chat`          | `app/(student)/chat/page.tsx`           | RF23         |
-| `/terminos`      | `app/terminos/page.tsx`                 | —            |
+| Ruta             | Archivo                                | RF asociados |
+| ---------------- | -------------------------------------- | ------------ |
+| `/`              | `app/page.tsx`                         | —            |
+| `/registro`      | `app/(auth)/register/page.tsx`         | RF01, RF02   |
+| `/login`         | `app/(auth)/login/page.tsx`            | —            |
+| `/foro`          | `app/(student)/foro/page.tsx`          | RF07, RF08   |
+| `/foro/[id]`     | `app/(student)/foro/[id]/page.tsx`     | RF08, RF12   |
+| `/perfil`        | `app/(student)/perfil/page.tsx`        | RF11, RF22   |
+| `/configuracion` | `app/(student)/configuracion/page.tsx` | —            |
+| `/chat`          | `app/(student)/chat/page.tsx`          | RF23         |
+| `/terminos`      | `app/terminos/page.tsx`                | —            |
 
 ### 7.2 Rol psicólogo
 
@@ -446,6 +447,54 @@ interface ChatMessage {
 
 ---
 
+## Supabase Realtime — implementation patterns
+
+### Chat messages (Broadcast from database)
+
+The DB trigger `trg_chat_message_broadcast` fires on every INSERT into `chat_message`,
+broadcasting to topic `room:{chat_room_id}:messages`.
+Frontend subscribes after entering the chat room:
+
+```typescript
+const channel = supabase
+  .channel(`room:${roomId}:messages`)
+  .on("broadcast", { event: "INSERT" }, ({ payload }) => {
+    // payload.new is the new ChatMessage row
+    setMessages((prev) => [...prev, mapMessage(payload.new)]);
+  })
+  .subscribe();
+
+// Cleanup on unmount
+return () => {
+  supabase.removeChannel(channel);
+};
+```
+
+### Alert notifications (Postgres Changes)
+
+Psychologist dashboard subscribes to new alerts for their campus:
+
+```typescript
+const channel = supabase
+  .channel("alerts-feed")
+  .on(
+    "postgres_changes",
+    {
+      event: "INSERT",
+      schema: "public",
+      table: "alert",
+      filter: `campus=eq.${user.campus}`,
+    },
+    ({ new: alert }) => {
+      setAlerts((prev) => [mapAlert(alert), ...prev]);
+    },
+  )
+  .subscribe();
+```
+
+Both patterns require the frontend Supabase client (anon key) — NOT the backend.
+The backend never pushes directly to clients; it writes to DB and triggers do the rest.
+
 ## 11. Roadmap de construcción
 
 ### Fase 0 — Fundación ✅ COMPLETADA
@@ -498,10 +547,12 @@ Accesibilidad final (contraste, teclado, roles ARIA). Optimización de rendimien
 Retorna todas las publicaciones visibles, paginadas por cursor basado en `created_at`.
 
 **Parámetros de query:**
+
 - `page` (number, default 1): número de página
 - `limit` (number, default 10): cantidad de posts por página
 
 **Respuesta (200):**
+
 ```json
 {
   "data": {
@@ -527,6 +578,7 @@ Retorna todas las publicaciones visibles, paginadas por cursor basado en `create
 Retorna el detalle de una publicación individual con su seudónimo.
 
 **Respuesta (200):**
+
 ```json
 {
   "data": {
@@ -545,6 +597,7 @@ Retorna el detalle de una publicación individual con su seudónimo.
 Retorna todos los comentarios de una publicación, ordenados por `created_at` ASC.
 
 **Respuesta (200):**
+
 ```json
 {
   "data": [
@@ -566,11 +619,13 @@ Retorna todos los comentarios de una publicación, ordenados por `created_at` AS
 Retorna todas las publicaciones del estudiante autenticado.
 
 **Headers requeridos:**
+
 ```
 Authorization: Bearer <JWT_TOKEN>
 ```
 
 **Respuesta (200):**
+
 ```json
 {
   "data": {
@@ -592,12 +647,12 @@ Authorization: Bearer <JWT_TOKEN>
 
 ```typescript
 interface PostItem {
-  id: string;              // UUID
-  pseudonym: string;       // from student → pseudonym.texto
-  text: string;            // from text_content
-  createdAt: string;       // ISO 8601
+  id: string; // UUID
+  pseudonym: string; // from student → pseudonym.texto
+  text: string; // from text_content
+  createdAt: string; // ISO 8601
   status: "VISIBLE" | "MODERATED" | "DELETED";
-  campus?: string;         // from student.campus (solo en list/detail endpoints)
+  campus?: string; // from student.campus (solo en list/detail endpoints)
 }
 ```
 

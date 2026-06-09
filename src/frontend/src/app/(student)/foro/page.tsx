@@ -87,7 +87,7 @@ export default function ForumPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold font-display text-foreground dark:text-white mb-6">
+      <h1 className="text-2xl font-bold font-display text-foreground mb-6">
         Foro
       </h1>
 

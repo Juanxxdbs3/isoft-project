@@ -72,7 +72,7 @@ export default function StudentChatPage() {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100dvh-8rem)]">
+    <div className="flex flex-col h-[calc(100dvh-10rem)] border-2 border-border rounded-2xl overflow-hidden bg-surface shadow-sm">
       {/* Header */}
       <ChatHeader
         name={PSYCHOLOGIST_NAME}
@@ -96,7 +96,7 @@ export default function StudentChatPage() {
       </div>
 
       {/* Input area */}
-      <div className="border-t border-border bg-surface">
+      <div className="border-t-2 border-border bg-surface shrink-0">
         <ChatInput onSend={handleSend} />
       </div>
     </div>

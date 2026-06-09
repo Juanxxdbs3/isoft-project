@@ -6,11 +6,17 @@ import { ThemeToggle } from "../../components/ui/theme-toggle";
 import { UserBadge } from "../../components/ui/user-badge";
 import { ChatNavItem } from "../../components/navigation/student-nav-items";
 
-const navItems = [
+const studentNavItems = [
   { href: "/foro", icon: House, label: "Inicio" },
   { href: "/perfil", icon: User, label: "Mi Perfil" },
   { href: "/perfil?tab=posts", icon: ClipboardList, label: "Mis Publicaciones" },
   { href: "/configuracion", icon: Settings, label: "Configuración" },
+];
+
+const psychologistNavLinks = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/dashboard/chat", label: "Chat" },
+  { href: "/foro", label: "Foro" },
 ];
 
 export default async function StudentLayout({ children }: { children: React.ReactNode }) {
@@ -18,6 +24,37 @@ export default async function StudentLayout({ children }: { children: React.Reac
   const token = cookieStore.get("access_token")?.value;
   if (!token) redirect("/login");
 
+  const role = cookieStore.get("role")?.value;
+
+  // ── Psychologist visiting from their dashboard sees a header, not student sidebar ──
+  if (role === "psychologist") {
+    return (
+      <>
+        <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
+          <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+            <div className="flex items-center gap-6">
+              <span className="text-lg font-bold font-display text-primary">MindBridge</span>
+              <nav className="hidden md:flex items-center gap-4 text-sm">
+                {psychologistNavLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-muted hover:text-foreground transition-colors font-medium"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+            <ThemeToggle />
+          </div>
+        </header>
+        <main className="max-w-7xl mx-auto px-4 py-6">{children}</main>
+      </>
+    );
+  }
+
+  // ── Student layout (default) ──
   return (
     <div className="min-h-screen bg-background">
       {/* Top bar */}
@@ -34,7 +71,7 @@ export default async function StudentLayout({ children }: { children: React.Reac
       {/* Desktop sidebar */}
       <aside className="hidden md:flex fixed left-0 top-14 bottom-0 w-56 flex-col bg-sidebar border-r border-border z-20">
         <nav className="flex-1 flex flex-col gap-1 p-3">
-          {navItems.map((item) => (
+          {studentNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -55,7 +92,7 @@ export default async function StudentLayout({ children }: { children: React.Reac
 
       {/* Mobile bottom nav */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface border-t border-border flex items-center justify-around px-2 z-40">
-        {navItems.map((item) => (
+        {studentNavItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}

@@ -83,3 +83,12 @@ export const contentTypeTranslation: Record<string, string> = {
   POST: "publicacion",
   COMMENT: "comentario",
 };
+
+export const roleTranslation: Record<string, string> = {
+  SUPERADMIN: "Superadmin",
+  ADMIN: "Administrador",
+  PSICOLOGO: "Psicólogo",
+  ESTUDIANTE: "Estudiante",
+  student: "Estudiante",
+  psychologist: "Psicólogo",
+};

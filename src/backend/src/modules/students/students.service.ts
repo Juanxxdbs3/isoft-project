@@ -62,15 +62,50 @@ export class StudentsService {
         throw new Error("No se encontró un seudónimo activo");
       }
 
-      const { error: updateError } = await this.supabase
+      // ── Deactivate old pseudonym (preserve audit trail) ──
+      const { error: deactivateError } = await this.supabase
         .from("pseudonym")
-        .update({ texto: data.pseudonym })
+        .update({
+          status: "HISTORICAL",
+          deactivated_at: new Date().toISOString(),
+        })
         .eq("id", activePseudonym.id);
 
-      if (updateError) {
-        this.logger.error({ err: updateError }, "Failed to update pseudonym");
-        throw new Error("Error al actualizar el seudónimo");
+      if (deactivateError) {
+        this.logger.error({ err: deactivateError }, "Failed to deactivate old pseudonym");
+        throw new Error("Error al desactivar el seudónimo anterior");
       }
+
+      // ── Insert new pseudonym row ──
+      const { data: newPseudonym, error: insertError } = await this.supabase
+        .from("pseudonym")
+        .insert({
+          student_id: studentId,
+          texto: data.pseudonym,
+          status: "ACTIVE",
+        })
+        .select("id")
+        .single();
+
+      if (insertError || !newPseudonym) {
+        this.logger.error({ err: insertError }, "Failed to insert new pseudonym");
+        throw new Error("Error al crear el nuevo seudónimo");
+      }
+
+      // ── Update student's active_pseudonym_id ──
+      const { error: updateStudentError } = await this.supabase
+        .from("student")
+        .update({ active_pseudonym_id: newPseudonym.id })
+        .eq("id", studentId);
+
+      if (updateStudentError) {
+        this.logger.error(
+          { err: updateStudentError },
+          "Failed to update student active_pseudonym_id"
+        );
+        // Non-fatal: student can still be found via pseudonym
+      }
+
       result.updatedPseudonym = true;
     }
 

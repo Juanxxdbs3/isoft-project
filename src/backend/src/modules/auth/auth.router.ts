@@ -10,7 +10,7 @@ import { sendError, Errors } from "../../lib/errors.js";
 import { CONFIG } from "../../config.js";
 
 const authRouter: FastifyPluginAsync = async (fastify: FastifyInstance) => {
-  const authService = new AuthService(fastify.supabase, fastify.log);
+  const authService = new AuthService(fastify.supabase, fastify.supabaseAnon, fastify.log);
 
   // ──────────────────────────────────────
   // POST /auth/register
