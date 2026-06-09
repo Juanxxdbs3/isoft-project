@@ -1,38 +1,24 @@
-import { ThemeToggle } from "../../components/ui/theme-toggle";
-import Link from "next/link";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { PsychologistHeader } from "../../components/psychologist/PsychologistHeader";
+import { PsychologistSidebar } from "../../components/psychologist/PsychologistSidebar";
 
-export default function PsychologistLayout({ children }: { children: React.ReactNode }) {
+export default async function PsychologistLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("access_token")?.value;
+  if (!token) redirect("/login");
+
   return (
-    <div className="psychologist-theme min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <span className="text-lg font-bold font-display text-primary">MindBridge</span>
-            <nav className="hidden md:flex items-center gap-4 text-sm">
-              <Link
-                href="/dashboard"
-                className="text-muted hover:text-foreground transition-colors font-medium"
-              >
-                Dashboard
-              </Link>
-              <Link
-                href="/dashboard/chat"
-                className="text-muted hover:text-foreground transition-colors font-medium"
-              >
-                Chat
-              </Link>
-              <Link
-                href="/foro"
-                className="text-muted hover:text-foreground transition-colors font-medium"
-              >
-                Foro
-              </Link>
-            </nav>
+    <div className="psychologist-theme min-h-screen bg-background">
+      <PsychologistHeader />
+      <div className="flex">
+        <PsychologistSidebar />
+        <main className="flex-1 min-h-[calc(100vh-3.5rem)] md:pl-56 pt-0">
+          <div className="max-w-7xl mx-auto px-4 py-6">
+            {children}
           </div>
-          <ThemeToggle />
-        </div>
-      </header>
-      <main className="max-w-7xl mx-auto px-4 py-6">{children}</main>
+        </main>
+      </div>
     </div>
   );
 }

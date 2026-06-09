@@ -17,13 +17,20 @@ Ver plan completo en `docs/plans/psychologist_module_implementation_plan.md`.
 - [x] Router registrado en `server.ts`
 - [x] `design-decisions.md` con AD-01
 
-### 1.2 Frontend — Pantalla de registro de psicólogo (admin mínimo) 🔲
+### 1.2 Frontend — Pantalla de registro de psicólogo (admin mínimo) ✅
 
-- [ ] `src/frontend/src/app/admin/register-psychologist/page.tsx`
+- [x] `src/frontend/src/app/admin/register-psychologist/page.tsx` — formulario con manejo de estados (idle/loading/success/error)
+- [x] POST a backend con cabecera `X-Admin-Secret` (input manual)
+- [x] Feedback visual: banner verde con UUID en éxito, banner rojo con mensaje en error
+- [x] Campos: nombre, correo, sede (select 11 campus), turno (select 2 shifts), contraseña, admin-secret
 
-### 1.3 Frontend — Tema de psicólogo al layout ✅
+### 1.3 Frontend — Tema de psicólogo al layout y modularización ✅
 
 - [x] Clase `.psychologist-theme` aplicada al `<div>` raíz del layout `(psychologist)/layout.tsx`
+- [x] `PsychologistHeader.tsx` — componente cliente con nav, datos del psicólogo y ThemeToggle
+- [x] `PsychologistSidebar.tsx` — componente cliente con sidebar fijo y active route highlight
+- [x] Layout refactorizado como server component puro (invoca componentes, sin HTML inline)
+- [x] Fix CSS: `.dark .psychologist-theme` agregado como selector descendiente para modo oscuro
 
 ## Sesión 2 — Capa de repositorios para alertas y casos 🔲
 

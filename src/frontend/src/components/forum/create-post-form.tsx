@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SendHorizonal } from "lucide-react";
 import { apiPost, ApiError } from "../../lib/api";
 
@@ -12,6 +12,16 @@ export function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
+  const [isPsychologist, setIsPsychologist] = useState(false);
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setIsPsychologist(role === "psychologist");
+  }, []);
+
+  const placeholder = isPsychologist
+    ? "¿Algún consejo o recomendación para la comunidad?"
+    : "¿Cómo te sientes hoy?";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -50,7 +60,7 @@ export function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="¿Cómo te sientes hoy?"
+            placeholder={placeholder}
             rows={2}
             maxLength={500}
             className="w-full bg-transparent text-sm text-foreground placeholder:text-muted/50 resize-none focus:outline-none"

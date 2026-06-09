@@ -14,6 +14,9 @@
 - [x] Avatar modal interactivo — Rejilla 6 estilos DiceBear (open-peeps, bottts, avataaars, identicon, adventurer, lorelei). Reemplaza input de texto manual.
 - [x] Dashboard del psicólogo — Route group `(psychologist)/layout.tsx` + `dashboard/page.tsx` NOTA: AÚN NO TIENE NINGUNA FUNCIONALIDAD, SOLO HAY UN ARCHIVO INICIAL.
 - [x] Tema de psicólogo aplicado al layout — Clase `.psychologist-theme` en `<div>` raíz de `(psychologist)/layout.tsx` (Sesión 1.3)
+- [x] Layout psicólogo modular — `PsychologistHeader.tsx`, `PsychologistSidebar.tsx` como componentes cliente
+- [x] Fix CSS modo oscuro psicólogo — Selector `.dark .psychologist-theme` agregado
+- [x] Pantalla `/admin/register-psychologist` — Formulario interno de aprovisionamiento (Sesión 1.2)
 - [x] Integración con backend real — Forum CRUD, JWT fix, avatar endpoint
 - [x] TypeScript limpio — `npx tsc --noEmit` pasa sin errores
 - [x] ChatWidget componente modular (`components/chat/chat-widget.tsx`) — props `roomId`, `currentUserId`, `currentUserRole`. Responsive (flotante desktop, fullscreen mobile). Conexión Realtime vía Supabase broadcast.

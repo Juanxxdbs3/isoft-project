@@ -53,28 +53,31 @@
   --risk-high: #fca5a5;
 }
 
-/* Tema Psicólogo (Claro) */
+/* Tema Psicólogo (Claro) — Soft Lavender */
 .psychologist-theme {
-  --background: #f8fafc;
-  --surface: #ffffff;
-  --foreground: #1e293b;
-  --muted: #64748b;
-  --primary: #6c5dd3;
+  --background: #F6F5FF;
+  --surface: #FFFFFF;
+  --sidebar: #E9E6FA;
+  --foreground: #1E1B3A;
+  --muted: #7875A8;
+  --primary: #6C5DD3;
   --accent: #10b981;
-  --border: #e2e8f0;
-  --input: #cbd5e1;
+  --border: #E4E2F5;
+  --input: #CBD5E1;
 }
 
 /* Tema Psicólogo (Oscuro) */
-.psychologist-theme.dark {
-  --background: #0f172a;
-  --surface: #1e293b;
-  --foreground: #e2e8f0;
+.psychologist-theme.dark,
+.dark .psychologist-theme {
+  --background: #0F172A;
+  --surface: #1E293B;
+  --sidebar: #111827;
+  --foreground: #E2E8F0;
   --muted: #94a3b8;
-  --primary: #7c6ddb;
+  --primary: #7C6DDB;
   --accent: #34d399;
-  --border: #1e293b;
-  --input: #1e293b;
+  --border: #1E293B;
+  --input: #1E293B;
 }
 
 /* ============================================================
