@@ -58,3 +58,5 @@ skills-lock.json
 dist/
 build/
 *.tsbuildinfo
+
+prompts.md

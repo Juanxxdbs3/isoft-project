@@ -46,7 +46,7 @@ function ProfileContent() {
             text: p.text,
             createdAt: p.createdAt,
             status: p.status,
-            commentCount: 0,
+            commentCount: p.commentCount || 0,
             avatarUrl: p.avatar_url || undefined,
           }));
           setUserPosts(mapped);

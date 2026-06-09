@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Shield } from "lucide-react";
+import { ArrowRight, Shield, LogIn } from "lucide-react";
 import { ThemeToggle } from "../components/ui/theme-toggle";
 
 // ============================================================
@@ -29,17 +29,18 @@ function Navbar() {
           </Link>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <ThemeToggle />
           <Link
             href="/login"
             className="text-sm font-medium text-muted hover:text-foreground transition-colors"
           >
-            Ingresar
+            <span className="hidden sm:inline">Ingresar</span>
+            <LogIn size={18} className="sm:hidden" />
           </Link>
           <Link
             href="/registro"
-            className="px-5 py-2 bg-primary text-white text-sm font-semibold rounded-full
+            className="px-4 sm:px-5 py-2 bg-primary text-white text-xs sm:text-sm font-semibold rounded-full
                        hover:bg-primary/90 transition-all hover:-translate-y-0.5 shadow-sm"
           >
             Registrarme

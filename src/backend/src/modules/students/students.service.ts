@@ -52,7 +52,7 @@ export class StudentsService {
     if (hasPseudonym) {
       const { data: activePseudonym, error: lookupError } = await this.supabase
         .from("pseudonym")
-        .select("id")
+        .select("id, avatar_url")
         .eq("student_id", studentId)
         .eq("status", "ACTIVE")
         .single();
@@ -81,8 +81,9 @@ export class StudentsService {
         .from("pseudonym")
         .insert({
           student_id: studentId,
-          texto: data.pseudonym,
+          texto: data.pseudonym!.toLowerCase(),
           status: "ACTIVE",
+          avatar_url: (activePseudonym as any).avatar_url,
         })
         .select("id")
         .single();

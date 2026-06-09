@@ -17,7 +17,8 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { apiGet, apiPatch, ApiError, API_BASE } from "@/lib/api";
+import { apiGet, apiPatch, apiDelete, ApiError, API_BASE } from "@/lib/api";
+import { supabase } from "@/lib/supabase";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
 
@@ -91,6 +92,7 @@ export default function SettingsPage() {
 
   // ── Section 5: Zona de Peligro ──
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
   const [deletingAccount, setDeletingAccount] = useState(false);
   const [feedbackDelete, setFeedbackDelete] = useState<Feedback>(null);
 
@@ -205,7 +207,8 @@ export default function SettingsPage() {
     }
   }
 
-  function handleLogout() {
+  async function handleLogout() {
+    await supabase.auth.signOut();
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("role");
@@ -222,23 +225,16 @@ export default function SettingsPage() {
 
   async function handleDeleteAccount() {
     if (!token) return;
+    if (!deletePassword) {
+      setFeedbackDelete({ type: "error", text: "Debes ingresar tu contraseña para confirmar la eliminación." });
+      return;
+    }
+
     setDeletingAccount(true);
     setFeedbackDelete(null);
 
     try {
-      const res = await fetch(`${API_BASE}/students/me`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!res.ok) {
-        const json = await res.json().catch(() => ({}));
-        throw new ApiError(res.status, json.error || "UNKNOWN_ERROR", json.message || "Error al eliminar la cuenta.");
-      }
-
+      await apiDelete("/auth/account", { password: deletePassword }, token);
       handleLogout();
     } catch (err) {
       const msg = err instanceof ApiError ? err.message : "Error al eliminar la cuenta. Intenta de nuevo.";
@@ -463,6 +459,7 @@ export default function SettingsPage() {
                     size="lg"
                     onClick={() => {
                       setShowDeleteConfirm(true);
+                      setDeletePassword("");
                       setFeedbackDelete(null);
                     }}
                   >
@@ -470,24 +467,37 @@ export default function SettingsPage() {
                     Eliminar Cuenta
                   </Button>
                 ) : (
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="destructive"
-                      size="lg"
+                  <div className="flex flex-col gap-3">
+                    <input
+                      type="password"
+                      value={deletePassword}
+                      onChange={(e) => setDeletePassword(e.target.value)}
+                      placeholder="Ingresa tu contraseña para confirmar"
                       disabled={deletingAccount}
-                      onClick={handleDeleteAccount}
-                      className="animate-pulse"
-                    >
-                      {deletingAccount ? "Eliminando…" : "Confirmar"}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      disabled={deletingAccount}
-                      onClick={() => setShowDeleteConfirm(false)}
-                    >
-                      Cancelar
-                    </Button>
+                      className="w-full px-4 py-2.5 bg-surface border border-input rounded-xl text-foreground
+                                 placeholder:text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary/40
+                                 focus:border-primary"
+                      autoComplete="current-password"
+                    />
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="destructive"
+                        size="lg"
+                        disabled={deletingAccount}
+                        onClick={handleDeleteAccount}
+                        className="animate-pulse"
+                      >
+                        {deletingAccount ? "Eliminando…" : "Confirmar"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        disabled={deletingAccount}
+                        onClick={() => setShowDeleteConfirm(false)}
+                      >
+                        Cancelar
+                      </Button>
+                    </div>
                   </div>
                 )}
               </div>

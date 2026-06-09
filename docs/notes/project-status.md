@@ -125,6 +125,22 @@
 - [x] 148 integration/smoke tests creados como standalone Node scripts
 - [x] 143 tests pasan, 0 fallan
 
+## Stabilization Sprint (2026-06-09)
+
+The ninth stabilization sprint resolved 9 issues across backend, frontend and infrastructure.
+
+### Completado ✅
+
+- [x] **A — Comment count in forum**: Backend `forum.service.ts` subselect `comment:comments(count)` in `listPosts`, `getMyPosts`, `getPostById` + `commentCount` in mappers
+- [x] **B — Case-insensitive pseudonyms**: Backend auth & students service use `.ilike()` for lookup, `.toLowerCase()` on insert; schema index changed to `LOWER("texto")`
+- [x] **C — Account deletion endpoint (new)**: `DELETE /auth/account` with password verification via `signInWithPassword`, then soft-deletes setting `status = 'DELETED'`
+- [x] **D — Supabase signOut on logout**: Frontend config page logout + 401 interceptor both call `supabase.auth.signOut()`
+- [x] **E — Avatar preservation on pseudonym change**: Backend selects `id, avatar_url` and passes `avatar_url` to new pseudonym INSERT
+- [x] **F — CORS config**: `CORS_ORIGIN` env var added; dev uses `origin: true`, production uses configured origin
+- [x] **G — Custom scrollbar**: `.custom-scrollbar` class with `::-webkit-scrollbar` rules in `globals.css`; applied to chat message containers
+- [x] **H — Dynamic avatar sync**: Avatar modal dispatches `CustomEvent('avatar-changed')`; `UserBadge` listens and updates state reactively
+- [x] **I — Mobile Navbar**: Landing page "Ingresar" text hidden on mobile, replaced with `LogIn` icon; responsive padding/text sizing
+
 ## Dependencias de bloqueo
 
 - Schema Supabase desplegado → Backend puede conectar BD en producción

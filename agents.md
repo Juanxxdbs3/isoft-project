@@ -53,6 +53,8 @@ Per-agent instructions live in `.opencode/agents/*.md` — read those before wri
 - **401 interceptor** in `api.ts` excludes `/auth/login` and `/auth/register` from redirect loop
 - **Chat service** uses `chat_room_id` column; membership check via `case:clinical_case!inner(student_id)` join; `rooms/active` registered before `rooms/:roomId` to avoid route conflict
 - **Forum endpoints** return `avatar_url` in all post/comment responses
+- **Account deletion**: `DELETE /auth/account` with password confirmation; no hard-delete, sets `status = DELETED`
+- **Pseudonym uniqueness**: Case-insensitive via `LOWER(texto)` DB index + `.ilike()` queries + `.toLowerCase()` on insert
 
 ## Critical constraints
 
@@ -84,5 +86,6 @@ See `docs/notes/project-status.md` for the full per-service task checklist. Key 
 | NLP engine | ✅ Pipeline + modelo clínico integrados. F1 suicidal 0.816. Modo comunidad pendiente |
 | Schema SQL v1.1 | ✅ Deployed — Supabase schema, test data, Realtime triggers working |
 | Infrastructure | ✅ Supabase deployed, Realtime configured, test data inserted |
+| Stabilization Sprint (2026-06-09) | ✅ Complete — 9-point plan: comment count, case-insensitive pseudonyms, account deletion, signOut on logout, avatar preservation, CORS, custom scrollbar, dynamic avatar sync, mobile navbar |
 
 **Active blockers:** see `docs/notes/blockers.md` — modelo 800MB sin estrategia de despliegue.

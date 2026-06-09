@@ -81,7 +81,7 @@ export default function StudentChatPage() {
       />
 
       {/* Messages area */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-background">
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-background custom-scrollbar">
         {messages.map((msg) => (
           <ChatMessage
             key={msg.id}

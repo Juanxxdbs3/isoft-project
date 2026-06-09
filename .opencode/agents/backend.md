@@ -103,6 +103,7 @@ Never import or reference supabaseAdmin in frontend code.
 
 Before writing any query, verify column names in `docs/models/mindbridge_schema.sql`.
 For example, the correct column for chat room reference in `chat_message` is `chat_room_id`, not `room_id`.
+- The `post` → `comment` FK relationship is named `comment` (singular), not `comments`. Use `comment:comment(count)` for embedded aggregate counts, NOT `comment:comments(count)`.
 
 ## Tests
 

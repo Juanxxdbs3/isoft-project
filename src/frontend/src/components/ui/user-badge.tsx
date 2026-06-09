@@ -34,6 +34,17 @@ export function UserBadge() {
       .catch(() => {});
   }, []);
 
+  // Listen for avatar changes from the AvatarModal
+  useEffect(() => {
+    function handleAvatarChange(e: CustomEvent) {
+      const newUrl = e.detail.avatarUrl;
+      setAvatarUrl(newUrl);
+      localStorage.setItem("avatar_url", newUrl);
+    }
+    window.addEventListener("avatar-changed", handleAvatarChange as EventListener);
+    return () => window.removeEventListener("avatar-changed", handleAvatarChange as EventListener);
+  }, []);
+
   if (!pseudonym) return null;
 
   return (

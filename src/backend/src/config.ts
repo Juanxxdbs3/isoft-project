@@ -15,6 +15,7 @@ const envSchema = z.object({
   STUDENT_CODE_ENCRYPTION_KEY: z.string().min(64),
   NLP_SERVICE_URL: z.string().url().optional(),
   NLP_SERVICE_BEARER_TOKEN: z.string().optional(),
+  CORS_ORIGIN: z.string().default("http://localhost:3000"),
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
 });
 

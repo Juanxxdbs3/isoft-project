@@ -697,7 +697,7 @@ CREATE UNIQUE INDEX "udx_pseudonym_one_active_per_student" ON "public"."pseudony
 
 
 
-CREATE UNIQUE INDEX "udx_pseudonym_texto" ON "public"."pseudonym" USING "btree" ("texto");
+CREATE UNIQUE INDEX "udx_pseudonym_texto" ON "public"."pseudonym" (LOWER("texto"));
 
 
 

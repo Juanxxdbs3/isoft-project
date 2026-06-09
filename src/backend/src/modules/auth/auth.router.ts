@@ -4,6 +4,7 @@ import {
   RegisterBodySchema,
   LoginBodySchema,
   CheckPseudonymParamsSchema,
+  DeleteAccountBodySchema,
   PasswordResetBodySchema,
 } from "./auth.schema.js";
 import { sendError, Errors } from "../../lib/errors.js";
@@ -148,6 +149,46 @@ const authRouter: FastifyPluginAsync = async (fastify: FastifyInstance) => {
           return sendError(reply, err as any);
         }
         request.log.error({ err }, "Logout failed");
+        return sendError(reply, Errors.INTERNAL_SERVER_ERROR());
+      }
+    }
+  );
+
+  // ──────────────────────────────────────
+  // DELETE /auth/account
+  // ──────────────────────────────────────
+  fastify.delete(
+    "/account",
+    { preHandler: [fastify.authenticate] },
+    async (request, reply) => {
+      if (request.user.role !== "student") {
+        return sendError(
+          reply,
+          Errors.FORBIDDEN("Solo estudiantes pueden eliminar su cuenta")
+        );
+      }
+
+      const parseResult = DeleteAccountBodySchema.safeParse(request.body);
+      if (!parseResult.success) {
+        return sendError(
+          reply,
+          Errors.VALIDATION_ERROR(
+            parseResult.error.issues.map((i) => i.message).join("; ")
+          )
+        );
+      }
+
+      try {
+        const result = await authService.deleteAccount(
+          request.user.sub,
+          parseResult.data.password
+        );
+        return reply.send({ data: result });
+      } catch (err: unknown) {
+        if (err && typeof err === "object" && "error" in err && "statusCode" in err) {
+          return sendError(reply, err as any);
+        }
+        request.log.error({ err }, "Delete account failed");
         return sendError(reply, Errors.INTERNAL_SERVER_ERROR());
       }
     }

@@ -31,7 +31,7 @@ export class Server {
 
   async #registerMiddlewares(): Promise<void> {
     await this.app.register(cors, {
-      origin: CONFIG.NODE_ENV === "production" ? false : true,
+      origin: CONFIG.NODE_ENV === "development" ? true : CONFIG.CORS_ORIGIN,
       credentials: true,
     });
   }

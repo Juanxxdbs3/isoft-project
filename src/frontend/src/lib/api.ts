@@ -1,3 +1,5 @@
+import { supabase } from "./supabase";
+
 function getApiBase(): string {
   if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
   if (typeof window !== "undefined") {
@@ -35,6 +37,7 @@ async function handleResponse<T>(res: Response): Promise<T> {
 
     // Clear tokens on unauthorized for protected endpoints
     if (typeof window !== "undefined") {
+      await supabase.auth.signOut();
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("role");
@@ -90,6 +93,28 @@ export async function apiPatch<T>(
     method: "PATCH",
     headers,
     body: JSON.stringify(body),
+  });
+
+  return handleResponse<T>(res);
+}
+
+export async function apiDelete<T>(
+  path: string,
+  body?: unknown,
+  token?: string
+): Promise<T> {
+  const headers: Record<string, string> = {};
+  if (body !== undefined) {
+    headers["Content-Type"] = "application/json";
+  }
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "DELETE",
+    headers,
+    body: body !== undefined ? JSON.stringify(body) : undefined,
   });
 
   return handleResponse<T>(res);

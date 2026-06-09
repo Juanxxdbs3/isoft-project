@@ -34,6 +34,7 @@ export function AvatarModal({ pseudonym, currentAvatarUrl, onClose, onSaved }: A
       const token = localStorage.getItem("access_token");
       await apiPatch("/forum/profile/avatar", { avatar_url: url }, token || undefined);
       localStorage.setItem("avatar_url", url);
+      window.dispatchEvent(new CustomEvent("avatar-changed", { detail: { avatarUrl: url } }));
       onSaved(url);
     } catch (err) {
       const message = err instanceof ApiError ? err.message : "Error al guardar el avatar";

@@ -14,7 +14,7 @@ You do NOT write TypeScript or Python application code.
 
 ## Before any action
 
-1. Read `docs/models/schema_mindbridge_v1.1.sql` — current schema, source of truth.
+1. Read `docs/models/mindbridge_schema.sql` — current schema, source of truth.
 2. Read `docs/contracts/contrato_backend_v1.1.md` §4 (JWT/auth) and §5 (response conventions).
 3. Read `docs/notes/design-decisions.md`.
 

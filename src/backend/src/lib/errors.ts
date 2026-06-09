@@ -53,6 +53,8 @@ export const Errors = {
     createError("INVALID_CREDENTIALS", "Credenciales inválidas", 401),
   ACCOUNT_SUSPENDED: () =>
     createError("ACCOUNT_SUSPENDED", "La cuenta está suspendida", 403),
+  ACCOUNT_DELETED: (msg?: string) =>
+    createError("ACCOUNT_DELETED", msg ?? "La cuenta ha sido desactivada", 409),
 } as const;
 
 export function sendError(reply: FastifyReply, err: AppError): void {

@@ -121,7 +121,7 @@ export class AuthService {
     const { data: existingPseudonym } = await this.supabaseAdmin
       .from("pseudonym")
       .select("id")
-      .eq("texto", finalPseudonym)
+      .ilike("texto", finalPseudonym)
       .maybeSingle();
 
     if (existingPseudonym) {
@@ -234,7 +234,7 @@ export class AuthService {
       .from("pseudonym")
       .insert({
         student_id: authUserId,
-        texto: finalPseudonym,
+        texto: finalPseudonym.toLowerCase(),
         status: "ACTIVE",
       })
       .select("id")
@@ -317,7 +317,7 @@ export class AuthService {
       const { data: pseudonymData, error: pseudonymError } = await this.supabaseAdmin
         .from("pseudonym")
         .select("student_id, texto")
-        .eq("texto", identifier)
+        .ilike("texto", identifier)
         .eq("status", "ACTIVE")
         .maybeSingle();
 
@@ -448,7 +448,7 @@ export class AuthService {
     const { data, error } = await this.supabaseAdmin
       .from("pseudonym")
       .select("id")
-      .eq("texto", pseudonym)
+      .ilike("texto", pseudonym)
       .maybeSingle();
 
     if (error) {
@@ -553,6 +553,71 @@ export class AuthService {
       this.logger.warn({ err: error }, "Logout failed");
       // Non-fatal: token will expire naturally
     }
+  }
+
+  /**
+   * DELETE /auth/account
+   *
+   * Deletes the student's account by:
+   * 1. Verifying the password via Supabase Auth signIn.
+   * 2. Setting student.status = 'DELETED'.
+   * 3. Clearing active_pseudonym_id.
+   */
+  async deleteAccount(userId: string, password: string): Promise<{ success: boolean }> {
+    // Look up student to get encrypted code (admin, bypass RLS)
+    const { data: studentData, error: studentError } = await this.supabaseAdmin
+      .from("student")
+      .select("codigo_estudiante_encrypted")
+      .eq("id", userId)
+      .single();
+
+    if (studentError || !studentData) {
+      this.logger.error({ err: studentError, userId }, "Student not found for deletion");
+      throw Errors.NOT_FOUND("Estudiante");
+    }
+
+    // Decrypt the student code to form the email
+    let decryptedCode: string;
+    try {
+      decryptedCode = decryptStudentCode(
+        studentData.codigo_estudiante_encrypted,
+        CONFIG.STUDENT_CODE_ENCRYPTION_KEY
+      );
+    } catch {
+      this.logger.error({ userId }, "Failed to decrypt student code during account deletion");
+      throw Errors.INTERNAL_SERVER_ERROR("Error al procesar credenciales");
+    }
+
+    const email = `${decryptedCode}@mindbridge.local`;
+
+    // Verify password via Supabase Auth signIn (uses anon client)
+    const { error: authError } = await this.supabaseAnon.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (authError) {
+      this.logger.warn({ err: authError, userId }, "Account deletion — password verification failed");
+      throw Errors.INVALID_CREDENTIALS();
+    }
+
+    // Set student status to DELETED and clear active pseudonym (admin client)
+    const { error: updateError } = await this.supabaseAdmin
+      .from("student")
+      .update({
+        status: "DELETED",
+        active_pseudonym_id: null,
+      })
+      .eq("id", userId);
+
+    if (updateError) {
+      this.logger.error({ err: updateError, userId }, "Failed to update student status to DELETED");
+      throw Errors.INTERNAL_SERVER_ERROR("Error al eliminar la cuenta");
+    }
+
+    this.logger.info({ userId }, "Student account deleted successfully");
+
+    return { success: true };
   }
 
   /**

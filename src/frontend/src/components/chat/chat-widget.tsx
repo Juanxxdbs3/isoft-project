@@ -214,7 +214,7 @@ export function ChatWidget({ roomId, currentUserId, currentUserRole }: ChatWidge
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
+            <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0 custom-scrollbar">
               {renderMessages()}
               <div ref={messagesEndRef} />
             </div>
@@ -245,7 +245,7 @@ export function ChatWidget({ roomId, currentUserId, currentUserRole }: ChatWidge
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-3 space-y-3">
+            <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar">
               {renderMessages()}
               <div ref={messagesEndRef} />
             </div>

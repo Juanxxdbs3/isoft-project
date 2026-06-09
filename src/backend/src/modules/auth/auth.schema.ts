@@ -74,6 +74,14 @@ export const CheckPseudonymParamsSchema = z.object({
 export type CheckPseudonymParams = z.infer<typeof CheckPseudonymParamsSchema>;
 
 // ──────────────────────────────────────
+// DELETE /auth/account
+// ──────────────────────────────────────
+export const DeleteAccountBodySchema = z.object({
+  password: z.string().min(1, "Contraseña requerida"),
+});
+export type DeleteAccountBody = z.infer<typeof DeleteAccountBodySchema>;
+
+// ──────────────────────────────────────
 // PATCH /auth/password-reset
 // ──────────────────────────────────────
 export const PasswordResetBodySchema = z.object({
