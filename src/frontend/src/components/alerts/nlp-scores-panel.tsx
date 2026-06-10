@@ -1,5 +1,8 @@
+"use client";
+
 import { RiskBadge } from "../forum/risk-badge";
 import { riskLevelTranslation } from "../../lib/i18n/risk";
+import { formatDate } from "../../lib/format-date";
 import type { NivelRiesgo } from "../../types/domain";
 
 interface NlpScoresPanelProps {
@@ -40,12 +43,7 @@ export function NlpScoresPanel({
   analyzed_at,
 }: NlpScoresPanelProps) {
   const level = riskLevelTranslation[risk_level] as NivelRiesgo | undefined;
-  const date = new Date(analyzed_at).toLocaleDateString("es-CO", {
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const date = formatDate(analyzed_at);
 
   return (
     <div className="bg-surface border border-border rounded-2xl p-4 space-y-3">

@@ -7,6 +7,7 @@ import { NlpScoresPanel } from "./nlp-scores-panel";
 import { PostHistoryList } from "./post-history-list";
 import { apiPost } from "../../lib/api";
 import { riskLevelTranslation, alertStatusTranslation } from "../../lib/i18n/risk";
+import { formatDate } from "../../lib/format-date";
 import type { NivelRiesgo, EstadoAlerta } from "../../types/domain";
 
 interface DeanonymizedData {
@@ -64,12 +65,7 @@ export function AlertDetailPanel({ alert }: AlertDetailPanelProps) {
   const level = riskLevelTranslation[alert.risk_level] as NivelRiesgo | undefined;
   const statusText = alertStatusTranslation[alert.status] as EstadoAlerta | undefined;
 
-  const formattedDate = new Date(alert.generated_at).toLocaleDateString("es-CO", {
-    day: "numeric",
-    month: "long",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const formattedDate = formatDate(alert.generated_at);
 
   async function handleAccept() {
     setAccepting(true);

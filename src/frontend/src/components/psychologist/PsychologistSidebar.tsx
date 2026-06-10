@@ -56,11 +56,15 @@ export function PsychologistSidebar({ collapsed, onToggle }: PsychologistSidebar
             {!collapsed && <span>Dashboard</span>}
           </Link>
 
-          {/* Mis Casos — disabled */}
-          <span className={disabledClass} title="Mis Casos">
+          {/* Mis Casos */}
+          <Link
+            href="/dashboard/cases"
+            className={linkClass(pathname.startsWith("/dashboard/cases"))}
+            title="Mis Casos"
+          >
             <FolderOpen size={18} className={iconOnly} />
             {!collapsed && <span>Mis Casos</span>}
-          </span>
+          </Link>
 
           {/* Archivados — disabled */}
           <span className={disabledClass} title="Archivados">

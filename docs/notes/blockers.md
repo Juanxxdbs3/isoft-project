@@ -53,6 +53,12 @@ en `docs/diagrams/entidades-del-negocio.txt` y `docs/diagrams/types.txt`.
 - Agregados 8 enums faltantes: AccountStatus, AdviserExportStatus, CaseStatus, CaseType, ContentType, ShiftType, ModerationAction, AcademicProgram, CampusUdeC.
 - Actualizado "Immutable records" y "Key constraints" para reflejar nombres en inglés.
 
+## PostgREST PGRST201 por ambigüedad de FK — RESOLVED
+
+**Service:** backend
+**Description:** The `student` table has an FK `active_pseudonym_id → pseudonym(id)` that was created with two different constraint names across environments (`fk_student_active_pseudonym` and `student_active_pseudonym_id_fkey`). Queries using `pseudonym!active_pseudonym_id` (column-name syntax) in `.select()` caused PostgREST to fail with `PGRST201: Could not embed because more than one relationship was found for 'student' and 'pseudonym'`.
+**Resolution:** Fixed on 2026-06-10. Both occurrences in `src/backend/src/modules/cases/cases.service.ts` were replaced from `pseudonym!active_pseudonym_id` to `pseudonym!fk_student_active_pseudonym` (explicit FK constraint name). Other services (`alerts.service.ts`, `forum.service.ts`, `auth.service.ts`) already used the explicit constraint syntax and were unaffected. Documented as a permanent rule in AGENTS.md under Critical constraints.
+
 ## Polimorfismo de encuestas (CHARACTERIZATION_LINK) — FUTURE EXTENSION
 
 **Service:** backend

@@ -119,7 +119,7 @@ ALERT
 - Only one psychologist can accept an alert (optimistic concurrency control in backend)
 
 CHAT
-- Chat room can only be created from a ACCEPTED case with an assigned psychologist
+- Chat room can only be created from a case with status `ASSIGNED` (after an alert has been accepted by a psychologist)
 - Students cannot initiate a chat room (RF23, D-34)
 - Only one active chat per case at a time (409 CHAT_ALREADY_EXISTS)
 
@@ -130,7 +130,7 @@ CONTENT DELETION
 - Editing content creates a new NLP cycle; original analysis record is preserved, immutable
 
 EXPORT
-- Requires: case ACCEPTED + at least one chat initiated + psychologist institutional email configured
+- Requires: case `ASSIGNED` + at least one chat initiated + psychologist institutional email configured
 - 409 CHAT_REQUIRED_BEFORE_EXPORT if no chat exists
 
 INFORMED CONSENT (FO-BU-O13)

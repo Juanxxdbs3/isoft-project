@@ -108,13 +108,42 @@ Ver plan completo en `docs/plans/psychologist_module_implementation_plan.md`.
 
 Reusa `lib/i18n/risk.ts` y `forum/risk-badge.tsx` para todos los scores, i18n y traducciones de estado.
 
+### 6.2 Tanda 2 — Estabilización ✅
+
+- [x] **Hydration fix** (`components/alerts/alert-card.tsx`): Added `suppressHydrationWarning` to the date `<span>` to fix `toLocaleDateString` SSR/CSR mismatch.
+- [x] **Script tag fix** (`app/layout.tsx`): Replaced Next.js `<Script>` with native `<script>` to avoid collisions on concurrent sessions.
+- [x] **Filter + sort** (`app/(psychologist)/dashboard/page.tsx`): Alerts filtered to only show `status === "PENDING"`; sorted HIGH first.
+- [x] **Realtime reactivity** (`components/alerts/alert-list.tsx`): Added `.on("UPDATE")` listener that removes alerts from the feed when status changes away from PENDING. INSERT handler now also respects HIGH-first ordering.
+- [x] **Elegant 404/403 banner** (`app/(psychologist)/dashboard/alerts/[alertId]/page.tsx`): Replaced `notFound()` with styled banner: "Esta alerta ya ha sido asignada y está siendo atendida por otro especialista de salud mental" for 403, generic banner for 404.
+
 `tsc --noEmit`: 0 errores en frontend.
 
-## Sesión 7 — Frontend: pantalla de chat del psicólogo 🔲
+## Sesión 7 — Chat del Psicólogo ✅
 
-- [ ] `(psychologist)/dashboard/chat/page.tsx`
-- [ ] `(psychologist)/dashboard/cases/[caseId]/chat/page.tsx`
-- [ ] Adaptar `chat-widget.tsx` para rol psicólogo
+### 7.1 Tanda 1 — Chat page y componentes
+
+- [x] **Chat page** (`app/(psychologist)/dashboard/chat/page.tsx`): Refactored to Server Component. Reads `?caseId=` searchParams. No param → shows case list (`ChatCaseList`). With param → shows split view (`ChatCaseView`).
+- [x] **ChatCaseList** (`components/chat/chat-case-list.tsx`): Grid of cards for active cases (status=ASSIGNED). Shows anonymous_alias or truncated case ID. Click navigates to `/dashboard/chat?caseId=xxx`. Empty state when no cases.
+- [x] **ChatCaseView** (`components/chat/chat-case-view.tsx`): Split layout. Left panel shows case info (identity, scores, future actions buttons). Right panel shows chat with Realtime subscription via `supabase.channel('case:{caseId}:messages').on('broadcast', ...)`. Chat is collapsible with button; when collapsed, case info panel expands to full width. Messages fetched from `GET /api/v1/cases/:caseId/chat`. Realtime cleanup on unmount/room change.
+- [x] **PsychologistChatInput** (`components/chat/psychologist-chat-input.tsx`): Extended input with two action buttons: 📅 "Proponer cita" (sends APPOINTMENT_PROPOSAL type) and 📋 "Ficha caracterización" (sends CHARACTERIZATION_LINK type). Standard text input sends STANDARD_TEXT. Messages sent via `POST /api/v1/cases/:caseId/chat/messages`.
+
+### 7.2 Infrastructure task delegated
+
+- [x] DB trigger `trg_validate_alert_campus` creation delegated to `@infraestructure` agent (AD-07).
+
+### 7.3 TypeScript
+
+- [x] `tsc --noEmit`: 0 errors (frontend + backend).
+
+## ✅ Enum Correction Sprint
+
+- `ACCEPTED` was incorrectly used as a `clinical_case.status` value in documentation — it only exists in `alert.status`
+- Frontend was sending `?status=ASSIGNED,ACCEPTED` to `/cases` causing 422 — now fixed
+- `clinical_case.status` can be NULL in the DB but the enum type only has 4 values: `OPENED`, `ASSIGNED`, `ARCHIVED`, `RESOLVED`
+
+## ✅ PGRST201 Fix en cases.service.ts
+
+- [x] Replaced `pseudonym!active_pseudonym_id` with `pseudonym!fk_student_active_pseudonym` in `src/backend/src/modules/cases/cases.service.ts` to resolve `PGRST201: Could not embed because more than one relationship was found` for the `student.active_pseudonym_id → pseudonym.id` FK.
 
 ## Deuda Técnica
 

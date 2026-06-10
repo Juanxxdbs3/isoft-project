@@ -1,15 +1,22 @@
 "use client";
 
 import type { ChatMessageItem } from "../../types/domain";
+import { Avatar } from "../ui/avatar";
 
 interface ChatBubbleProps {
   message: ChatMessageItem;
   isOwn: boolean;
+  avatarUrl?: string;
 }
 
-export function ChatBubble({ message, isOwn }: ChatBubbleProps) {
+export function ChatBubble({ message, isOwn, avatarUrl }: ChatBubbleProps) {
   return (
-    <div className={`flex ${isOwn ? "justify-end" : "justify-start"}`}>
+    <div className={`flex gap-2 ${isOwn ? "justify-end" : "justify-start"}`}>
+      {!isOwn && (
+        <div className="shrink-0 self-end">
+          <Avatar seed={message.text} size={28} url={avatarUrl} />
+        </div>
+      )}
       <div
         className={`rounded-2xl px-3 py-2 max-w-[80%] text-sm ${
           isOwn

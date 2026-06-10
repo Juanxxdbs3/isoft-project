@@ -53,7 +53,13 @@ export class CasesService {
         assigned_psychologist_id,
         is_unsubscribed_from_recapture,
         opened_at,
-        updated_at
+        updated_at,
+        student!inner (
+          pseudonym!fk_student_active_pseudonym (
+            texto,
+            avatar_url
+          )
+        )
       `)
       .eq("assigned_psychologist_id", psychologistId);
 
@@ -70,26 +76,43 @@ export class CasesService {
       throw Errors.INTERNAL_SERVER_ERROR("Error al obtener casos");
     }
 
-    return (data || []).map((c: any) => ({
-      id: c.id,
-      student_id: c.student_id,
-      case_type: c.case_type,
-      status: c.status,
-      assigned_psychologist_id: c.assigned_psychologist_id,
-      is_unsubscribed_from_recapture: c.is_unsubscribed_from_recapture,
-      opened_at: c.opened_at,
-      updated_at: c.updated_at,
-    }));
+    return (data || []).map((c: any) => {
+      const pseudonymObj = c.student?.pseudonym;
+      return {
+        id: c.id,
+        student_id: c.student_id,
+        case_type: c.case_type,
+        status: c.status,
+        assigned_psychologist_id: c.assigned_psychologist_id,
+        is_unsubscribed_from_recapture: c.is_unsubscribed_from_recapture,
+        opened_at: c.opened_at,
+        updated_at: c.updated_at,
+        anonymous_alias: pseudonymObj?.texto || null,
+        avatar_url: pseudonymObj?.avatar_url || null,
+      };
+    });
   }
 
   async getCaseById(caseId: string, psychologistId: string) {
-    const caseData = await this.caseRepo.findById(caseId);
+    const { data: caseData, error } = await this.supabase
+      .from("clinical_case")
+      .select(`
+        *,
+        student!inner (
+          pseudonym!fk_student_active_pseudonym (
+            texto,
+            avatar_url
+          )
+        )
+      `)
+      .eq("id", caseId)
+      .maybeSingle();
 
-    if (!caseData) {
+    if (error || !caseData) {
       throw Errors.NOT_FOUND("Caso clínico");
     }
 
-    if (caseData.assigned_psychologist_id !== psychologistId) {
+    if ((caseData as any).assigned_psychologist_id !== psychologistId) {
       throw createError(
         "FORBIDDEN",
         "No tienes acceso a este caso",
@@ -97,7 +120,13 @@ export class CasesService {
       );
     }
 
-    return caseData;
+    const c = caseData as any;
+    const pseudonymObj = c.student?.pseudonym;
+    return {
+      ...c,
+      anonymous_alias: pseudonymObj?.texto || null,
+      avatar_url: pseudonymObj?.avatar_url || null,
+    };
   }
 
   async createSelfReferral(studentId: string) {

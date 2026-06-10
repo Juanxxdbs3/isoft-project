@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import Link from "next/link";
 import { AlertDetailPanel } from "../../../../../components/alerts/alert-detail-panel";
 
 interface AlertDetailResponse {
@@ -36,19 +36,20 @@ interface AlertDetailResponse {
   } | null;
 }
 
-async function getAlertDetail(alertId: string, token: string): Promise<AlertDetailResponse | null> {
+async function getAlertDetail(alertId: string, token: string): Promise<{ data: AlertDetailResponse | null; status: number }> {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api/v1";
   try {
     const res = await fetch(`${baseUrl}/alerts/${alertId}`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
     });
-    if (res.status === 404) return null;
-    if (!res.ok) return null;
+    if (res.status === 404) return { data: null, status: 404 };
+    if (res.status === 403) return { data: null, status: 403 };
+    if (!res.ok) return { data: null, status: res.status };
     const json = await res.json();
-    return json.data || null;
+    return { data: json.data || null, status: 200 };
   } catch {
-    return null;
+    return { data: null, status: 500 };
   }
 }
 
@@ -59,8 +60,45 @@ export default async function AlertDetailPage({ params }: { params: Promise<{ al
 
   if (!token) return null;
 
-  const alert = await getAlertDetail(alertId, token);
-  if (!alert) notFound();
+  const { data: alert, status } = await getAlertDetail(alertId, token);
+
+  if (status === 403) {
+    return (
+      <div className="max-w-lg mx-auto mt-12">
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center space-y-3">
+          <h2 className="text-lg font-semibold text-amber-800">Alerta no disponible</h2>
+          <p className="text-sm text-amber-700">
+            Esta alerta ya ha sido asignada y está siendo atendida por otro especialista de salud mental.
+          </p>
+          <Link
+            href="/dashboard"
+            className="inline-block mt-2 px-4 py-2 rounded-xl text-sm font-semibold bg-amber-600 text-white hover:bg-amber-700 transition-colors"
+          >
+            Volver al dashboard
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (!alert) {
+    return (
+      <div className="max-w-lg mx-auto mt-12">
+        <div className="bg-surface border border-border rounded-2xl p-6 text-center space-y-3">
+          <h2 className="text-lg font-semibold text-foreground">Alerta no encontrada</h2>
+          <p className="text-sm text-muted">
+            La alerta que buscas no existe o ha sido eliminada.
+          </p>
+          <Link
+            href="/dashboard"
+            className="inline-block mt-2 px-4 py-2 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-colors"
+          >
+            Volver al dashboard
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto">

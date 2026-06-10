@@ -190,6 +190,8 @@
 |    |    |    |    |    |    +--- alerts
 |    |    |    |    |    |    |    \--- [alertId]
 |    |    |    |    |    |    |         \--- page.tsx
+|    |    |    |    |    |    +--- cases
+|    |    |    |    |    |    |    \--- page.tsx
 |    |    |    |    |    |    +--- chat
 |    |    |    |    |    |    |    \--- page.tsx
 |    |    |    |    |    |    \--- page.tsx
@@ -223,16 +225,20 @@
 |    |    |    |    +--- alerts
 |    |    |    |    |    +--- alert-card.tsx
 |    |    |    |    |    +--- alert-detail-panel.tsx
+|    |    |    |    |    +--- alert-feed.tsx
 |    |    |    |    |    +--- alert-list.tsx
 |    |    |    |    |    +--- nlp-scores-panel.tsx
 |    |    |    |    |    \--- post-history-list.tsx
 |    |    |    |    +--- chat
 |    |    |    |    |    +--- chat-bubble.tsx
+|    |    |    |    |    +--- chat-case-list.tsx
+|    |    |    |    |    +--- chat-case-view.tsx
 |    |    |    |    |    +--- chat-header.tsx
 |    |    |    |    |    +--- chat-input.tsx
 |    |    |    |    |    +--- chat-message.tsx
 |    |    |    |    |    +--- chat-widget.tsx
-|    |    |    |    |    \--- index.ts
+|    |    |    |    |    +--- index.ts
+|    |    |    |    |    \--- psychologist-chat-input.tsx
 |    |    |    |    +--- forum
 |    |    |    |    |    +--- comment-thread.tsx
 |    |    |    |    |    +--- create-post-form.tsx
@@ -246,6 +252,8 @@
 |    |    |    |    |    +--- PsychologistSidebar.tsx
 |    |    |    |    |    +--- SidebarLayout.tsx
 |    |    |    |    |    \--- welcome-greeting.tsx
+|    |    |    |    +--- theme
+|    |    |    |    |    \--- theme-provider.tsx
 |    |    |    |    \--- ui
 |    |    |    |         +--- avatar.tsx
 |    |    |    |         +--- avatar-modal.tsx
@@ -262,6 +270,7 @@
 |    |    |    |    |    \--- profile.json
 |    |    |    |    +--- api.ts
 |    |    |    |    +--- campus.ts
+|    |    |    |    +--- format-date.ts
 |    |    |    |    +--- student-code.ts
 |    |    |    |    +--- supabase.ts
 |    |    |    |    \--- utils.ts

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { RiskBadge } from "../forum/risk-badge";
 import { apiPost } from "../../lib/api";
 import { riskLevelTranslation, alertStatusTranslation } from "../../lib/i18n/risk";
+import { formatDateShort } from "../../lib/format-date";
 import type { NivelRiesgo, EstadoAlerta } from "../../types/domain";
 
 interface AlertCardProps {
@@ -32,12 +33,7 @@ export function AlertCard({
   const level = riskLevelTranslation[risk_level] as NivelRiesgo | undefined;
   const statusText = alertStatusTranslation[status] as EstadoAlerta | undefined;
 
-  const formattedDate = new Date(generated_at).toLocaleDateString("es-CO", {
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const formattedDate = formatDateShort(generated_at);
 
   async function handleAccept(e: React.MouseEvent) {
     e.stopPropagation();

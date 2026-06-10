@@ -15,6 +15,7 @@ interface AlertListItem {
   campus: UdecCampus;
   is_complementary: boolean;
   ai_generated_summary: string | null;
+  assigned_psychologist_id: string | null;
   pseudonym: string;
 }
 
@@ -62,6 +63,7 @@ export class AlertsService {
         campus,
         is_complementary,
         ai_generated_summary,
+        assigned_psychologist_id,
         student:student_id (
           active_pseudonym_id,
           pseudonym:student_active_pseudonym_id_fkey (
@@ -93,6 +95,7 @@ export class AlertsService {
       campus: item.campus,
       is_complementary: item.is_complementary,
       ai_generated_summary: item.ai_generated_summary,
+      assigned_psychologist_id: item.assigned_psychologist_id,
       pseudonym: item.student?.pseudonym?.texto || "Anónimo",
     }));
   }

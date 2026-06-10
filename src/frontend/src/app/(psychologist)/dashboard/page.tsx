@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
-import { AlertList } from "../../../components/alerts/alert-list";
 import { WelcomeGreeting } from "../../../components/psychologist/welcome-greeting";
+import { AlertFeed } from "../../../components/alerts/alert-feed";
 
 interface AlertRaw {
   id: string;
@@ -52,11 +52,16 @@ export default async function DashboardPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get("access_token")?.value;
   const alerts = token ? await getAlerts(token) : [];
-  const totalAlerts = alerts.length;
+  const pendingAlerts = alerts.filter((a) => a.status === "PENDING");
+  const SEVERITY: Record<string, number> = { HIGH: 3, MEDIUM: 2, LOW: 1 };
+  const sortedAlerts = [...pendingAlerts].sort(
+    (a, b) => (SEVERITY[b.risk_level] ?? 0) - (SEVERITY[a.risk_level] ?? 0)
+  );
+  const totalAlerts = pendingAlerts.length;
 
   const todayStr = new Date().toISOString().slice(0, 10);
-  const alertasHoy = alerts.filter((a) => a.generated_at?.startsWith(todayStr)).length;
-  const alertasCriticas = alerts.filter((a) => a.risk_level === "HIGH").length;
+  const alertasHoy = pendingAlerts.filter((a) => a.generated_at?.startsWith(todayStr)).length;
+  const alertasCriticas = pendingAlerts.filter((a) => a.risk_level === "HIGH").length;
 
   const statCards = [
     { label: "Alertas en la sede", value: String(totalAlerts), accent: "text-primary" },
@@ -66,12 +71,6 @@ export default async function DashboardPage() {
     { label: "Autoderivaciones", value: "—", accent: "text-cyan-600" },
     { label: "Alertas críticas", value: String(alertasCriticas), accent: "text-red-600" },
     { label: "Mensajes sin leer", value: "—", accent: "text-primary" },
-  ];
-
-  const riskFilters = [
-    { key: "bajo", label: "Bajo", color: "border-green-400 text-green-700 bg-green-50" },
-    { key: "medio", label: "Medio", color: "border-amber-400 text-amber-700 bg-amber-50" },
-    { key: "critico", label: "Crítico", color: "border-red-400 text-red-700 bg-red-50" },
   ];
 
   return (
@@ -94,29 +93,8 @@ export default async function DashboardPage() {
         ))}
       </div>
 
-      {/* Risk filters */}
-      <div>
-        <h2 className="text-sm font-semibold text-foreground mb-3">Filtrar por nivel de riesgo</h2>
-        <div className="flex flex-wrap gap-3">
-          {riskFilters.map((f) => (
-            <button
-              key={f.key}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold border-2 transition-opacity hover:opacity-80 ${f.color}`}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Alert list */}
-      <div>
-        <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-red-500 inline-block" />
-          Alertas Activas
-        </h2>
-        <AlertList alerts={alerts} />
-      </div>
+      {/* Risk filters + Alert feed */}
+      <AlertFeed alerts={sortedAlerts} />
     </div>
   );
 }

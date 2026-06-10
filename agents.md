@@ -64,6 +64,7 @@ Per-agent instructions live in `.opencode/agents/*.md` — read those before wri
 - MVP UI roles: `Estudiante` and `Psicólogo` only (Admin/Superadmin via Supabase Studio)
 - AWS-style error format: `{ "error": "SCREAMING_SNAKE_CASE", "message": "..." }`
 - **Circular FK dependency (CRITICAL):** `student.active_pseudonym_id` → `pseudonym.id` (FK name: `student_active_pseudonym_id_fkey`, ON DELETE SET NULL) + `pseudonym.student_id` → `student.id` (ON DELETE CASCADE). PostgREST `/auth/me` embedded join requires exact FK name `student_active_pseudonym_id_fkey`. If auto-generated name differs, recreate with correct name.
+- **PostgREST embed disambiguation:** When joining `student → pseudonym` in `.select()`, always use the explicit FK constraint name with bang syntax — e.g., `pseudonym!fk_student_active_pseudonym` or colon syntax `pseudonym:fk_student_active_pseudonym`. Never use column-name syntax like `pseudonym!active_pseudonym_id`. PostgREST can find multiple constraint names for the same FK relationship and throw `PGRST201: Could not embed because more than one relationship was found`.
 
 ## NLP tests that must always stay green
 
