@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
-import { Avatar } from "../../../../components/ui/avatar";
+import { Avatar } from "../../../components/ui/avatar";
 import { MessageSquare, ChevronRight } from "lucide-react";
 
 interface CaseRaw {
@@ -92,7 +92,7 @@ export default async function MyCasesPage() {
             return (
               <Link
                 key={c.id}
-                href={`/dashboard/chat?caseId=${c.id}`}
+                href={`/cases/${c.id}`}
                 className="bg-surface border border-border rounded-2xl p-4 space-y-3 transition-shadow hover:shadow-sm block cursor-pointer"
               >
                 <div className="flex items-center gap-3">
@@ -121,7 +121,7 @@ export default async function MyCasesPage() {
                 <div className="flex items-center justify-between text-xs">
                   <span className="flex items-center gap-1 text-primary font-medium">
                     <MessageSquare size={12} />
-                    Ir al chat
+                    Ir al caso
                   </span>
                   <ChevronRight size={14} className="text-muted" />
                 </div>

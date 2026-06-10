@@ -8,7 +8,6 @@ import {
   ChevronRight,
   FolderOpen,
   Archive,
-  MessageSquare,
   Settings,
 } from "lucide-react";
 
@@ -58,8 +57,8 @@ export function PsychologistSidebar({ collapsed, onToggle }: PsychologistSidebar
 
           {/* Mis Casos */}
           <Link
-            href="/dashboard/cases"
-            className={linkClass(pathname.startsWith("/dashboard/cases"))}
+            href="/cases"
+            className={linkClass(pathname.startsWith("/cases"))}
             title="Mis Casos"
           >
             <FolderOpen size={18} className={iconOnly} />
@@ -71,16 +70,6 @@ export function PsychologistSidebar({ collapsed, onToggle }: PsychologistSidebar
             <Archive size={18} className={iconOnly} />
             {!collapsed && <span>Archivados</span>}
           </span>
-
-          {/* Chat */}
-          <Link
-            href="/dashboard/chat"
-            className={linkClass(pathname.startsWith("/dashboard/chat"))}
-            title="Chat"
-          >
-            <MessageSquare size={18} className={iconOnly} />
-            {!collapsed && <span>Chat</span>}
-          </Link>
         </nav>
 
         {/* Bottom section: Configuración — disabled */}

@@ -184,7 +184,7 @@ export function ChatCaseView({ caseId, token }: ChatCaseViewProps) {
     <div className="flex h-[calc(100vh-6rem)] gap-4">
       <div className={`flex flex-col gap-4 overflow-y-auto custom-scrollbar transition-all duration-300 ${chatCollapsed ? "flex-1" : "w-1/2 lg:w-[45%]"}`}>
         <button
-          onClick={() => router.push("/dashboard/chat")}
+          onClick={() => router.push("/cases")}
           className="self-start flex items-center gap-1 text-xs text-muted hover:text-foreground transition-colors"
         >
           <ChevronLeft size={14} />

@@ -67,7 +67,7 @@ export function ChatCaseList({ cases }: ChatCaseListProps) {
         return (
           <Link
             key={c.id}
-            href={`/dashboard/chat?caseId=${c.id}`}
+            href={`/cases/${c.id}`}
             className="bg-surface border border-border rounded-2xl p-4 space-y-3 transition-shadow hover:shadow-sm block cursor-pointer"
           >
             <div className="flex items-center gap-3">
