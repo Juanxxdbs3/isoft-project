@@ -39,12 +39,20 @@ export default function DashboardPage() {
 
   const displayName = profile?.nombre || profile?.pseudonimo_institucional || "Psicólogo";
 
+  const hour = new Date().getHours();
+  const greeting =
+    hour >= 6 && hour < 12
+      ? "Buenos días"
+      : hour >= 12 && hour < 19
+        ? "Buenas tardes"
+        : "Buenas noches";
+
   return (
     <div className="space-y-8">
       {/* Welcome header */}
       <div>
         <h1 className="text-2xl font-bold font-display text-foreground">
-          Bienvenido, {displayName}
+          {greeting}, {displayName}
         </h1>
         <p className="text-sm text-muted mt-1">
           Monitoreo de bienestar universitario y atención de alertas críticas

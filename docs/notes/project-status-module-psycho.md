@@ -32,24 +32,35 @@ Ver plan completo en `docs/plans/psychologist_module_implementation_plan.md`.
 - [x] Layout refactorizado como server component puro (invoca componentes, sin HTML inline)
 - [x] Fix CSS: `.dark .psychologist-theme` agregado como selector descendiente para modo oscuro
 
-## Sesión 2 — Capa de repositorios para alertas y casos 🔲
+### 1.4 Frontend — Correcciones UI y navegación ✅
 
-### 2.1 Interfaces
+- [x] Fuga verde en `/foro` corregida — Clase `.psychologist-theme` envuelve el branch psicólogo en `(student)/layout.tsx`
+- [x] Chat residual removido — Enlace redundante eliminado de `psychologistNavLinks`
+- [x] Nav centrada — Logo izquierda, Dashboard/Foro centro, usuario+ThemeToggle derecha
+- [x] Sidebar colapsable — Protuberancia con flecha, transición w-56 ↔ w-14, iconos visibles
+- [x] Botón Configuración en sidebar — Ruta `/dashboard/settings` con icono `Settings`
+- [x] Enlace "Casos Archivados" — Navegación a `/dashboard/cases?status=ARCHIVED`
+- [x] Saludo dinámico — "Buenos días/tardes/noches" según `new Date().getHours()`
+- [x] `StatusToast` component — Notificaciones flotantes bottom-center con variantes
 
-- [ ] `IAlertRepository` en `repositories/interfaces.ts`
-- [ ] `ICaseRepository` en `repositories/interfaces.ts`
-- [ ] `IChatRepository` en `repositories/interfaces.ts`
+## Sesión 2 — Capa de repositorios para alertas y casos ✅
 
-### 2.2 Implementaciones
+### 2.1 Interfaces ✅
 
-- [ ] `repositories/alert.repository.ts`
-- [ ] `repositories/case.repository.ts`
-- [ ] `repositories/chat.repository.ts`
+- [x] `IAlertRepository` en `repositories/interfaces.ts`
+- [x] `ICaseRepository` en `repositories/interfaces.ts`
+- [x] `IChatRepository` en `repositories/interfaces.ts`
 
-### 2.3 Tipos de dominio
+### 2.2 Implementaciones ✅
 
-- [ ] `AlertStatus`, `CaseStatus`, `CaseType`, `ChatStatus`, `MessageType`, `MessageSenderRole`, `ShiftType`, `RiskLevel`
-- [ ] `AlertSummary`, `AlertDetail`
+- [x] `repositories/alert.repository.ts`
+- [x] `repositories/case.repository.ts`
+- [x] `repositories/chat.repository.ts`
+
+### 2.3 Tipos de dominio ✅
+
+- [x] `Alert`, `ClinicalCase`, `ChatRoom`, `ChatMessage`, `NlpAnalysis` — interfaces en `types/domain.ts`
+- [x] Enums ya existían: `AlertStatus`, `CaseStatus`, `CaseType`, `ChatStatus`, `MessageType`, `RiskLevel`
 
 ## Sesión 3 — Backend: módulo de alertas 🔲
 

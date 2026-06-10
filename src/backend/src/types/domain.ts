@@ -105,3 +105,78 @@ export interface Rol {
   nombre: string;
   descripcion: string | null;
 }
+
+// ── Alert ──
+
+export interface Alert {
+  id: string;
+  case_id: string;
+  nlp_analysis_id: string;
+  student_id: string;
+  campus: UdecCampus;
+  risk_level: RiskLevel;
+  status: AlertStatus;
+  assigned_psychologist_id: string | null;
+  is_complementary: boolean;
+  ai_generated_summary: string | null;
+  historical_snapshot: Record<string, unknown> | null;
+  generated_at: string;
+  accepted_at: string | null;
+  closed_at: string | null;
+}
+
+// ── Clinical Case ──
+
+export interface ClinicalCase {
+  id: string;
+  student_id: string;
+  case_type: CaseType;
+  status: CaseStatus;
+  assigned_psychologist_id: string | null;
+  is_unsubscribed_from_recapture: boolean;
+  adviser_export_status: "NOT_EXPORTED" | "EXPORTED_SUCCESS" | "FAILED";
+  opened_at: string;
+  updated_at: string;
+}
+
+// ── Chat ──
+
+export interface ChatRoom {
+  id: string;
+  case_id: string;
+  psychologist_id: string;
+  status: ChatStatus;
+  opened_at: string;
+  last_activity_at: string;
+  closed_at: string | null;
+}
+
+export interface ChatMessage {
+  id: string;
+  chat_room_id: string;
+  sender_id: string;
+  sender_role: "STUDENT" | "PSYCHOLOGIST";
+  text_content: string;
+  message_type: MessageType;
+  read: boolean;
+  sent_at: string;
+}
+
+// ── NLP ──
+
+export interface NlpAnalysis {
+  id: string;
+  post_id: string | null;
+  comment_id: string | null;
+  content_type: "POST" | "COMMENT";
+  analyzed_text_snapshot: string;
+  depressive_probability: number | null;
+  anxiety_probability: number | null;
+  suicidal_probability: number | null;
+  base_malaise_index: number | null;
+  suicidal_override: boolean;
+  community_rules_infraction: boolean;
+  top_clinical_label: string | null;
+  risk_level: RiskLevel;
+  analyzed_at: string;
+}

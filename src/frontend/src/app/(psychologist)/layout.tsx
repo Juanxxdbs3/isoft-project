@@ -13,7 +13,7 @@ export default async function PsychologistLayout({ children }: { children: React
       <PsychologistHeader />
       <div className="flex">
         <PsychologistSidebar />
-        <main className="flex-1 min-h-[calc(100vh-3.5rem)] md:pl-56 pt-0">
+        <main className="flex-1 min-h-[calc(100vh-3.5rem)] pt-0">
           <div className="max-w-7xl mx-auto px-4 py-6">
             {children}
           </div>

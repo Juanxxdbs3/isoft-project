@@ -15,7 +15,6 @@ const studentNavItems = [
 
 const psychologistNavLinks = [
   { href: "/dashboard", label: "Dashboard" },
-  { href: "/dashboard/chat", label: "Chat" },
   { href: "/foro", label: "Foro" },
 ];
 
@@ -29,7 +28,7 @@ export default async function StudentLayout({ children }: { children: React.Reac
   // ── Psychologist visiting from their dashboard sees a header, not student sidebar ──
   if (role === "psychologist") {
     return (
-      <>
+      <div className="psychologist-theme">
         <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
           <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
             <div className="flex items-center gap-6">
@@ -50,7 +49,7 @@ export default async function StudentLayout({ children }: { children: React.Reac
           </div>
         </header>
         <main className="max-w-7xl mx-auto px-4 py-6">{children}</main>
-      </>
+      </div>
     );
   }
 

@@ -14,9 +14,16 @@
 - [x] Avatar modal interactivo — Rejilla 6 estilos DiceBear (open-peeps, bottts, avataaars, identicon, adventurer, lorelei). Reemplaza input de texto manual.
 - [x] Dashboard del psicólogo — Route group `(psychologist)/layout.tsx` + `dashboard/page.tsx` NOTA: AÚN NO TIENE NINGUNA FUNCIONALIDAD, SOLO HAY UN ARCHIVO INICIAL.
 - [x] Tema de psicólogo aplicado al layout — Clase `.psychologist-theme` en `<div>` raíz de `(psychologist)/layout.tsx` (Sesión 1.3)
+- [x] Tema de psicólogo también en `/foro` — Clase `.psychologist-theme` inyectada en el branch psicólogo del layout estudiante (Sesión 1.4)
 - [x] Layout psicólogo modular — `PsychologistHeader.tsx`, `PsychologistSidebar.tsx` como componentes cliente
 - [x] Fix CSS modo oscuro psicólogo — Selector `.dark .psychologist-theme` agregado
 - [x] Pantalla `/admin/register-psychologist` — Formulario interno de aprovisionamiento (Sesión 1.2)
+- [x] Nav centrada en barra superior psicólogo — Logo izquierda, nav centro, usuario+derecha (Sesión 1.4)
+- [x] Sidebar psicólogo colapsable — Protuberancia con flecha, transición w-56 ↔ w-14, iconos visibles (Sesión 1.4)
+- [x] Saludo dinámico en dashboard — "Buenos días/tardes/noches" según hora local (Sesión 1.4)
+- [x] Componente StatusToast — Notificaciones flotantes bottom-center (Sesión 1.4)
+- [x] Botón Config en sidebar — Ruta `/dashboard/settings` con icono engranaje (Sesión 1.4)
+- [x] Enlace "Casos Archivados" en sidebar — Navegación a filtro de archivados (Sesión 1.4)
 - [x] Integración con backend real — Forum CRUD, JWT fix, avatar endpoint
 - [x] TypeScript limpio — `npx tsc --noEmit` pasa sin errores
 - [x] ChatWidget componente modular (`components/chat/chat-widget.tsx`) — props `roomId`, `currentUserId`, `currentUserRole`. Responsive (flotante desktop, fullscreen mobile). Conexión Realtime vía Supabase broadcast.
@@ -80,6 +87,14 @@
 - [x] `repositories/psychologist.repository.ts` — `SupabasePsychologistRepository`
 - [x] `lib/roles.ts` — lógica compartida `getPsicologoRolId()` / `getEstudianteRolId()` (DRY)
 - [x] `auth.service.ts` refactorizado para usar `lib/roles.ts`
+
+### Completado ✅ (Sesión 2 — Repositorios)
+
+- [x] `types/domain.ts` — Interfaces `Alert`, `ClinicalCase`, `ChatRoom`, `ChatMessage`, `NlpAnalysis`
+- [x] `repositories/interfaces.ts` — Contratos `IAlertRepository`, `ICaseRepository`, `IChatRepository`
+- [x] `repositories/alert.repository.ts` — `SupabaseAlertRepository`
+- [x] `repositories/case.repository.ts` — `SupabaseCaseRepository`
+- [x] `repositories/chat.repository.ts` — `SupabaseChatRepository`
 
 ### Pendiente 🔲
 
