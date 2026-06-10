@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { AlertList } from "../../../components/alerts/alert-list";
+import { WelcomeGreeting } from "../../../components/psychologist/welcome-greeting";
 
 interface AlertRaw {
   id: string;
@@ -57,14 +58,6 @@ export default async function DashboardPage() {
   const alertasHoy = alerts.filter((a) => a.generated_at?.startsWith(todayStr)).length;
   const alertasCriticas = alerts.filter((a) => a.risk_level === "HIGH").length;
 
-  const hour = new Date().getHours();
-  const greeting =
-    hour >= 6 && hour < 12
-      ? "Buenos días"
-      : hour >= 12 && hour < 19
-        ? "Buenas tardes"
-        : "Buenas noches";
-
   const statCards = [
     { label: "Alertas en la sede", value: String(totalAlerts), accent: "text-primary" },
     { label: "Alertas hoy", value: String(alertasHoy), accent: "text-amber-600" },
@@ -84,14 +77,7 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8">
       {/* Welcome header */}
-      <div>
-        <h1 className="text-2xl font-bold font-display text-foreground">
-          {greeting}, Psicólogo
-        </h1>
-        <p className="text-sm text-muted mt-1">
-          Monitoreo de bienestar universitario y atención de alertas críticas
-        </p>
-      </div>
+      <WelcomeGreeting />
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">

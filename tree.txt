@@ -187,6 +187,9 @@
 |    |    |    +--- app
 |    |    |    |    +--- (psychologist)
 |    |    |    |    |    +--- dashboard
+|    |    |    |    |    |    +--- alerts
+|    |    |    |    |    |    |    \--- [alertId]
+|    |    |    |    |    |    |         \--- page.tsx
 |    |    |    |    |    |    +--- chat
 |    |    |    |    |    |    |    \--- page.tsx
 |    |    |    |    |    |    \--- page.tsx
@@ -217,6 +220,12 @@
 |    |    |    |    +--- layout.tsx
 |    |    |    |    \--- page.tsx
 |    |    |    +--- components
+|    |    |    |    +--- alerts
+|    |    |    |    |    +--- alert-card.tsx
+|    |    |    |    |    +--- alert-detail-panel.tsx
+|    |    |    |    |    +--- alert-list.tsx
+|    |    |    |    |    +--- nlp-scores-panel.tsx
+|    |    |    |    |    \--- post-history-list.tsx
 |    |    |    |    +--- chat
 |    |    |    |    |    +--- chat-bubble.tsx
 |    |    |    |    |    +--- chat-header.tsx
@@ -235,7 +244,8 @@
 |    |    |    |    +--- psychologist
 |    |    |    |    |    +--- PsychologistHeader.tsx
 |    |    |    |    |    +--- PsychologistSidebar.tsx
-|    |    |    |    |    \--- SidebarLayout.tsx
+|    |    |    |    |    +--- SidebarLayout.tsx
+|    |    |    |    |    \--- welcome-greeting.tsx
 |    |    |    |    \--- ui
 |    |    |    |         +--- avatar.tsx
 |    |    |    |         +--- avatar-modal.tsx

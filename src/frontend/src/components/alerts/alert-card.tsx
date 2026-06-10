@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { RiskBadge } from "../forum/risk-badge";
 import { apiPost } from "../../lib/api";
 import { riskLevelTranslation, alertStatusTranslation } from "../../lib/i18n/risk";
@@ -38,7 +39,8 @@ export function AlertCard({
     minute: "2-digit",
   });
 
-  async function handleAccept() {
+  async function handleAccept(e: React.MouseEvent) {
+    e.stopPropagation();
     setAccepting(true);
     try {
       const token = localStorage.getItem("access_token");
@@ -56,11 +58,12 @@ export function AlertCard({
   const isPending = status === "PENDING" && !accepted;
 
   return (
-    <div
-      className={`bg-surface border border-border rounded-2xl p-4 flex flex-col gap-2 transition-shadow hover:shadow-sm ${
-        isHigh ? "border-l-4 border-l-risk-high" : ""
-      }`}
-    >
+    <Link href={`/dashboard/alerts/${id}`} className="block cursor-pointer">
+      <div
+        className={`bg-surface border border-border rounded-2xl p-4 flex flex-col gap-2 transition-shadow hover:shadow-sm ${
+          isHigh ? "border-l-4 border-l-risk-high" : ""
+        }`}
+      >
       {/* Header row */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 min-w-0">
@@ -97,6 +100,7 @@ export function AlertCard({
           {accepting ? "Aceptando..." : "Aceptar caso"}
         </button>
       )}
-    </div>
+      </div>
+    </Link>
   );
 }

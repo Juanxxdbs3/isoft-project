@@ -95,12 +95,20 @@ Ver plan completo en `docs/plans/psychologist_module_implementation_plan.md`.
 - [x] `components/alerts/risk-badge.tsx` — componente reutilizable con variantes de color (bajo/medio/alto/alto_por_filtro_seguridad), reusado en `AlertCard`.
 - [x] Realtime suscripción a nuevas alertas integrada en `alert-list.tsx` mediante `supabase.channel().on('postgres_changes', ...)`.
 
-## Sesión 6 — Frontend: detalle de alerta y aceptación 🔲
+## Sesión 6 — Frontend: detalle de alerta y aceptación ✅
 
-- [ ] `(psychologist)/dashboard/alerts/[alertId]/page.tsx`
-- [ ] `components/alerts/alert-detail-panel.tsx`
-- [ ] `components/alerts/nlp-scores-panel.tsx`
-- [ ] `components/alerts/post-history-list.tsx`
+### 6.1 Tanda 1 — Ruta de detalle, paneles y deanonymización ✅
+
+- [x] `components/psychologist/welcome-greeting.tsx` — Client Component que fetchea `/auth/me` post-mount para mostrar el nombre real del psicólogo, eliminando el hydration mismatch. Dashboard `page.tsx` usa `<WelcomeGreeting />` en lugar de `"Psicólogo"` hardcodeado.
+- [x] `components/alerts/alert-card.tsx` — Navegación envuelta en `<Link href={/dashboard/alerts/${id}}>`; botón accept usa `e.stopPropagation()`.
+- [x] `(psychologist)/dashboard/alerts/[alertId]/page.tsx` — Server Component, fetchea `GET /api/v1/alerts/:id` con auth cookie, renderiza `<AlertDetailPanel>`.
+- [x] `components/alerts/nlp-scores-panel.tsx` — Componente presentacional con 4 barras de puntuación (depresión, ansiedad, suicida, IMB), badge `suicidal_override`, RiskBadge.
+- [x] `components/alerts/post-history-list.tsx` — Lista cronológica de posts, resalta coincidencia `trigger_text` con `bg-risk-high-bg/20 border-l-2 border-l-risk-high`.
+- [x] `components/alerts/alert-detail-panel.tsx` — Client Component orquestador con anonimato RF21: sección deanonymized data usa `blur-[4px] pointer-events-none select-none` cuando status es PENDING, placeholders `••••••••` cuando `deanonymized_data` es null. Botón Accept con `router.refresh()` tras éxito. Banner de confirmación al aceptar.
+
+Reusa `lib/i18n/risk.ts` y `forum/risk-badge.tsx` para todos los scores, i18n y traducciones de estado.
+
+`tsc --noEmit`: 0 errores en frontend.
 
 ## Sesión 7 — Frontend: pantalla de chat del psicólogo 🔲
 
