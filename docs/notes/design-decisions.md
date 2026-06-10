@@ -72,3 +72,18 @@ CREATE TABLE wellness_event (
 - El botón de protuberancia está posicionado con `fixed` y se mueve mediante style `left`.
 - El sidebar usa `sticky top-14` en lugar de `fixed` para que participe en el flujo flex y el contenido principal se ajuste automáticamente.
 - El layout raíz eliminó `md:pl-56` para delegar el espaciado al flex layout.
+
+---
+
+## AD-05: Deuda técnica — publisher_id polimórfico en post/comment
+
+**Fecha:** 2026-06-09
+**Contexto:** La tabla `post` y `comment` tienen una FK obligatoria a `student.id`. Los psicólogos no pueden crear hilos ni comentarios porque no tienen registro en la tabla `student`. Actualmente el problema se resuelve a nivel UI deshabilitando los formularios cuando `participacion_foro_habilitada = false` (default para psicólogos).
+
+**Decisión:** Se posterga la migración de esquema que transformaría `student_id` en un `publisher_id` UUID polimórfico con una columna `publisher_role` (`STUDENT` | `PSYCHOLOGIST`). Mientras tanto, la columna `psychologist.participacion_foro_habilitada` (BOOLEAN, default `false`) controla el acceso desde el frontend.
+
+**Consecuencias:**
+- El frontend consulta `/auth/me` para obtener `participacion_foro_habilitada`.
+- Si es `false`, se ocultan los formularios de post y comentario, mostrando un banner informativo en tonos lavanda.
+- Futura migración: agregar `publisher_id UUID` y `publisher_role VARCHAR` a `post` y `comment`, convertir datos existentes, y eliminar la FK a `student.id` (o hacerla nullable).
+- El backend ya almacena y retorna `participacion_foro_habilitada` desde el endpoint `/auth/me`.

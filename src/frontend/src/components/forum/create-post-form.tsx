@@ -1,11 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { SendHorizonal } from "lucide-react";
-import { apiPost, ApiError } from "../../lib/api";
+import { EyeOff, SendHorizonal } from "lucide-react";
+import { apiPost, ApiError, apiGet } from "../../lib/api";
 
 interface CreatePostFormProps {
   onPostCreated?: () => void;
+}
+
+interface PsychologistProfile {
+  participacion_foro_habilitada: boolean;
 }
 
 export function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
@@ -13,15 +17,42 @@ export function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
   const [isPsychologist, setIsPsychologist] = useState(false);
+  const [forumDisabled, setForumDisabled] = useState(false);
 
   useEffect(() => {
     const role = localStorage.getItem("role");
-    setIsPsychologist(role === "psychologist");
+    const isPsy = role === "psychologist";
+    setIsPsychologist(isPsy);
+
+    if (isPsy) {
+      const token = localStorage.getItem("access_token");
+      if (!token) return;
+      apiGet<PsychologistProfile>("/auth/me", token)
+        .then((profile) => setForumDisabled(!profile.participacion_foro_habilitada))
+        .catch(() => {});
+    }
   }, []);
 
-  const placeholder = isPsychologist
-    ? "¿Algún consejo o recomendación para la comunidad?"
-    : "¿Cómo te sientes hoy?";
+  const placeholder = "¿Cómo te sientes hoy?";
+
+  if (forumDisabled) {
+    return (
+      <div className="w-full bg-primary/10 border border-primary/20 rounded-2xl p-5 mb-6 flex items-start gap-3">
+        <div className="shrink-0 mt-0.5 w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center">
+          <EyeOff size={16} className="text-purple-950 dark:text-purple-200" />
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-purple-950 dark:text-purple-200">
+            Modo de Monitoreo Clínico
+          </p>
+          <p className="text-xs text-purple-800 dark:text-purple-300 mt-0.5 leading-relaxed">
+            Los profesionales de salud mental visualizan el foro en modo de monitoreo.
+            La creación de hilos está reservada para estudiantes.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

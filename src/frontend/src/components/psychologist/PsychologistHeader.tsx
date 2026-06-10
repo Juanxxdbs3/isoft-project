@@ -14,6 +14,11 @@ interface PsychologistProfile {
   pseudonimo_institucional: string;
 }
 
+const navLinks = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/foro", label: "Foro" },
+];
+
 export function PsychologistHeader() {
   const [profile, setProfile] = useState<PsychologistProfile | null>(null);
   const [localCampus, setLocalCampus] = useState("");
@@ -34,9 +39,9 @@ export function PsychologistHeader() {
 
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between relative">
         {/* Left: Logo */}
-        <div className="flex-1 flex items-center">
+        <div className="flex items-center">
           <Link
             href="/dashboard"
             className="text-lg font-bold font-display text-primary"
@@ -45,24 +50,21 @@ export function PsychologistHeader() {
           </Link>
         </div>
 
-        {/* Center: Navigation */}
-        <nav className="hidden md:flex items-center gap-4 text-sm">
-          <Link
-            href="/dashboard"
-            className="text-muted hover:text-foreground transition-colors font-medium"
-          >
-            Dashboard
-          </Link>
-          <Link
-            href="/foro"
-            className="text-muted hover:text-foreground transition-colors font-medium"
-          >
-            Foro
-          </Link>
+        {/* Center: Navigation — absolutely centered, immune to side content */}
+        <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-4 text-sm">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-muted hover:text-foreground transition-colors font-medium"
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
         {/* Right: User info + ThemeToggle */}
-        <div className="flex-1 flex items-center justify-end gap-3">
+        <div className="flex items-center gap-3">
           <span className="hidden md:inline text-xs text-muted">
             {displayName}
             {campus && (

@@ -20,11 +20,15 @@ const alertSubItems = [
   { label: "Baja", filter: "baja", color: "before:bg-green-500" },
 ];
 
-export function PsychologistSidebar() {
+interface PsychologistSidebarProps {
+  collapsed: boolean;
+  onToggle: () => void;
+}
+
+export function PsychologistSidebar({ collapsed, onToggle }: PsychologistSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [alertsExpanded, setAlertsExpanded] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
 
   function handleAlertsClick() {
     setAlertsExpanded((prev) => !prev);
@@ -153,7 +157,7 @@ export function PsychologistSidebar() {
 
       {/* Toggle button — protuberance on right edge */}
       <button
-        onClick={() => setCollapsed((prev) => !prev)}
+        onClick={onToggle}
         className="hidden md:flex fixed z-30 items-center justify-center w-6 h-10 rounded-r-xl bg-sidebar border border-l-0 border-border text-muted hover:text-foreground transition-all duration-300 cursor-pointer"
         style={{
           left: collapsed ? "56px" : "224px",

@@ -8,6 +8,7 @@ import forumRouter from "./modules/forum/forum.router.js";
 import studentsRouter from "./modules/students/students.router.js";
 import chatRouter from "./modules/chat/chat.router.js";
 import psychologistsRouter from "./modules/psychologists/psychologists.router.js";
+import alertsRouter from "./modules/alerts/alerts.router.js";
 
 export class Server {
   public readonly app: FastifyInstance;
@@ -48,6 +49,7 @@ export class Server {
     await this.app.register(studentsRouter, { prefix: "/api/v1/students" });
     await this.app.register(chatRouter, { prefix: "/api/v1/chat" });
     await this.app.register(psychologistsRouter, { prefix: "/api/v1/admin" });
+    await this.app.register(alertsRouter, { prefix: "/api/v1/alerts" });
 
     this.app.get("/health", async () => ({
       status: "ok",

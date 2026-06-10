@@ -1,10 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { SendHorizonal } from "lucide-react";
+import { useState, useEffect } from "react";
+import { EyeOff, SendHorizonal } from "lucide-react";
 import { Avatar } from "../ui/avatar";
 import { apiGet, apiPost, ApiError } from "../../lib/api";
 import type { CommentItem as CommentItemType, EstadoContenido } from "../../types/domain";
+
+interface PsychologistProfile {
+  participacion_foro_habilitada: boolean;
+}
 
 interface CommentThreadProps {
   postId: string;
@@ -16,6 +20,17 @@ export function CommentThread({ postId, initialComments = [] }: CommentThreadPro
   const [newComment, setNewComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [forumDisabled, setForumDisabled] = useState(false);
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role !== "psychologist") return;
+    const token = localStorage.getItem("access_token");
+    if (!token) return;
+    apiGet<PsychologistProfile>("/auth/me", token)
+      .then((profile) => setForumDisabled(!profile.participacion_foro_habilitada))
+      .catch(() => {});
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -79,28 +94,35 @@ export function CommentThread({ postId, initialComments = [] }: CommentThreadPro
         <p className="text-xs text-red-500 dark:text-red-400">{error}</p>
       )}
 
-      <form onSubmit={handleSubmit} className="flex gap-2 pt-2">
-        <input
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          placeholder="Escribe un comentario…"
-          maxLength={300}
-          disabled={submitting}
-          className="flex-1 px-3 py-2 bg-surface border border-input rounded-xl text-sm
-                     text-foreground placeholder:text-muted/50
-                     focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary
-                     disabled:opacity-50"
-        />
-        <button
-          type="submit"
-          disabled={!newComment.trim() || submitting}
-          className="px-3 py-2 bg-primary text-white rounded-xl hover:bg-primary/90
-                     transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-          aria-label="Enviar comentario"
-        >
-          <SendHorizonal size={16} />
-        </button>
-      </form>
+      {forumDisabled ? (
+        <div className="flex items-center gap-2 pt-3 text-xs text-purple-800 dark:text-purple-300">
+          <EyeOff size={14} className="text-purple-950 dark:text-purple-200" />
+          <span>El modo de monitoreo clínico no permite participar en comentarios.</span>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="flex gap-2 pt-2">
+          <input
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="Escribe un comentario…"
+            maxLength={300}
+            disabled={submitting}
+            className="flex-1 px-3 py-2 bg-surface border border-input rounded-xl text-sm
+                       text-foreground placeholder:text-muted/50
+                       focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary
+                       disabled:opacity-50"
+          />
+          <button
+            type="submit"
+            disabled={!newComment.trim() || submitting}
+            className="px-3 py-2 bg-primary text-white rounded-xl hover:bg-primary/90
+                       transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            aria-label="Enviar comentario"
+          >
+            <SendHorizonal size={16} />
+          </button>
+        </form>
+      )}
     </div>
   );
 }

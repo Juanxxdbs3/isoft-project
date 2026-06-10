@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { PsychologistHeader } from "../../components/psychologist/PsychologistHeader";
-import { PsychologistSidebar } from "../../components/psychologist/PsychologistSidebar";
+import { SidebarLayout } from "../../components/psychologist/SidebarLayout";
 
 export default async function PsychologistLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
@@ -11,14 +11,7 @@ export default async function PsychologistLayout({ children }: { children: React
   return (
     <div className="psychologist-theme min-h-screen bg-background">
       <PsychologistHeader />
-      <div className="flex">
-        <PsychologistSidebar />
-        <main className="flex-1 min-h-[calc(100vh-3.5rem)] pt-0">
-          <div className="max-w-7xl mx-auto px-4 py-6">
-            {children}
-          </div>
-        </main>
-      </div>
+      <SidebarLayout>{children}</SidebarLayout>
     </div>
   );
 }

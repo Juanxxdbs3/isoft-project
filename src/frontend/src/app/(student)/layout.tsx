@@ -5,17 +5,13 @@ import { House, User, ClipboardList, Settings } from "lucide-react";
 import { ThemeToggle } from "../../components/ui/theme-toggle";
 import { UserBadge } from "../../components/ui/user-badge";
 import { ChatNavItem } from "../../components/navigation/student-nav-items";
+import { PsychologistHeader } from "../../components/psychologist/PsychologistHeader";
 
 const studentNavItems = [
   { href: "/foro", icon: House, label: "Inicio" },
   { href: "/perfil", icon: User, label: "Mi Perfil" },
   { href: "/perfil?tab=posts", icon: ClipboardList, label: "Mis Publicaciones" },
   { href: "/configuracion", icon: Settings, label: "Configuración" },
-];
-
-const psychologistNavLinks = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/foro", label: "Foro" },
 ];
 
 export default async function StudentLayout({ children }: { children: React.ReactNode }) {
@@ -28,26 +24,8 @@ export default async function StudentLayout({ children }: { children: React.Reac
   // ── Psychologist visiting from their dashboard sees a header, not student sidebar ──
   if (role === "psychologist") {
     return (
-      <div className="psychologist-theme">
-        <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
-          <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <span className="text-lg font-bold font-display text-primary">MindBridge</span>
-              <nav className="hidden md:flex items-center gap-4 text-sm">
-                {psychologistNavLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-muted hover:text-foreground transition-colors font-medium"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-            <ThemeToggle />
-          </div>
-        </header>
+      <div className="psychologist-theme min-h-screen bg-background text-foreground transition-colors duration-300">
+        <PsychologistHeader />
         <main className="max-w-7xl mx-auto px-4 py-6">{children}</main>
       </div>
     );

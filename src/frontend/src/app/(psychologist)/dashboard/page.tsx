@@ -15,7 +15,9 @@ interface PsychologistProfile {
 const statCards = [
   { label: "Alertas en la sede", value: "—", accent: "text-primary" },
   { label: "Alertas hoy", value: "—", accent: "text-amber-600" },
+  { label: "Alertas IA (NLP)", value: "—", accent: "text-purple-600" },
   { label: "Mis casos activos", value: "—", accent: "text-emerald-600" },
+  { label: "Autoderivaciones", value: "—", accent: "text-cyan-600" },
   { label: "Alertas críticas", value: "—", accent: "text-red-600" },
   { label: "Mensajes sin leer", value: "—", accent: "text-primary" },
 ];
@@ -60,7 +62,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
         {statCards.map((stat) => (
           <div
             key={stat.label}
