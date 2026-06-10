@@ -9,7 +9,7 @@ export default async function PsychologistLayout({ children }: { children: React
   if (!token) redirect("/login");
 
   return (
-    <div className="psychologist-theme min-h-screen bg-background">
+    <div className="psychologist-theme min-h-screen bg-background text-foreground">
       <PsychologistHeader />
       <SidebarLayout>{children}</SidebarLayout>
     </div>

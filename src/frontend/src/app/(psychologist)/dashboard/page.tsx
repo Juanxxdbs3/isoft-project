@@ -1,45 +1,61 @@
-"use client";
+import { cookies } from "next/headers";
+import { AlertList } from "../../../components/alerts/alert-list";
 
-import { useEffect, useState } from "react";
-import { apiGet } from "../../../lib/api";
-
-interface PsychologistProfile {
+interface AlertRaw {
   id: string;
-  nombre: string;
-  correo_institucional: string;
-  campus: string;
-  shift: string;
-  pseudonimo_institucional: string;
+  pseudonym: string | { texto: string };
+  risk_level: string;
+  status: string;
+  is_complementary: boolean;
+  trigger_text: string;
+  generated_at: string;
+  created_at: string;
 }
 
-const statCards = [
-  { label: "Alertas en la sede", value: "—", accent: "text-primary" },
-  { label: "Alertas hoy", value: "—", accent: "text-amber-600" },
-  { label: "Alertas IA (NLP)", value: "—", accent: "text-purple-600" },
-  { label: "Mis casos activos", value: "—", accent: "text-emerald-600" },
-  { label: "Autoderivaciones", value: "—", accent: "text-cyan-600" },
-  { label: "Alertas críticas", value: "—", accent: "text-red-600" },
-  { label: "Mensajes sin leer", value: "—", accent: "text-primary" },
-];
+interface NormalizedAlert {
+  id: string;
+  pseudonym: string;
+  risk_level: string;
+  status: string;
+  is_complementary: boolean;
+  trigger_text: string;
+  generated_at: string;
+}
 
-const riskFilters = [
-  { key: "bajo", label: "Bajo", color: "border-green-400 text-green-700 bg-green-50" },
-  { key: "medio", label: "Medio", color: "border-amber-400 text-amber-700 bg-amber-50" },
-  { key: "critico", label: "Crítico", color: "border-red-400 text-red-700 bg-red-50" },
-];
+function normalizePseudonym(alert: AlertRaw): NormalizedAlert {
+  const pseudonym =
+    typeof alert.pseudonym === "object" && alert.pseudonym !== null
+      ? (alert.pseudonym as { texto: string }).texto
+      : (alert.pseudonym as string);
+  return { ...alert, pseudonym };
+}
 
-export default function DashboardPage() {
-  const [profile, setProfile] = useState<PsychologistProfile | null>(null);
+async function getAlerts(token: string): Promise<NormalizedAlert[]> {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api/v1";
+  try {
+    const res = await fetch(`${baseUrl}/alerts`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+    });
+    if (!res.ok) return [];
+    const json = await res.json();
+    const items: AlertRaw[] = json.data || [];
+    return items.map(normalizePseudonym);
+  } catch {
+    return [];
+  }
+}
 
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (!token) return;
-    apiGet<PsychologistProfile>("/auth/me", token)
-      .then(setProfile)
-      .catch(() => {});
-  }, []);
+export default async function DashboardPage() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("access_token")?.value;
+  const alerts = token ? await getAlerts(token) : [];
+  const totalAlerts = alerts.length;
 
-  const displayName = profile?.nombre || profile?.pseudonimo_institucional || "Psicólogo";
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const alertasHoy = alerts.filter((a) => a.generated_at?.startsWith(todayStr)).length;
+  const alertasCriticas = alerts.filter((a) => a.risk_level === "HIGH").length;
 
   const hour = new Date().getHours();
   const greeting =
@@ -49,12 +65,28 @@ export default function DashboardPage() {
         ? "Buenas tardes"
         : "Buenas noches";
 
+  const statCards = [
+    { label: "Alertas en la sede", value: String(totalAlerts), accent: "text-primary" },
+    { label: "Alertas hoy", value: String(alertasHoy), accent: "text-amber-600" },
+    { label: "Alertas IA (NLP)", value: String(totalAlerts), accent: "text-purple-600" },
+    { label: "Mis casos activos", value: "—", accent: "text-emerald-600" },
+    { label: "Autoderivaciones", value: "—", accent: "text-cyan-600" },
+    { label: "Alertas críticas", value: String(alertasCriticas), accent: "text-red-600" },
+    { label: "Mensajes sin leer", value: "—", accent: "text-primary" },
+  ];
+
+  const riskFilters = [
+    { key: "bajo", label: "Bajo", color: "border-green-400 text-green-700 bg-green-50" },
+    { key: "medio", label: "Medio", color: "border-amber-400 text-amber-700 bg-amber-50" },
+    { key: "critico", label: "Crítico", color: "border-red-400 text-red-700 bg-red-50" },
+  ];
+
   return (
     <div className="space-y-8">
       {/* Welcome header */}
       <div>
         <h1 className="text-2xl font-bold font-display text-foreground">
-          {greeting}, {displayName}
+          {greeting}, Psicólogo
         </h1>
         <p className="text-sm text-muted mt-1">
           Monitoreo de bienestar universitario y atención de alertas críticas
@@ -68,7 +100,9 @@ export default function DashboardPage() {
             key={stat.label}
             className="bg-surface border border-border rounded-2xl p-4 flex flex-col gap-1"
           >
-            <span className="text-2xl font-bold font-display text-foreground">{stat.value}</span>
+            <span className={`text-2xl font-bold font-display text-foreground ${stat.accent}`}>
+              {stat.value}
+            </span>
             <span className="text-xs text-muted">{stat.label}</span>
           </div>
         ))}
@@ -89,43 +123,13 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Critical alerts section (prioritized) */}
+      {/* Alert list */}
       <div>
         <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-red-500 inline-block" />
-          Alertas Críticas
+          Alertas Activas
         </h2>
-        <div className="bg-surface border border-red-200 rounded-2xl p-8 text-center">
-          <p className="text-sm text-muted">
-            No hay alertas críticas pendientes
-          </p>
-        </div>
-      </div>
-
-      {/* Medium / Low alerts columns */}
-      <div className="grid md:grid-cols-2 gap-6">
-        <div>
-          <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-amber-500 inline-block" />
-            Riesgo Medio
-          </h2>
-          <div className="bg-surface border border-border rounded-2xl p-8 text-center">
-            <p className="text-sm text-muted">
-              Sin alertas de nivel medio
-            </p>
-          </div>
-        </div>
-        <div>
-          <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
-            Riesgo Bajo
-          </h2>
-          <div className="bg-surface border border-border rounded-2xl p-8 text-center">
-            <p className="text-sm text-muted">
-              Sin alertas de nivel bajo
-            </p>
-          </div>
-        </div>
+        <AlertList alerts={alerts} />
       </div>
     </div>
   );

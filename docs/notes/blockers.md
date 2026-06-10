@@ -52,3 +52,10 @@ en `docs/diagrams/entidades-del-negocio.txt` y `docs/diagrams/types.txt`.
 - Enums corregidos: AlertStatus (ATTENDED→SERVED), ChatStatus (agregado CLOSED_BY_INACTIVITY), MessageType (TEXT→STANDARD_TEXT, WELLBEING_RESOURCE→CHARACTERIZATION_LINK).
 - Agregados 8 enums faltantes: AccountStatus, AdviserExportStatus, CaseStatus, CaseType, ContentType, ShiftType, ModerationAction, AcademicProgram, CampusUdeC.
 - Actualizado "Immutable records" y "Key constraints" para reflejar nombres en inglés.
+
+## Polimorfismo de encuestas (CHARACTERIZATION_LINK) — FUTURE EXTENSION
+
+**Service:** backend
+**Status:** Extension de diseño futura
+**Description:** El tipo `CHARACTERIZATION_LINK` actualmente inyecta `FO_BU_O13_FORM_URL` como texto del mensaje, ignorando el `text_content` del body. Esto cubre el caso del formulario FO-BU-O13.
+**Extensión planificada:** Permitir que el body acepte un campo `form_code` adicional para seleccionar entre múltiples URLs de encuesta (psicosocial, académica, caracterización general). Cada código se mapearía a una variable de entorno distinta (ej. `FORM_URL_PSYCHOSOCIAL`, `FORM_URL_ACADEMIC`). El `text_content` siempre se ignora cuando `message_type = CHARACTERIZATION_LINK`.

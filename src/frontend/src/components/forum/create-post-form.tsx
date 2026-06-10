@@ -37,15 +37,15 @@ export function CreatePostForm({ onPostCreated }: CreatePostFormProps) {
 
   if (forumDisabled) {
     return (
-      <div className="w-full bg-primary/10 border border-primary/20 rounded-2xl p-5 mb-6 flex items-start gap-3">
-        <div className="shrink-0 mt-0.5 w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center">
-          <EyeOff size={16} className="text-purple-950 dark:text-purple-200" />
+      <div className="w-full bg-surface border border-border rounded-2xl p-5 mb-6 flex items-start gap-3 shadow-sm">
+        <div className="shrink-0 mt-0.5 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+          <EyeOff size={16} className="text-primary" />
         </div>
         <div>
-          <p className="text-sm font-semibold text-purple-950 dark:text-purple-200">
+          <p className="text-sm font-bold text-foreground">
             Modo de Monitoreo Clínico
           </p>
-          <p className="text-xs text-purple-800 dark:text-purple-300 mt-0.5 leading-relaxed">
+          <p className="text-xs text-muted mt-1 leading-relaxed">
             Los profesionales de salud mental visualizan el foro en modo de monitoreo.
             La creación de hilos está reservada para estudiantes.
           </p>

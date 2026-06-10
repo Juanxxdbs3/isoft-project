@@ -33,14 +33,16 @@
 |    |    \--- types.txt
 |    +--- models
 |    |    +--- MindBridge_entity_reference.md
-|    |    \--- mindbridge_schema.sql
+|    |    +--- mindbridge_schema.sql
+|    |    \--- mindbridge_schema_compact.md
 |    +--- notes
 |    |    +--- blockers.md
 |    |    +--- design-decisions.md
 |    |    +--- nlp-dataset-status.md
-|    |    \--- project-status.md
+|    |    +--- project-status.md
+|    |    \--- project-status-module-psycho.md
 |    \--- plans
-|         \--- psychologist-module-plan.md
+|         \--- psychologist_module_implementation_plan.md
 +--- Documentación
 |    +--- Anexos
 |    |    +--- Acta_Entrevista_Estudiante.docx
@@ -112,14 +114,21 @@
 |    |    |    +--- lib
 |    |    |    |    +--- encryption.ts
 |    |    |    |    +--- errors.ts
+|    |    |    |    +--- roles.ts
 |    |    |    |    \--- student-code.ts
 |    |    |    +--- modules
 |    |    |    |    +--- alerts
+|    |    |    |    |    +--- alerts.router.ts
+|    |    |    |    |    +--- alerts.schema.ts
+|    |    |    |    |    \--- alerts.service.ts
 |    |    |    |    +--- auth
 |    |    |    |    |    +--- auth.router.ts
 |    |    |    |    |    +--- auth.schema.ts
 |    |    |    |    |    \--- auth.service.ts
 |    |    |    |    +--- cases
+|    |    |    |    |    +--- cases.router.ts
+|    |    |    |    |    +--- cases.schema.ts
+|    |    |    |    |    \--- cases.service.ts
 |    |    |    |    +--- chat
 |    |    |    |    |    +--- chat.router.ts
 |    |    |    |    |    +--- chat.schema.ts
@@ -130,6 +139,10 @@
 |    |    |    |    |    +--- forum.schema.ts
 |    |    |    |    |    \--- forum.service.ts
 |    |    |    |    +--- notifications
+|    |    |    |    +--- psychologists
+|    |    |    |    |    +--- psychologists.router.ts
+|    |    |    |    |    +--- psychologists.schema.ts
+|    |    |    |    |    \--- psychologists.service.ts
 |    |    |    |    +--- students
 |    |    |    |    |    +--- students.router.ts
 |    |    |    |    |    +--- students.schema.ts
@@ -139,6 +152,11 @@
 |    |    |    |    +--- auth.ts
 |    |    |    |    \--- supabase.ts
 |    |    |    +--- repositories
+|    |    |    |    +--- alert.repository.ts
+|    |    |    |    +--- case.repository.ts
+|    |    |    |    +--- chat.repository.ts
+|    |    |    |    +--- interfaces.ts
+|    |    |    |    \--- psychologist.repository.ts
 |    |    |    +--- types
 |    |    |    |    \--- domain.ts
 |    |    |    +--- app.ts
@@ -185,6 +203,9 @@
 |    |    |    |    |    +--- perfil
 |    |    |    |    |    |    \--- page.tsx
 |    |    |    |    |    \--- layout.tsx
+|    |    |    |    +--- admin
+|    |    |    |    |    \--- register-psychologist
+|    |    |    |    |         \--- page.tsx
 |    |    |    |    +--- login
 |    |    |    |    |    \--- page.tsx
 |    |    |    |    +--- registro
@@ -211,10 +232,15 @@
 |    |    |    |    |    \--- risk-badge.tsx
 |    |    |    |    +--- navigation
 |    |    |    |    |    \--- student-nav-items.tsx
+|    |    |    |    +--- psychologist
+|    |    |    |    |    +--- PsychologistHeader.tsx
+|    |    |    |    |    +--- PsychologistSidebar.tsx
+|    |    |    |    |    \--- SidebarLayout.tsx
 |    |    |    |    \--- ui
 |    |    |    |         +--- avatar.tsx
 |    |    |    |         +--- avatar-modal.tsx
 |    |    |    |         +--- button.tsx
+|    |    |    |         +--- status-toast.tsx
 |    |    |    |         +--- theme-toggle.tsx
 |    |    |    |         \--- user-badge.tsx
 |    |    |    +--- lib

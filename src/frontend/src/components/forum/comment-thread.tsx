@@ -95,8 +95,8 @@ export function CommentThread({ postId, initialComments = [] }: CommentThreadPro
       )}
 
       {forumDisabled ? (
-        <div className="flex items-center gap-2 pt-3 text-xs text-purple-800 dark:text-purple-300">
-          <EyeOff size={14} className="text-purple-950 dark:text-purple-200" />
+        <div className="flex items-center gap-2 pt-3 text-xs text-muted">
+          <EyeOff size={14} className="text-primary" />
           <span>El modo de monitoreo clínico no permite participar en comentarios.</span>
         </div>
       ) : (

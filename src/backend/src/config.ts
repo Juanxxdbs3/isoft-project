@@ -17,6 +17,10 @@ const envSchema = z.object({
   NLP_SERVICE_BEARER_TOKEN: z.string().optional(),
   ADMIN_SECRET: z.string().min(1, "ADMIN_SECRET es requerido para aprovisionamiento de psicólogos"),
   CORS_ORIGIN: z.string().default("http://localhost:3000"),
+  FO_BU_O13_FORM_URL: z
+    .string()
+    .url()
+    .default("https://forms.gle/placeholder-FO-BU-O13"),
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
 });
 

@@ -80,14 +80,20 @@ Ver plan completo en `docs/plans/psychologist_module_implementation_plan.md`.
 - [ ] `POST /api/v1/cases/:caseId/chat/messages`
 - [ ] `PATCH /api/v1/cases/:caseId/chat` (archivar)
 
-## Sesión 5 — Frontend: dashboard y lista de alertas 🔲
+## Sesión 5 — Frontend: dashboard y lista de alertas ✅
 
-- [ ] `(psychologist)/dashboard/page.tsx` (reemplazar stub)
-- [ ] `(psychologist)/dashboard/layout.tsx` (sidebar fijo)
-- [ ] `components/alerts/alert-card.tsx`
-- [ ] `components/alerts/alert-list.tsx`
-- [ ] `components/alerts/risk-badge.tsx`
-- [ ] Realtime suscripción a nuevas alertas
+### 5.1 Tanda 1 — Layout base y componente AlertCard ✅
+
+- [x] `(psychologist)/dashboard/layout.tsx` — `psychologist-theme` wrapper con `text-foreground`, sidebar con `sticky` positioning (revertido de `fixed` para evitar solapamiento del toggle button), items Dashboard/Chat activos, Mis Casos/Archivados/Configuración deshabilitados con `opacity-50 cursor-not-allowed`, padding a `p-4`, main padding `pl-6` expandido / `pl-20` colapsado.
+- [x] `components/alerts/alert-card.tsx` — creado con RiskBadge reuse, Von Restorff effect (`border-l-4 border-l-risk-high` para HIGH), complementary micro-badge, botón accept que llama `POST /api/v1/alerts/:id/accept`, i18n vía `lib/i18n/risk.ts`.
+- [x] `tsc --noEmit` pasa con 0 errores.
+
+### 5.2 Tanda 2 — Lista de alertas y Realtime ✅
+
+- [x] `(psychologist)/dashboard/page.tsx` — Server Component que fetchea `GET /api/v1/alerts` usando auth cookie, normaliza pseudonym, computa stat cards (total alerts, today alerts, HIGH alerts), renderiza `<AlertList>` con datos reales, preserva saludo y botones de filtro.
+- [x] `components/alerts/alert-list.tsx` — Client Component con `useState` para lista local, `useEffect` con Realtime `postgres_changes` subscription en `alert` table filtrada por `campus` desde JWT claims, mapea cada alerta a `<AlertCard>`, renderiza empty state.
+- [x] `components/alerts/risk-badge.tsx` — componente reutilizable con variantes de color (bajo/medio/alto/alto_por_filtro_seguridad), reusado en `AlertCard`.
+- [x] Realtime suscripción a nuevas alertas integrada en `alert-list.tsx` mediante `supabase.channel().on('postgres_changes', ...)`.
 
 ## Sesión 6 — Frontend: detalle de alerta y aceptación 🔲
 
