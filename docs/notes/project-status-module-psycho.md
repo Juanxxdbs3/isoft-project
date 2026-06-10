@@ -1,5 +1,7 @@
 # Módulo del Psicólogo — Estado del Proyecto
 
+> **Actualizado 2026-06-10:** Se actualizó el estado real de Sesiones 3 y 4 del backend de psicólogo (completadas).
+
 Seguimiento específico para la implementación del módulo del psicólogo.
 Ver plan completo en `docs/plans/psychologist_module_implementation_plan.md`.
 
@@ -62,23 +64,23 @@ Ver plan completo en `docs/plans/psychologist_module_implementation_plan.md`.
 - [x] `Alert`, `ClinicalCase`, `ChatRoom`, `ChatMessage`, `NlpAnalysis` — interfaces en `types/domain.ts`
 - [x] Enums ya existían: `AlertStatus`, `CaseStatus`, `CaseType`, `ChatStatus`, `MessageType`, `RiskLevel`
 
-## Sesión 3 — Backend: módulo de alertas 🔲
+## Sesión 3 — Backend: módulo de alertas ✅
 
-- [ ] `GET /api/v1/alerts`
-- [ ] `GET /api/v1/alerts/:alertId`
-- [ ] `POST /api/v1/alerts/:alertId/accept`
-- [ ] `PATCH /api/v1/alerts/:alertId/status`
+- [x] `GET /api/v1/alerts`
+- [x] `GET /api/v1/alerts/:alertId`
+- [x] `POST /api/v1/alerts/:alertId/accept`
+- [x] `PATCH /api/v1/alerts/:alertId/status`
 
-## Sesión 4 — Backend: módulo de casos y chat 🔲
+## Sesión 4 — Backend: módulo de casos y chat ✅
 
-- [ ] `GET /api/v1/cases`
-- [ ] `GET /api/v1/cases/:caseId`
-- [ ] `POST /api/v1/cases` (self-referral)
-- [ ] `PATCH /api/v1/cases/:caseId/formal-active`
-- [ ] `POST /api/v1/cases/:caseId/chat` (crear sala)
-- [ ] `GET /api/v1/cases/:caseId/chat` (historial)
-- [ ] `POST /api/v1/cases/:caseId/chat/messages`
-- [ ] `PATCH /api/v1/cases/:caseId/chat` (archivar)
+- [x] `GET /api/v1/cases`
+- [x] `GET /api/v1/cases/:caseId`
+- [x] `POST /api/v1/cases` (self-referral)
+- [x] `PATCH /api/v1/cases/:caseId/formal-active`
+- [x] `POST /api/v1/cases/:caseId/chat` (crear sala)
+- [x] `GET /api/v1/cases/:caseId/chat` (historial)
+- [x] `POST /api/v1/cases/:caseId/chat/messages`
+- [x] `PATCH /api/v1/cases/:caseId/chat` (archivar)
 
 ## Sesión 5 — Frontend: dashboard y lista de alertas ✅
 

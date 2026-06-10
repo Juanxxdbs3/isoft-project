@@ -14,6 +14,7 @@
 
 | Versión | Fecha      | Descripción                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | ------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1.6     | 10-06-2026 | Corrección de rutas en sección 7.2 (`/panel` → `/dashboard`) y archivos reales. Roadmap: Fase 3 marcada como completada, Fase 4 actualizada (endpoints Alerts y Cases ya implementados).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | 1.5     | 09-06-2026 | Se ha añadido la sección de supabase realtime strategy para las indicaciones del módulo de chat.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | 1.4     | 07-06-2026 | Forum GET endpoints completados: `GET /api/v1/forum/posts` (paginated, no auth), `GET /api/v1/forum/posts/mine` (JWT), `GET /api/v1/forum/posts/:postId` (detail), `GET /api/v1/forum/posts/:postId/comments` (comments list). PostgREST nested join pattern documented for pseudonym resolution via `student_active_pseudonym_id_fkey`. RLS policies `post_select_all_authenticated` y `comment_select_all_authenticated` implementadas.                                                                                                                                                                                                                                     |
 | 1.3     | 07-06-2026 | Fase 1 completada: login y registro con validación, Suspense boundaries, pseudonym stored in localStorage. Fase 2 completada: forum feed con sidebar fijo (fixed left-0 top-14), main content con pl-56, DiceBear avatars integrados. Fase 3 iniciada: psychologist route group creado. Backend forum CRUD endpoints implementados. JWT fix (fastify.jwt.decode). Avatar endpoint agregado. API URL fija a `http://localhost:3001/api/v1`. CAMPUS extraído a `src/frontend/src/lib/campus.ts`. Validación de student code mejorada (entry period, special community, admission position). Dark mode colors centralizados en globals.css. Hardcoded dark: overrides removidos. |
@@ -355,11 +356,12 @@ Un UI Process Component puede contener UI Components como `children`. Un UI Comp
 
 ### 7.2 Rol psicólogo
 
-| Ruta                         | Archivo                                           | RF asociados     |
-| ---------------------------- | ------------------------------------------------- | ---------------- |
-| `/panel`                     | `app/(psychologist)/dashboard/page.tsx`           | RF15, RF16       |
-| `/panel/alertas/[alertId]`   | `app/(psychologist)/alerts/[alertId]/page.tsx`    | RF14, RF19, RF21 |
-| `/panel/casos/[caseId]/chat` | `app/(psychologist)/cases/[caseId]/chat/page.tsx` | RF23, RF24       |
+| Ruta                               | Archivo                                                       | RF asociados     |
+| ---------------------------------- | ------------------------------------------------------------- | ---------------- |
+| `/dashboard`                       | `app/(psychologist)/dashboard/page.tsx`                       | RF15, RF16       |
+| `/dashboard/alerts/[alertId]`      | `app/(psychologist)/dashboard/alerts/[alertId]/page.tsx`      | RF14, RF19, RF21 |
+| `/dashboard/chat?caseId=xxx`       | `app/(psychologist)/dashboard/chat/page.tsx`                  | RF23, RF24       |
+| `/dashboard/cases`                 | `app/(psychologist)/dashboard/cases/page.tsx`                 | RF16             |
 
 ---
 
@@ -513,18 +515,18 @@ Feed de publicaciones con paginación por cursor. Sidebar fijo (`fixed left-0 to
 
 **Pantallas:** `/foro`, `/foro/[id]`, `/perfil`.
 
-### Fase 3 — Panel del psicólogo 🔄 EN EJECUCIÓN
+### Fase 3 — Panel del psicólogo ✅ COMPLETADA
 
-Dashboard con lista de alertas priorizadas y RiskBadges. Detalle de alerta con puntuaciones NLP (RF14). Aceptación de caso (RF19). Chat básico (RF23).
+Dashboard con lista de alertas priorizadas y RiskBadges. Detalle de alerta con puntuaciones NLP (RF14). Aceptación de caso (RF19). Chat básico (RF23). Realtime suscripción a nuevas alertas por campus.
 
-**Pantallas:** `/panel`, `/panel/alertas/[alertId]`, `/panel/casos/[caseId]/chat`.
-**Status:** Route group `(psychologist)/layout.tsx` + `dashboard/page.tsx` created. Layout pending.
+**Pantallas:** `/dashboard`, `/dashboard/alerts/[alertId]`, `/dashboard/chat`, `/dashboard/cases`.
+**Status:** Todos los componentes implementados y conectados al backend real.
 
 ### Fase 4 — Integración con backend 🔄 EN EJECUCIÓN
 
-Reemplazo de funciones mock por llamadas reales al backend Fastify. Backend forum CRUD endpoints ya implementados (`POST /api/v1/forum/posts`, `PATCH`, `DELETE`, comments). JWT fix applied (`fastify.jwt.decode()`). Avatar endpoint implemented. Conexión con Supabase Realtime para el chat. Manejo de estados de carga, error y vacío en todas las pantallas.
+Reemplazo de funciones mock por llamadas reales al backend Fastify. Backend forum CRUD endpoints ya implementados (`POST /api/v1/forum/posts`, `PATCH`, `DELETE`, comments). Backend Alerts y Cases endpoints ya implementados. JWT fix applied (`fastify.jwt.decode()`). Avatar endpoint implemented. Conexión con Supabase Realtime para el chat. Manejo de estados de carga, error y vacío en todas las pantallas.
 
-**Status:** Forum endpoints working. Auth, Alerts, Cases, Chat endpoints pending.
+**Status:** Forum, Alerts, Cases endpoints working. Auth y Chat endpoints pendientes de integración con frontend real.
 
 ### Fase 5 — Integración NLP y funciones avanzadas 🔲 PENDIENTE
 

@@ -1,5 +1,7 @@
 # MindBridge — Estado del proyecto
 
+> **Actualizado 2026-06-10:** Se actualizó el estado real de los módulos Alerts y Cases del backend (completados) y los frontend RF14/RF19 (completados).
+
 ## Frontend (Next.js 16, TypeScript, Tailwind v4, shadcn/ui)
 
 ### Completado ✅
@@ -47,13 +49,13 @@
 - [x] Profile posts tab maneja array plano del backend
 - [x] `API_BASE` exportado desde `src/frontend/src/lib/api.ts`
 - [x] Footer usa CSS variables `--footer-bg`, `--footer-text`, `--footer-muted`
+- [x] Detalle de alerta con puntuaciones NLP (RF14) — ruta `/dashboard/alerts/[alertId]`, componente `AlertDetailPanel`
+- [x] Aceptación de caso con optimistic concurrency (RF19) — botón Accept en `AlertDetailPanel` con llamada `POST /alerts/:id/accept`
 
 ### Pendiente 🔲
 
 - [ ] Soft delete (RF11)
 - [ ] Edición con nuevo ciclo NLP (RF12)
-- [ ] Detalle de alerta con puntuaciones NLP (RF14)
-- [ ] Aceptación de caso con optimistic concurrency (RF19)
 - [ ] Integrar ChatWidget en páginas de psicólogo y estudiante (RF23)
 - [ ] Utilizar modals en lugar de tipos prefefinidos del navegador/javascript para los alert () o ventanas de confirmación (hasta ahora he identificado una al eliminar un post del foro)
 - Cada vez que se realice una acción por parte del usuario o del sistema, mostrar una notificación emergente que se oculta en un corto tiempo y cuyo propósito es informar el estado de la acción que se realizó: si falló, si se completó, o si faltó algo. Esto con el propósito de cumplir con el principio que informa al usuario el estado de la app a medida que la usa.
@@ -79,6 +81,8 @@
 - [x] Chat service usa `chat_room_id` column; membership check via `case:clinical_case!inner(student_id)` join
 - [x] `rooms/active` registrado antes de `rooms/:roomId` para evitar route conflict
 - [x] Forum service retorna `avatar_url` en todos los endpoints post/comment
+- [x] Módulo Alerts: GET /alerts, GET /alerts/:id, POST /:id/accept, PATCH /:id/status
+- [x] Módulo Cases: GET /cases, GET /cases/:id, POST /cases (self-referral), PATCH /:id/formal-active, chat CRUD, consent
 
 ### Completado ✅ (Sesión 1.1)
 
@@ -98,8 +102,6 @@
 
 ### Pendiente 🔲
 
-- [ ] Módulo Alerts: GET /alerts, GET /alerts/:id, POST /:id/accept, PATCH /:id/status
-- [ ] Módulo Cases: GET /cases, GET /cases/:id, POST /cases, PATCH /:id/formal-active
 - [ ] Módulo Export: POST /cases/:id/export, generación PDF, Gmail API
 - [ ] Módulo Notifications: GET, PATCH read
 - [ ] Módulo Psychologist Settings: forum-participation, email-alerts
