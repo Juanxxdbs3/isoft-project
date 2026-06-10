@@ -256,20 +256,59 @@ export class AlertsService {
       throw Errors.INTERNAL_SERVER_ERROR("Error al aceptar la alerta");
     }
 
-    const { data: caseData, error: caseError } = await this.supabase
+    // Buscar caso activo existente del estudiante (OPENED o ASSIGNED)
+    const { data: existingCase } = await this.supabase
       .from("clinical_case")
-      .insert({
-        student_id: alert.student_id,
-        case_type: "AUTOMATIC_ALERT",
-        status: "ASSIGNED",
-        assigned_psychologist_id: psychologistId,
-      })
       .select("*")
+      .eq("student_id", alert.student_id)
+      .in("status", ["OPENED", "ASSIGNED"])
+      .order("opened_at", { ascending: false })
+      .limit(1)
       .maybeSingle();
 
-    if (caseError || !caseData) {
-      this.logger.error({ err: caseError, alertId }, "Failed to create clinical case after alert accept");
-      throw Errors.INTERNAL_SERVER_ERROR("Error al crear el caso clínico");
+    let caseData: any;
+    let isComplementary = false;
+
+    if (existingCase) {
+      // Reutilizar caso existente — esta alerta es complementaria
+      caseData = existingCase;
+      isComplementary = true;
+    } else {
+      // Crear caso nuevo
+      const { data: newCase, error: caseError } = await this.supabase
+        .from("clinical_case")
+        .insert({
+          student_id: alert.student_id,
+          case_type: "AUTOMATIC_ALERT",
+          status: "ASSIGNED",
+          assigned_psychologist_id: psychologistId,
+        })
+        .select("*")
+        .maybeSingle();
+
+      if (caseError || !newCase) {
+        this.logger.error({ err: caseError, alertId }, "Failed to create clinical case");
+        // Revertir el estado de la alerta para mantener consistencia
+        await this.supabase
+          .from("alert")
+          .update({ status: "PENDING", assigned_psychologist_id: null, accepted_at: null })
+          .eq("id", alertId);
+        throw Errors.INTERNAL_SERVER_ERROR("Error al crear el caso clínico");
+      }
+      caseData = newCase;
+    }
+
+    // Vincular alerta al caso y marcar como complementaria si aplica
+    const { error: linkError } = await this.supabase
+      .from("alert")
+      .update({
+        case_id: caseData.id,
+        is_complementary: isComplementary,
+      })
+      .eq("id", alertId);
+
+    if (linkError) {
+      this.logger.error({ err: linkError, alertId }, "Failed to link alert to case");
     }
 
     const { data: studentData } = await this.supabase
