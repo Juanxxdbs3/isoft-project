@@ -189,7 +189,7 @@ Crear dos alertas para el mismo estudiante desde el SQL snippet. Verificar:
 
 ---
 
-## Sesión C — Pantalla de detalle del caso (`/cases/[caseId]`)
+## Sesión C — Pantalla de detalle del caso (`/cases/[caseId]`) ✅ COMPLETADA
 
 **Objetivo:** construir la vista completa del caso. Es la sesión más densa.
 
@@ -498,7 +498,7 @@ robustecer la conexión Realtime:
 
 ---
 
-## Sesión E — Estabilización y cierre
+## Sesión E — Estabilización y cierre ✅ COMPLETADA
 
 **Objetivo:** auditoría final antes de preparar el entregable.
 
@@ -582,3 +582,81 @@ primero, frontend después). D y E caben en un prompt cada una.
 | C | `case-info-panel.tsx`, `student-data-panel.tsx`, `case-actions.tsx`, `case-alert-list.tsx`, `case-post-history.tsx`, `cases/[caseId]/page.tsx` (reemplaza stub) | `cases.service.ts` (getCaseById), `alerts.service.ts` (filtro complementarias) | — |
 | D | — | `chat-widget.tsx`, `cases/[caseId]/page.tsx` | — |
 | E | — | Client Component del dashboard (useEffect cleanup) | — |
+| F | `student-chat-shell.tsx`, `(student)/chat/page.tsx` | `auth.service.ts` (/auth/me), `case-chat-shell.tsx` (dedup), `student-chat-shell.tsx` (dedup), `.env.local` (CORS) | — |
+
+---
+
+## Sprint Final — Cierre y estabilización final ✅ COMPLETADA
+
+**Objetivo:** cablear el chat del estudiante, mejorar el endpoint `/auth/me`,
+corregir duplicación de mensajes en Realtime, y habilitar acceso desde
+otros dispositivos en la red local.
+
+### F1 — Chat del estudiante (`/chat`)
+
+- [x] Nuevo Client Component `StudentChatShell` en
+  `src/frontend/src/components/cases/student-chat-shell.tsx` con suscripción
+  Realtime a canal privado `room:<chatRoomId>:messages`
+- [x] Carga de mensajes vía `GET /api/v1/cases/:caseId/chat`
+- [x] Envío optimista con rollback local (reemplaza `temp_id` con el real
+  del servidor; revierte con `filter()` en error y muestra toast)
+- [x] Estado placeholder cuando el psicólogo aún no ha iniciado la conversación:
+  "El psicólogo aún no ha iniciado la conversación"
+- [x] Server Component `(student)/chat/page.tsx` que lee token de cookies,
+  fetchea `/auth/me` para obtener `active_case_id`, y renderiza
+  `StudentChatShell` o estados fallback (no autenticado, sin caso activo)
+
+### F2 — Endpoint `/auth/me` mejorado
+
+- [x] Añadido campo `active_case_id` (UUID o null) al perfil de estudiante
+  retornado por `/auth/me`
+- [x] Query a `clinical_case` filtrado por status `OPENED`/`ASSIGNED`,
+  ordenado por `opened_at DESC`, límite 1
+- [x] Permite al frontend del estudiante saber si tiene un caso activo sin
+  tener que consultar otro endpoint
+
+### F3 — Corrección de duplicación en CaseChatShell (+ StudentChatShell)
+
+- [x] Decodificación del JWT en cliente (`token.split(".")[1]` → `atob` → `sub`)
+  para obtener `userId` en ambos shells
+- [x] En el handler de broadcast, los mensajes con `sender_id === userId`
+  se saltan para evitar duplicados por condición de carrera entre envío
+  optimista y broadcast Realtime
+- [x] Afecta tanto a `case-chat-shell.tsx` (psicólogo) como a
+  `student-chat-shell.tsx` (estudiante)
+
+### F4 — Solución CORS para acceso desde red local
+
+- [x] Comentada la variable `NEXT_PUBLIC_API_URL` en `.env.local`
+- [x] El frontend usa `window.location.hostname` dinámicamente en `api.ts`
+  para detectar la IP local cuando se accede desde otros dispositivos
+- [x] Permite probar la aplicación desde dispositivos móviles en la misma
+  red sin modificar configuraciones
+
+### F5 — Trigger Realtime finalizado
+
+- [x] La función `on_chat_message_inserted()` se finalizó con la forma
+  definitiva:
+
+  ```sql
+  CREATE OR REPLACE FUNCTION public.on_chat_message_inserted()
+  RETURNS trigger
+  LANGUAGE plpgsql
+  SECURITY DEFINER
+  AS $$
+  BEGIN
+      PERFORM realtime.send(
+          row_to_json(NEW)::jsonb,
+          'INSERT',
+          'room:' || NEW.chat_room_id::text || ':messages',
+          true    -- private channel
+      );
+      RETURN NEW;
+  END;
+  $$;
+  ```
+
+- [x] Se eliminaron todas las funciones y triggers antiguos:
+  `trg_chat_message_broadcast` y `on_chat_message_broadcast()` DROPPED
+- [x] `trg_chat_message_inserted` y `on_chat_message_inserted()` recreados
+  con la nueva función

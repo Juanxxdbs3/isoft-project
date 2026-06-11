@@ -10,8 +10,9 @@ function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold font-display text-primary">
-          MindBridge
+        <Link href="/" className="flex items-center gap-2">
+          <Image src="/mindbridge-logo.png" alt="MindBridge" width={28} height={28} className="w-7 h-7" />
+          <span className="text-xl font-bold font-display text-primary">MindBridge</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
@@ -259,9 +260,12 @@ function Footer() {
         <div className="grid md:grid-cols-3 gap-8 pb-8 border-b border-footer-text/10">
           {/* Columna 1 — Proyecto */}
           <div>
-            <h3 className="text-footer-text font-bold text-xl font-display mb-2">
-              MindBridge
-            </h3>
+            <div className="flex items-center gap-2 mb-2">
+              <Image src="/mindbridge-logo.png" alt="MindBridge" width={28} height={28} className="w-7 h-7" />
+              <h3 className="text-footer-text font-bold text-xl font-display">
+                MindBridge
+              </h3>
+            </div>
             <p className="text-footer-text/50 text-sm leading-relaxed">
               Construyendo puentes de empatía y salud mental universitaria.
             </p>

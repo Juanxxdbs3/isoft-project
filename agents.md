@@ -88,7 +88,9 @@ See `docs/notes/project-status.md` for the full per-service task checklist. Key 
 | Schema SQL v1.1 | ✅ Deployed — Supabase schema, test data, Realtime triggers working |
 | Infrastructure | ✅ Supabase deployed, Realtime configured, test data inserted |
 | Stabilization Sprint (2026-06-09) | ✅ Complete — 12-point plan: comment count, case-insensitive pseudonyms, account deletion, signOut on logout, avatar preservation, CORS, custom scrollbar, dynamic avatar sync, mobile navbar, freeze pseudonyms, DELETED login message, edit/delete own posts |
+| Psicólogo Sprint Final (2026-06-11) | ✅ Complete — Student chat, `/auth/me` `active_case_id`, CaseChatShell dedup fix, `.env.local` CORS fix, trigger `realtime.send()` finalizado, `caso_formal_activo` dinámico |
+| Logo institucional | ✅ Complete — `mindbridge-logo.png` added to landing navbar/footer, login/register headers, student & psychologist headers, favicon + OpenGraph |
 
 **Active blockers:** see `docs/notes/blockers.md` — modelo 800MB sin estrategia de despliegue.
 
-**Next up:** Psychologist module — see `docs/plans/psychologist-module-plan.md`
+**Next up:** Notificaciones (RF15), Exportación PDF (RF04), RLS isolation, NLP retrain

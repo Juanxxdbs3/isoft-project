@@ -60,5 +60,10 @@ build/
 *.tsbuildinfo
 
 prompts.md
+Terminos_y_Condiciones_MindBridge.docx
 
 supabase/
+
+credentials.json
+
+tmp_*

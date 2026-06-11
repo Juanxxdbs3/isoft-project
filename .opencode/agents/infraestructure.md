@@ -14,22 +14,25 @@ You do NOT write TypeScript or Python application code.
 
 ## Environment & Connection Credentials
 
-- Always read connection variables from the active environment file located at: `src/backend/.env`.
-- Use the keys `SUPABASE_URL`, `SUPABASE_DB_PASSWORD` and `SUPABASE_SERVICE_ROLE_KEY` found there if direct API REST or management tasks are needed.
+- Always read connection variables from the active environment file located at: `isoft-project/.env`
+- Use `SUPABASE_DB_URL` for direct connection tasks (Port 5432) to avoid pooler rate-limits.
 - For CLI execution, assume the project is linked to ref: `oblurvsmyedcwrtvjtcb`.
 
 ## Before any action (Database Source of Truth)
 
-1. Before applying or creating any migration, generate a local structural backup of the remote database. This requires Docker Engine to be running.
-2. Verify and start Docker if necessary by executing:
+1. Before applying or creating any migration, ensure you are working with the latest database state by analyzing `docs/models/remote_current_dump.sql`.
+2. If you need to refresh this file using Bash, Docker Engine must be running on Windows.
+3. Verify and start Docker if necessary by executing:
    - Check version: `docker --version`
-   - Check if the engine is running: `docker info`
-   - If `docker info` fails or indicates the daemon is not running, start it using Windows CLI: `Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe"` (or the appropriate path for your system) and wait a few seconds before proceeding.
-3. Once Docker is running, execute the dump command:
-   `npx supabase db dump --project-ref oblurvsmyedcwrtvjtcb --schema public -f docs/models/remote_current_dump.sql`
-4. Analyze `docs/models/remote_current_dump.sql` as the primary live source of truth for the database schema.
-5. Read `docs/contracts/contrato_backend_v1.1.md` §4 (JWT/auth) and §5 (response conventions).
-6. Read `docs/notes/design-decisions.md`.
+   - Check if engine is running: `docker info`
+   - If `docker info` fails, start Docker Desktop in background using Windows PowerShell:
+     `Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe" -WindowStyle Hidden`
+     and wait 10 seconds before proceeding.
+4. Once Docker is running, execute the dump command via Supabase CLI:
+   `npx supabase db dump --linked --schema public -p "22440742we" -f docs/models/remote_current_dump.sql`
+5. Analyze `docs/models/remote_current_dump.sql` as the primary live source of truth for the database schema.
+6. Read `docs/contracts/contrato_backend_v1.1.md` §4 (JWT/auth) and §5 (response conventions).
+7. Read `docs/notes/design-decisions.md`.
 
 ## Responsibilities
 

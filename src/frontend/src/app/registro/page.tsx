@@ -3,6 +3,7 @@
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { apiPost, ApiError } from "../../lib/api";
 import { validateStudentCode } from "../../lib/student-code";
 import { CAMPUSES } from "../../lib/campus";
@@ -92,9 +93,10 @@ export default function RegisterPage() {
       <div className="w-full max-w-sm">
         <Link
           href="/"
-          className="text-xl font-bold font-display text-primary block text-center mb-8"
+          className="flex items-center gap-2 justify-center mb-8"
         >
-          MindBridge
+          <Image src="/mindbridge-logo.png" alt="MindBridge" width={32} height={32} className="w-8 h-8" />
+          <span className="text-xl font-bold font-display text-primary">MindBridge</span>
         </Link>
 
         <h1 className="text-2xl font-bold font-display text-foreground text-center mb-2">

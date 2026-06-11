@@ -3,6 +3,7 @@
 import { Suspense, useState, FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { apiPost, apiGet, ApiError } from "../../lib/api";
 
 interface ProfileResponse {
@@ -103,9 +104,10 @@ function LoginContent() {
       <div className="w-full max-w-sm">
         <Link
           href="/"
-          className="text-xl font-bold font-display text-primary block text-center mb-8"
+          className="flex items-center gap-2 justify-center mb-8"
         >
-          MindBridge
+          <Image src="/mindbridge-logo.png" alt="MindBridge" width={32} height={32} className="w-8 h-8" />
+          <span className="text-xl font-bold font-display text-primary">MindBridge</span>
         </Link>
 
         <h1 className="text-2xl font-bold font-display text-foreground text-center mb-2">

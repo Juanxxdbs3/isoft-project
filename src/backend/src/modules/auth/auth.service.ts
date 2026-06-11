@@ -446,13 +446,24 @@ export class AuthService {
         throw Errors.NOT_FOUND("Estudiante");
       }
 
+      // Fetch the student's active clinical case ID
+      const { data: activeCase } = await this.supabaseAdmin
+        .from("clinical_case")
+        .select("id")
+        .eq("student_id", userId)
+        .in("status", ["OPENED", "ASSIGNED"])
+        .order("opened_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
       return {
         id: student.id,
         role: "student" as const,
         pseudonym: (student as any).pseudonym?.texto || null,
         avatar_url: (student as any).pseudonym?.avatar_url || null,
         campus: student.campus,
-        caso_formal_activo: student.caso_formal_activo,
+        caso_formal_activo: activeCase?.id ? true : false,
+        active_case_id: activeCase?.id || null,
         created_at: student.created_at,
         updated_at: student.updated_at,
       };

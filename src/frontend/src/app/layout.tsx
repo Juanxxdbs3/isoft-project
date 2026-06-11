@@ -24,6 +24,14 @@ export const metadata: Metadata = {
   description:
     'Foro de triaje proactivo para el bienestar universitario. ' +
     'Publica de forma anónima y recibe apoyo profesional cuando lo necesites.',
+  icons: [{ rel: 'icon', url: '/mindbridge-logo.png' }],
+  openGraph: {
+    title: 'MindBridge — Tu espacio seguro',
+    description:
+      'Foro de triaje proactivo para el bienestar universitario. ' +
+      'Publica de forma anónima y recibe apoyo profesional cuando lo necesites.',
+    images: [{ url: '/mindbridge-logo.png', width: 512, height: 512 }],
+  },
 }
 
 interface RootLayoutProps {

@@ -1,6 +1,6 @@
 # Módulo del Psicólogo — Estado del Proyecto
 
-> **Actualizado 2026-06-11:** Se documentó el fix definitivo del trigger Realtime: `realtime.send()` reemplazó a `broadcast_changes()` por type mismatch `record` vs `jsonb`.
+> **Actualizado 2026-06-11:** Se documentó el fix definitivo del trigger Realtime: `realtime.send()` reemplazó a `broadcast_changes()` por type mismatch `record` vs `jsonb`. Posterior: `caso_formal_activo` computado dinámicamente en backend para robustecer visibilidad del chat.
 
 Seguimiento específico para la implementación del módulo del psicólogo.
 Ver plan completo en `docs/plans/psychologist_module_implementation_plan.md`.
@@ -179,7 +179,54 @@ Reusa `lib/i18n/risk.ts` y `forum/risk-badge.tsx` para todos los scores, i18n y 
 - [x] **409 handling with GET fallback:** Room init now catches 409 (room already exists), detects via `err.status / statusCode / error / message`, and falls back to `GET /cases/:caseId/chat`
 - [x] **Payload extraction 3-way null guard:** Incoming broadcast messages mapped via `payload.payload || record || payload` with `if (!msgData?.id) return` guard
 - [x] **Dependencies stabilized:** Subscription `useEffect` uses `chatRoom?.id` (primitive string) instead of `chatRoom` (object reference)
-- [x] **DB trigger fix — `realtime.send()` replaces `broadcast_changes()`:** The old function `on_chat_message_broadcast()` called `realtime.broadcast_changes()` which expects `record` type for args 6-7, not `jsonb` → PostgreSQL error 42883. Rewritten to use `realtime.send(payload jsonb, event text, topic text, private boolean)` which accepts `jsonb` directly. Cleanup: `trg_chat_message_broadcast` and `on_chat_message_broadcast()` dropped; `trg_chat_message_inserted` and `on_chat_message_inserted()` recreated. Audit root cause confirmed: `broadcast_changes()` type signature expects `record`, not `jsonb`, making it incompatible with the `row_to_json(NEW)::jsonb` pattern.
+- [x] **DB trigger finalizado — `realtime.send()` replaces `broadcast_changes()`:** The old function `on_chat_message_broadcast()` called `realtime.broadcast_changes()` which expects `record` type for args 6-7, not `jsonb` → PostgreSQL error 42883. Rewritten to use `realtime.send(payload jsonb, event text, topic text, private boolean)` which accepts `jsonb` directly. The final form of the SQL is:
+
+  ```sql
+  CREATE OR REPLACE FUNCTION public.on_chat_message_inserted()
+  RETURNS trigger
+  LANGUAGE plpgsql
+  SECURITY DEFINER
+  AS $$
+  BEGIN
+      PERFORM realtime.send(
+          row_to_json(NEW)::jsonb,
+          'INSERT',
+          'room:' || NEW.chat_room_id::text || ':messages',
+          true
+      );
+      RETURN NEW;
+  END;
+  $$;
+  ```
+
+  Cleanup: `trg_chat_message_broadcast` and `on_chat_message_broadcast()` dropped; `trg_chat_message_inserted` and `on_chat_message_inserted()` recreated. Audit root cause confirmed: `broadcast_changes()` type signature expects `record`, not `jsonb`, making it incompatible with the `row_to_json(NEW)::jsonb` pattern.
+
+## ✅ Chat del estudiante y dedup Realtime
+
+### StudentChatShell + página `/chat`
+
+- [x] Nuevo Client Component `StudentChatShell` (`src/frontend/src/components/cases/student-chat-shell.tsx`):
+  - Suscripción Realtime a canal privado `room:<chatRoomId>:messages`
+  - Carga de mensajes vía `GET /api/v1/cases/:caseId/chat`
+  - Envío optimista con rollback local (reemplaza `temp_id` con el real del servidor; revierte en error)
+  - Estado placeholder cuando el psicólogo aún no ha iniciado: "El psicólogo aún no ha iniciado la conversación"
+- [x] Server Component `(student)/chat/page.tsx`:
+  - Lee token de cookies `access_token`
+  - Fetchea `/auth/me` para obtener `active_case_id`
+  - Renderiza `StudentChatShell` con el caso activo o estados fallback (no autenticado, sin caso activo)
+
+### Dedup fix (ambos shells)
+
+- [x] Decodificación del JWT en cliente (`token.split(".")[1]` → `atob` → `payload.sub`) para obtener `userId`
+- [x] En el handler de broadcast, mensajes con `sender_id === userId` se saltan para evitar duplicados por condición de carrera entre envío optimista y broadcast Realtime
+- [x] Implementado tanto en `case-chat-shell.tsx` (psicólogo) como en `student-chat-shell.tsx` (estudiante)
+
+## ✅ Dinamismo de `caso_formal_activo` (fix elpanajhon)
+
+- [x] **Problema raíz:** El estudiante `elpanajhon` tenía `caso_formal_activo=false` en la tabla `student` a pesar de tener un caso clínico ASSIGNED. Esto impedía que el sidebar de chat se mostrara en el layout del estudiante.
+- [x] **Solución:** En `auth.service.ts`, el campo `caso_formal_activo` ahora se computa dinámicamente a partir de `active_case_id`: si `activeCase?.id` es no-null, se retorna `true`; caso contrario `false`. Esto elimina la dependencia de la columna almacenada `student.caso_formal_activo`, que podía desincronizarse de la realidad.
+- [x] **Archivos modificados:** `src/backend/src/modules/auth/auth.service.ts` — función `getMyProfile()`, mapper de respuesta.
+- [x] **Impacto:** El sidebar de chat se muestra correctamente para todos los estudiantes con un caso clínico activo, independientemente del valor almacenado en `caso_formal_activo`.
 
 ## Deuda Técnica
 

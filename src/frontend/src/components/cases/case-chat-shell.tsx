@@ -42,12 +42,23 @@ export function CaseChatShell({
   const [roomLoading, setRoomLoading] = useState(!chatRoom.id);
   const [roomError, setRoomError] = useState<string | null>(null);
   const [msgsLoading, setMsgsLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!token) return;
     console.log("🔑 Inyectando JWT de autenticación en el cliente Supabase Realtime...");
     supabase.realtime.setAuth(token);
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) return;
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      setUserId(payload.sub || null);
+    } catch {
+      setUserId(null);
+    }
   }, [token]);
 
   useEffect(() => {
@@ -134,6 +145,11 @@ export function CaseChatShell({
 
         if (!msgData || !msgData.id) {
           console.warn("⚠️ Mensaje omitido: Estructura de payload inválida.");
+          return;
+        }
+
+        if (userId && msgData.sender_id === userId) {
+          console.log("⏭️ Mensaje propio ignorado (ya recibido vía POST response):", msgData.id);
           return;
         }
 

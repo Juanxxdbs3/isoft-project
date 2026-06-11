@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { House, User, ClipboardList, Settings } from "lucide-react";
 import { ThemeToggle } from "../../components/ui/theme-toggle";
 import { UserBadge } from "../../components/ui/user-badge";
@@ -37,6 +38,7 @@ export default async function StudentLayout({ children }: { children: React.Reac
       {/* Top bar */}
       <header className="fixed top-0 left-0 right-0 h-14 bg-surface border-b border-border flex items-center justify-between px-4 z-30">
         <Link href="/foro" className="flex items-center gap-2">
+          <Image src="/mindbridge-logo.png" alt="MindBridge" width={24} height={24} className="w-6 h-6" />
           <span className="text-sm font-bold font-display text-foreground tracking-tight">MindBridge</span>
         </Link>
         <div className="flex items-center gap-2">

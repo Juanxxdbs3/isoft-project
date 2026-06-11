@@ -1,6 +1,6 @@
 # MindBridge — Estado del proyecto
 
-> **Actualizado 2026-06-11:** Se documentó el fix definitivo del trigger Realtime (`realtime.send()` por type mismatch `record` vs `jsonb` en `broadcast_changes`).
+> **Actualizado 2026-06-11:** Sprint final completado: chat estudiante, dedup Realtime, CORS local, `/auth/me` mejorado con `active_case_id`, trigger Realtime finalizado con `realtime.send()`. Posteriores: logo institucional implementado en todas las páginas; `caso_formal_activo` computado dinámicamente en backend.
 
 ## Frontend (Next.js 16, TypeScript, Tailwind v4, shadcn/ui)
 
@@ -54,6 +54,10 @@
 - [x] Sesión A — Routing restructure psicólogo: `cases/page.tsx` creado, `cases/[caseId]/page.tsx` stub, `dashboard/chat/page.tsx` reemplazado con redirect, Sidebar actualizado, enlaces de chat arreglados, `dashboard/cases/` eliminado
 - [x] Sesión D — Chat funcional en detalle de caso: CaseChatShell cableado a `POST /cases/:caseId/chat/messages` + `GET /cases/:caseId/chat` con Realtime broadcast; sala auto-creada en primera visita; envío optimista con rollback de error; estados de carga/error integrados
 - [x] CaseChatShell Realtime refuerzos: setAuth JWT injection, 409 handling con GET fallback, payload extraction 3-way (`payload.payload || record || payload`) con null guard, dependencias estabilizadas (`chatRoom?.id` en lugar de `chatRoom`)
+- [x] Student chat page (`/chat`) creada — Server Component `(student)/chat/page.tsx` que obtiene `active_case_id` de `/auth/me`; renderiza `StudentChatShell` con Realtime, envío optimista y placeholder "El psicólogo aún no ha iniciado la conversación"
+- [x] CaseChatShell dedup fix — JWT decodificado (`token.split(".")[1]` → `atob` → `sub`); mensajes broadcast con `sender_id === userId` se skip para evitar duplicados (aplicado en ambos shells: psicólogo y estudiante)
+- [x] `.env.local` CORS fix — `NEXT_PUBLIC_API_URL` comentada; detección dinámica de `window.location.hostname` en `api.ts` para acceso desde la red local
+- [x] Logo institucional (`mindbridge-logo.png`) implementado en: navbar landing, footer landing, login header, register header, student layout header, PsychologistHeader, y metadata `layout.tsx` (favicon + OpenGraph image)
 
 ### Pendiente 🔲
 
@@ -87,6 +91,8 @@
 - [x] Módulo Alerts: GET /alerts, GET /alerts/:id, POST /:id/accept, PATCH /:id/status
 - [x] Módulo Cases: GET /cases, GET /cases/:id, POST /cases (self-referral), PATCH /:id/formal-active, chat CRUD, consent
 - [x] Sesión B — Unique case per student: `acceptAlert()` reusa caso activo existente, marca `is_complementary = true`, rollback on failure
+- [x] `/auth/me` retorna `active_case_id` para estudiantes — UUID del caso activo (`OPENED`/`ASSIGNED`) o null; query ordenada por `opened_at DESC`, límite 1
+- [x] `caso_formal_activo` computado dinámicamente en `auth.service.ts` — se deriva de `active_case_id` no-null (`activeCase?.id ? true : false`) en lugar de depender de la columna almacenada `student.caso_formal_activo`. Corrige bug donde estudiantes con casos ASSIGNED pero `caso_formal_activo=false` en la BD no veían el sidebar de chat.
 
 ### Completado ✅ (Sesión 1.1)
 
@@ -144,7 +150,18 @@
 - [x] Schema SQL v1.1 (`docs/models/schema_mindbridge_v1.1.sql`)
 - [x] `.env.example` para los tres servicios
 - [x] Triggers Realtime — `trg_chat_message_inserted` en `chat_message` para broadcast a `room:<room_id>:messages`
-- [x] **Fix type cast — `realtime.send()` en lugar de `broadcast_changes()`:** La función del trigger se reescribió porque `realtime.broadcast_changes()` espera tipo `record` en args 6-7 y fallaba con error PostgreSQL 42883 al recibir `jsonb`. Se reemplazó por `realtime.send(payload jsonb, event text, topic text, private boolean)` que acepta `jsonb` directamente. `trg_chat_message_broadcast` y su función `on_chat_message_broadcast()` eliminados; `trg_chat_message_inserted` y `on_chat_message_inserted()` recreados.
+- [x] **Trigger Realtime finalizado — `realtime.send()` en lugar de `broadcast_changes()`:** La función del trigger se reescribió porque `realtime.broadcast_changes()` espera tipo `record` en args 6-7 y fallaba con error PostgreSQL 42883 al recibir `jsonb`. La forma final usa:
+
+  ```sql
+  PERFORM realtime.send(
+      row_to_json(NEW)::jsonb,
+      'INSERT',
+      'room:' || NEW.chat_room_id::text || ':messages',
+      true
+  );
+  ```
+
+  `trg_chat_message_broadcast` y `on_chat_message_broadcast()` DROPPED; `trg_chat_message_inserted` y `on_chat_message_inserted()` recreados apuntando a la nueva función.
 - [x] Schema SQL v1.1 desplegado en Supabase
 - [x] Datos de prueba insertados (psicólogo, caso clínico, sala de chat)
 - [x] Triggers Realtime funcionando para chat

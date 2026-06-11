@@ -1,0 +1,26 @@
+{
+  "epoch": 3,
+  "f1_viola_normas": 0.7583497053045186,
+  "f1_cumple_normas": 0.9281681915514892,
+  "f1_macro": 0.843258948428004,
+  "label_convention": {
+    "model_output_1": "viola_normas  (hate=1)",
+    "model_output_0": "cumple_normas (hate=0)",
+    "score_norms_in_microservice": "prob de viola_normas (0.0–1.0)"
+  },
+  "config": {
+    "model_name": "dccuchile/bert-base-spanish-wwm-cased",
+    "dataset_path": "/content/drive/MyDrive/mindbridge_nlp/unified_dataset.json",
+    "output_dir": "/content/drive/MyDrive/mindbridge_nlp/checkpoints/community_model_v1",
+    "max_length": 256,
+    "batch_size": 16,
+    "num_epochs": 4,
+    "lr": 2e-05,
+    "weight_decay": 0.01,
+    "train_ratio": 0.8,
+    "val_ratio": 0.1,
+    "seed": 42,
+    "pos_weight": 3.2956947666924465,
+    "threshold": 0.5
+  }
+}

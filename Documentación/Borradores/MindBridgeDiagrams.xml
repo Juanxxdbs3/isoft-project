@@ -1,2 +1,1074 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1"><xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/><uml:Model xmi:type="uml:Model" name="EA_Model"><ownedMember xmi:type="uml:Package" xmi:id="EAPK_213BB9FA_B498_487d_96D1_48212B5CED51" name="Attention &amp; Alerts Module"/></uml:Model><xmi:Extension extender="Enterprise Architect" extenderID="6.5"><elements><element xmi:idref="EAPK_213BB9FA_B498_487d_96D1_48212B5CED51" xmi:type="uml:Package" name="Attention &amp; Alerts Module" scope="public"><model package2="EAID_213BB9FA_B498_487d_96D1_48212B5CED51" package="EAPK_25013AEC_1C6E_424a_8B20_FC52D0F7CFD6" tpos="0" ea_localid="48" ea_eleType="package"/><properties isSpecification="false" sType="Package" nType="0" scope="public"/><project author="jn" version="1.0" phase="1.0" created="2026-05-28 19:46:14" modified="2026-05-28 19:46:14" complexity="1" status="Proposed"/><code gentype="Java"/><style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/><tags/><xrefs/><extendedProperties tagged="0" package_name="Modulos de clases por componente"/><packageproperties version="1.0"/><paths/><times created="2026-05-28 19:46:14" modified="2026-05-28 19:46:14"/><flags iscontrolled="FALSE" isprotected="FALSE" usedtd="FALSE" logxml="FALSE"/></element></elements><connectors/><primitivetypes><packagedElement xmi:type="uml:Package" xmi:id="EAPrimitiveTypesPackage" name="EA_PrimitiveTypes_Package"/></primitivetypes><profiles/><diagrams><diagram xmi:id="EAID_E038A650_0A37_4f52_AB09_63FF397CCF7B"><model package="EAPK_213BB9FA_B498_487d_96D1_48212B5CED51" localID="24" owner="EAPK_213BB9FA_B498_487d_96D1_48212B5CED51"/><properties name="Attention &amp; Alerts Module" type="Logical"/><project author="jn" version="1.0" created="2026-05-28 19:46:19" modified="2026-06-04 22:56:37"/><style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=0;PPgs.cy=0;DocSize.cx=827;DocSize.cy=1169;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=0;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/><style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=7939A573;"/><swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/><matrixitems value="locked=false;matrixactive=false;swimlanesactive=true;kanbanactive=false;width=1;clrLine=0;"/><extendedProperties/><elements><element geometry="Left=820;Top=1469;Right=1080;Bottom=1569;imgL=245;imgT=913;imgR=505;imgB=1013;" subject="EAID_D6136530_C0D7_4f6c_9014_051F9598D9FB" seqno="1" style="DUID=F6EEE4C4;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=779;Top=599;Right=1073;Bottom=794;imgL=204;imgT=43;imgR=498;imgB=238;" subject="EAID_19487D60_6E35_49d1_BC0A_F871264ADCA5" seqno="2" style="DUID=A751191C;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=610;Top=1030;Right=979;Bottom=1130;imgL=35;imgT=474;imgR=404;imgB=574;" subject="EAID_9F676331_1EA4_4a2c_B0AA_5F2497DFB95B" seqno="3" style="DUID=A4E76002;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=630;Top=800;Right=981;Bottom=976;imgL=55;imgT=244;imgR=406;imgB=420;" subject="EAID_A61D3E37_C2B0_4126_80F6_7F3D9330F2E6" seqno="4" style="DUID=5776EEFE;"/><element geometry="Left=690;Top=1151;Right=955;Bottom=1315;imgL=115;imgT=595;imgR=380;imgB=759;" subject="EAID_7230C33C_EBDE_42ab_BA6C_6F1C67381E4A" seqno="5" style="DUID=0039BEF0;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=630;Top=1340;Right=990;Bottom=1452;imgL=55;imgT=784;imgR=415;imgB=896;" subject="EAID_1373917A_CBC2_49e6_8299_8B71DA501F73" seqno="6" style="DUID=D3CB5B8C;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=2360;Top=770;Right=2460;Bottom=855;imgL=1785;imgT=214;imgR=1885;imgB=299;" subject="EAID_7CE5F98D_82DA_42df_A44C_CB3AAF0D6043" seqno="7" style="DUID=62014678;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=2069;Top=972;Right=2329;Bottom=1245;imgL=1494;imgT=416;imgR=1754;imgB=689;" subject="EAID_7A38CE44_0D25_4cd6_BD62_81F49B0095BC" seqno="8" style="DUID=E08C164A;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=1120;Top=880;Right=1477;Bottom=980;imgL=545;imgT=324;imgR=902;imgB=424;" subject="EAID_001768FC_B176_4f90_BC68_8E9A920B10D7" seqno="9" style="DUID=91BDEB9B;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=2060;Top=1280;Right=2171;Bottom=1378;imgL=1485;imgT=724;imgR=1596;imgB=822;" subject="EAID_E6CED1BB_4CD2_46a0_855A_03BADBE3BDDB" seqno="10" style="DUID=CA4DE65B;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=1780;Top=880;Right=1906;Bottom=965;imgL=1205;imgT=324;imgR=1331;imgB=409;" subject="EAID_FC355634_52B3_470e_B861_19845BDECF1B" seqno="11" style="DUID=04A8B5E9;"/><element geometry="Left=2360;Top=891;Right=2460;Bottom=1002;imgL=1785;imgT=335;imgR=1885;imgB=446;" subject="EAID_D1EBAF3B_D275_4a3d_91BB_DCED116FD5CA" seqno="12" style="DUID=5557D108;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=2210;Top=1280;Right=2310;Bottom=1378;imgL=1635;imgT=724;imgR=1735;imgB=822;" subject="EAID_1DFBAE9E_9A37_46e0_B19F_A2A869263718" seqno="13" style="DUID=FD7B1CB0;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=1641;Top=1020;Right=1826;Bottom=1100;imgL=1066;imgT=464;imgR=1251;imgB=544;" subject="EAID_4E508E15_0DF2_40e4_9E81_37D55800CD7D" seqno="14" style="DUID=B42C2795;"/><element geometry="Left=1110;Top=760;Right=1359;Bottom=840;imgL=535;imgT=204;imgR=784;imgB=284;" subject="EAID_D587946B_064B_4dfb_A2A9_60EA2C662476" seqno="15" style="DUID=2BB645E2;"/><element geometry="Left=1530;Top=890;Right=1709;Bottom=975;imgL=955;imgT=334;imgR=1134;imgB=419;" subject="EAID_4D19E479_813E_4206_8FA3_7509FA935FC0" seqno="16" style="DUID=6D34FB41;"/><element geometry="Left=1801;Top=1129;Right=2031;Bottom=1230;imgL=1226;imgT=573;imgR=1456;imgB=674;" subject="EAID_912ADB53_7723_49e8_B71C_2D876F70EB43" seqno="17" style="DUID=BF808D43;"/><element geometry="Left=1440;Top=1129;Right=1740;Bottom=1230;imgL=865;imgT=573;imgR=1165;imgB=674;" subject="EAID_2C9C5ABF_46C0_4fc1_B826_5359906805A6" seqno="18" style="DUID=F6A36CBC;"/><element geometry="Left=1559;Top=1308;Right=1938;Bottom=1438;imgL=984;imgT=752;imgR=1363;imgB=882;" subject="EAID_14709AB1_D91E_4262_8B87_01FB317DE329" seqno="19" style="DUID=E83B0F29;"/><element geometry="Left=1030;Top=1129;Right=1360;Bottom=1189;imgL=455;imgT=573;imgR=785;imgB=633;" subject="EAID_0F4EFBE1_9F63_4a53_ACF9_504089B1BDB6" seqno="20" style="DUID=932CDB33;"/><element geometry="Left=1140;Top=1010;Right=1560;Bottom=1122;imgL=565;imgT=454;imgR=985;imgB=566;" subject="EAID_1C565810_BFEA_41b7_B817_FC2B1FDF9001" seqno="21" style="DUID=95AABB20;"/><element geometry="Left=1090;Top=1280;Right=1450;Bottom=1474;imgL=515;imgT=724;imgR=875;imgB=918;" subject="EAID_9C8C5542_8851_4414_B97A_CEAEE78DBD42" seqno="22" style="DUID=578D42F1;"/><element geometry="Left=1390;Top=630;Right=1640;Bottom=851;imgL=815;imgT=74;imgR=1065;imgB=295;" subject="EAID_DA09A98F_EA2F_4a2b_8EAA_C55AA3895A49" seqno="23" style="DUID=1227EF3F;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=1730;Top=640;Right=1949;Bottom=848;imgL=1155;imgT=84;imgR=1374;imgB=292;" subject="EAID_7D312710_9646_436d_95B8_A8EEF3D10447" seqno="24" style="DUID=14CDD2A7;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=2421;Top=1021;Right=2691;Bottom=1216;imgL=1846;imgT=465;imgR=2116;imgB=660;" subject="EAID_00FFF796_CE84_4c7a_963D_6F3783229AE4" seqno="25" style="DUID=A4DCABB1;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="Left=2080;Top=611;Right=2290;Bottom=845;imgL=1505;imgT=55;imgR=1715;imgB=289;" subject="EAID_841E6B02_7A97_47be_9E7C_63725E275C80" seqno="26" style="DUID=39EED86A;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/><element geometry="SX=0;SY=45;EX=16;EY=0;EDGE=4;$LLB=;LLT=;LMT=;LMB=CX=25:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=1021:-1312$1021:-1007$821:-1007$;" subject="EAID_4075CEB4_D16F_4087_8F03_DA7B2E7EE149" style="Mode=3;EOID=5776EEFE;SOID=578D42F1;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=-8;EX=-35;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1881:-1068$;" subject="EAID_CF309D77_B052_4ec1_A199_02250C9DB7F1" style="Mode=3;EOID=BF808D43;SOID=B42C2795;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=180;SY=0;EX=-67;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1988:-1443$1988:-1383$2489:-1383$;" subject="EAID_DDD550F5_E557_4682_9D42_14FC6C4A2E31" style="Mode=3;EOID=A4DCABB1;SOID=578D42F1;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=172;SY=0;EX=-101;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1442:-1269$2098:-1269$;" subject="EAID_4A785CF6_6855_4b65_988E_ACD2C354A792" style="Mode=3;EOID=E08C164A;SOID=578D42F1;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=-3;EX=-128;EY=0;EDGE=4;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1067:-803$;" subject="EAID_26281E88_B971_45bf_A5C5_93CB08559EA2" style="Mode=3;EOID=932CDB33;SOID=2BB645E2;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=17;EX=0;EY=-13;EDGE=4;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1008:-1340$1008:-943$;" subject="EAID_7DF72EE1_6FA6_46d3_9AF5_3C66CE8FCC3B" style="Mode=3;EOID=91BDEB9B;SOID=578D42F1;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=-71;EDGE=2;EX=-67;EY=0;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=;LMT=CX=23:CY=14:OX=1:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=CX=6:CY=14:OX=-7:OY=-16:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;IRHS=;ILHS=;Path=2055:-815$2055:-946$2132:-946$;" subject="EAID_1F0E95BE_81D7_4910_B740_AC7E2C372821" style="Mode=3;EOID=E08C164A;SOID=14CDD2A7;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="EDGE=2;EX=0;EY=0;SX=0;SY=0;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=;LMT=CX=30:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=CX=6:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;IRHS=;ILHS=;Path=;" subject="EAID_34C1D9C3_C4CE_4aa0_94E0_B3283F0CE519" style="Mode=3;EOID=39EED86A;SOID=14CDD2A7;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="EX=0;EY=7;SX=0;SY=72;EDGE=2;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LLT=;LMT=;LMB=;LRT=;LRB=CX=6:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;IRHS=;ILHS=;Path=1976:-624$1976:-1095$;" subject="EAID_E6C7B6D1_F7C1_47eb_82FC_403E7F00CD33" style="Mode=3;EOID=E08C164A;SOID=A751191C;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=-3;SY=4;EX=-3;EY=4;EDGE=3;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_9BD8D399_9E2E_4496_8185_487ABB130CBB" style="Mode=3;EOID=CA4DE65B;SOID=E08C164A;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=4;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_A71DB2CA_BB61_4323_8D4F_76606D3487EA" style="Mode=3;EOID=D3CB5B8C;SOID=578D42F1;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=3;$LLB=CX=6:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_17467DAE_DCD5_4846_B0A1_E551613E1E0B" style="Mode=3;EOID=E83B0F29;SOID=BF808D43;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=3;$LLB=CX=6:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_DD5AA6F3_C41D_41d4_8B6F_FAB306ED972D" style="Mode=3;EOID=E83B0F29;SOID=F6A36CBC;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=60;SY=-1;EX=12;EY=0;EDGE=3;$LLB=CX=6:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=;LMT=CX=40:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_E68FF2BC_7461_42a9_B876_138EF39CD6BD" style="Mode=3;EOID=578D42F1;SOID=95AABB20;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=63;SY=-1;EX=63;EY=-1;EDGE=3;$LLB=CX=6:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=;LMT=CX=169:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_17C28146_272C_4d67_8121_DCB1679B8B98" style="Mode=3;EOID=578D42F1;SOID=932CDB33;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=0;EX=98;EY=-13;EDGE=2;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=;LMT=CX=35:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=CX=6:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;IRHS=;ILHS=;Path=;" subject="EAID_94D0B75A_17FF_4310_9969_1CB50A4136DE" style="Mode=3;EOID=14CDD2A7;SOID=1227EF3F;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="EX=0;EY=0;EDGE=3;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=;LMT=CX=29:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=CX=6:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;IRHS=;ILHS=;Path=;" subject="EAID_41FCAF64_4563_4df7_A93C_5E71EA8C7876" style="Mode=3;EOID=E08C164A;SOID=39EED86A;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=29;SY=0;EX=-9;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1777:-1119$1593:-1119$1593:-982$1506:-982$;" subject="EAID_D121821C_1334_4b6d_9141_C750D182749B" style="Mode=3;EOID=1227EF3F;SOID=E83B0F29;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=66;EX=70;EY=0;EDGE=4;$LLB=;LLT=;LMT=;LMB=CX=25:CY=14:OX=1:OY=-139:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=996:-1291$;" subject="EAID_A08F64C1_9D73_4786_BDFC_9D33081ABDA3" style="Mode=3;EOID=A751191C;SOID=578D42F1;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=-155;SY=0;EX=0;EY=17;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1115:-1209$;" subject="EAID_D12F4CE5_2865_42d5_BF3D_B000DDE425E2" style="Mode=3;EOID=0039BEF0;SOID=578D42F1;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=127;SY=0;EX=86;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1717:-1107$1925:-1107$;" subject="EAID_6D8EA28F_DE7A_42a6_A5F1_D5585B7B0736" style="Mode=3;EOID=14CDD2A7;SOID=F6A36CBC;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=-20;SY=0;EX=8;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1570:-995$1523:-995$;" subject="EAID_B06E71CA_1D07_4716_A8B2_E342EC6D38F3" style="Mode=3;EOID=1227EF3F;SOID=F6A36CBC;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=22;SY=0;EX=-104;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1612:-982$1735:-982$;" subject="EAID_5B15797D_ABC8_4a26_BF97_95891539C434" style="Mode=3;EOID=14CDD2A7;SOID=F6A36CBC;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=210;SY=0;EX=0;EY=84;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1560:-1004$1852:-1004$1852:-978$2061:-978$2061:-956$2355:-956$2355:-1034$;" subject="EAID_CC2D5ECB_0DBE_4e6c_996C_960C72FE613E" style="Mode=3;EOID=A4DCABB1;SOID=95AABB20;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="EX=0;EY=0;EDGE=4;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=;LMT=CX=25:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=CX=6:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;IRHS=;ILHS=;Path=;" subject="EAID_D0EFA1C5_96DB_40ee_9A5C_191A8BB4D219" style="Mode=3;EOID=E08C164A;SOID=A4DCABB1;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=172;SY=0;EX=0;EY=-66;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1522:-990$2042:-990$2042:-794$;" subject="EAID_D221F1C0_9E01_4516_ADF5_EE876FDFEB28" style="Mode=3;EOID=39EED86A;SOID=95AABB20;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=91;SY=0;EX=0;EY=49;EDGE=3;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_4815D526_2D78_4c69_8557_DA3FA0334719" style="Mode=3;EOID=FD7B1CB0;SOID=E08C164A;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=6;SY=0;EX=-77;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1754:-1113$1626:-1113$1626:-997$1762:-997$;" subject="EAID_50EF497D_B7D5_4317_8F44_68C08F3E5CB9" style="Mode=3;EOID=14CDD2A7;SOID=E83B0F29;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=-88;EX=31;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1650:-828$;" subject="EAID_A1EC8548_A9D8_452c_B254_7F343291C7B7" style="Mode=3;EOID=6D34FB41;SOID=1227EF3F;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=3;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_100E7C9C_56A4_4d1a_AC6A_3D789829AEB4" style="Mode=3;EOID=04A8B5E9;SOID=14CDD2A7;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=-75;EX=0;EY=33;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_216AA75B_0D96_4c94_94C4_27F97ADBE23D" style="Mode=3;EOID=62014678;SOID=39EED86A;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=3;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_FFFA13C8_8375_451d_AB8B_41B1CDD31E91" style="Mode=3;EOID=A4E76002;SOID=5776EEFE;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=105;SY=0;EX=0;EY=10;EDGE=3;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=2290:-916$;" subject="EAID_3CBB3239_B926_47db_8951_1C4712167713" style="Mode=3;EOID=5557D108;SOID=39EED86A;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=-136;SY=0;EX=0;EY=19;EDGE=3;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1134:-1500$;" subject="EAID_0537FC98_300E_488e_B8D4_39F77015CF2E" style="Mode=3;EOID=F6EEE4C4;SOID=578D42F1;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/><element geometry="SX=20;SY=38;EX=20;EY=89;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_55645331_7B13_432a_983D_56D94203C954" style="Mode=3;EOID=E08C164A;SOID=95AABB20;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/></elements></diagram></diagrams></xmi:Extension></xmi:XMI>
+<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:thecustomprofile="http://www.sparxsystems.com/profiles/thecustomprofile/1.0">
+	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/>
+	<uml:Model xmi:type="uml:Model" name="EA_Model">
+		<ownedMember xmi:type="uml:Package" xmi:id="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" name="Fase_Requisitos">
+			<ownedMember xmi:type="uml:UseCase" xmi:id="EAID_AD00ED5F_9BD0_4cb2_A9C4_31A6FD5F67CC" name="Aceptar aviso de consentimiento de uso"/>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_65529D64_D420_46ed_9670_30F00F2AE290">
+				<memberEnd xmi:idref="EAID_dst529D64_D420_46ed_9670_30F00F2AE290"/>
+				<memberEnd xmi:idref="EAID_src529D64_D420_46ed_9670_30F00F2AE290"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_src529D64_D420_46ed_9670_30F00F2AE290" association="EAID_65529D64_D420_46ed_9670_30F00F2AE290">
+					<type xmi:idref="EAID_3871791F_C1FD_4639_A729_2F3A271598D7"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dst529D64_D420_46ed_9670_30F00F2AE290" association="EAID_65529D64_D420_46ed_9670_30F00F2AE290">
+					<type xmi:idref="EAID_AD00ED5F_9BD0_4cb2_A9C4_31A6FD5F67CC"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:UseCase" xmi:id="EAID_10044AF0_6B2A_45b9_A2F9_BDEC1E7E5295" name="Editar contenido propio">
+				<extend xmi:type="uml:Extend" xmi:id="EAID_0A0D121C_CE5E_464f_BB31_D220637E75F7" extendedCase="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863"/>
+			</ownedMember>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_F8C95713_473B_4023_B645_38B67778C3D4">
+				<memberEnd xmi:idref="EAID_dstC95713_473B_4023_B645_38B67778C3D4"/>
+				<memberEnd xmi:idref="EAID_srcC95713_473B_4023_B645_38B67778C3D4"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_srcC95713_473B_4023_B645_38B67778C3D4" association="EAID_F8C95713_473B_4023_B645_38B67778C3D4">
+					<type xmi:idref="EAID_3871791F_C1FD_4639_A729_2F3A271598D7"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dstC95713_473B_4023_B645_38B67778C3D4" association="EAID_F8C95713_473B_4023_B645_38B67778C3D4">
+					<type xmi:idref="EAID_10044AF0_6B2A_45b9_A2F9_BDEC1E7E5295"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:UseCase" xmi:id="EAID_E5B51622_5A22_454a_9874_17E266CA5044" name="Eliminar contenido propio">
+				<extend xmi:type="uml:Extend" xmi:id="EAID_D79652F6_AFA9_450c_BF2F_544CB9DC7A86" extendedCase="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863"/>
+			</ownedMember>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_F9A9F3EB_CDCE_4c96_96D1_46865C447091">
+				<memberEnd xmi:idref="EAID_dstA9F3EB_CDCE_4c96_96D1_46865C447091"/>
+				<memberEnd xmi:idref="EAID_srcA9F3EB_CDCE_4c96_96D1_46865C447091"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_srcA9F3EB_CDCE_4c96_96D1_46865C447091" association="EAID_F9A9F3EB_CDCE_4c96_96D1_46865C447091">
+					<type xmi:idref="EAID_3871791F_C1FD_4639_A729_2F3A271598D7"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dstA9F3EB_CDCE_4c96_96D1_46865C447091" association="EAID_F9A9F3EB_CDCE_4c96_96D1_46865C447091">
+					<type xmi:idref="EAID_E5B51622_5A22_454a_9874_17E266CA5044"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:UseCase" xmi:id="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A" name="Exportar caso a Adviser">
+				<extend xmi:type="uml:Extend" xmi:id="EAID_4A96E239_7729_4128_92FC_5751F6280818" extendedCase="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+			</ownedMember>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_622B7FF9_2F6D_424a_8054_7BB12CE8A9C0">
+				<memberEnd xmi:idref="EAID_dst2B7FF9_2F6D_424a_8054_7BB12CE8A9C0"/>
+				<memberEnd xmi:idref="EAID_src2B7FF9_2F6D_424a_8054_7BB12CE8A9C0"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_src2B7FF9_2F6D_424a_8054_7BB12CE8A9C0" association="EAID_622B7FF9_2F6D_424a_8054_7BB12CE8A9C0">
+					<type xmi:idref="EAID_6F7CBF4D_F150_4700_8B1A_142B7BC46E5E"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dst2B7FF9_2F6D_424a_8054_7BB12CE8A9C0" association="EAID_622B7FF9_2F6D_424a_8054_7BB12CE8A9C0">
+					<type xmi:idref="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_6CB8EE42_822A_4412_886A_0C2655546636">
+				<memberEnd xmi:idref="EAID_dstB8EE42_822A_4412_886A_0C2655546636"/>
+				<memberEnd xmi:idref="EAID_srcB8EE42_822A_4412_886A_0C2655546636"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_srcB8EE42_822A_4412_886A_0C2655546636" association="EAID_6CB8EE42_822A_4412_886A_0C2655546636">
+					<type xmi:idref="EAID_52368077_5A53_453c_8551_204029962B95"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dstB8EE42_822A_4412_886A_0C2655546636" association="EAID_6CB8EE42_822A_4412_886A_0C2655546636">
+					<type xmi:idref="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:UseCase" xmi:id="EAID_2D209DFE_5C10_4304_B31A_02040B781B5D" name="Facilitar consentimiento FO-BU-O13">
+				<extend xmi:type="uml:Extend" xmi:id="EAID_BD2215CF_EB3F_451c_8CAF_70F60DA08024" extendedCase="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+			</ownedMember>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_FCF6C1C9_FA0B_488e_A231_87B496746916">
+				<memberEnd xmi:idref="EAID_dstF6C1C9_FA0B_488e_A231_87B496746916"/>
+				<memberEnd xmi:idref="EAID_srcF6C1C9_FA0B_488e_A231_87B496746916"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_srcF6C1C9_FA0B_488e_A231_87B496746916" association="EAID_FCF6C1C9_FA0B_488e_A231_87B496746916">
+					<type xmi:idref="EAID_52368077_5A53_453c_8551_204029962B95"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dstF6C1C9_FA0B_488e_A231_87B496746916" association="EAID_FCF6C1C9_FA0B_488e_A231_87B496746916">
+					<type xmi:idref="EAID_2D209DFE_5C10_4304_B31A_02040B781B5D"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:UseCase" xmi:id="EAID_094B22C6_9067_46ca_ADA5_BBB2C03DB5EA" name="Gestionar alerta">
+				<include xmi:type="uml:Include" xmi:id="EAID_EE290C28_8001_43b1_9C80_D1A228BECD0F" addition="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+			</ownedMember>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_88720B64_5D8A_458c_BC92_6E6C3012CBB6">
+				<memberEnd xmi:idref="EAID_dst720B64_5D8A_458c_BC92_6E6C3012CBB6"/>
+				<memberEnd xmi:idref="EAID_src720B64_5D8A_458c_BC92_6E6C3012CBB6"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_src720B64_5D8A_458c_BC92_6E6C3012CBB6" association="EAID_88720B64_5D8A_458c_BC92_6E6C3012CBB6">
+					<type xmi:idref="EAID_52368077_5A53_453c_8551_204029962B95"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dst720B64_5D8A_458c_BC92_6E6C3012CBB6" association="EAID_88720B64_5D8A_458c_BC92_6E6C3012CBB6">
+					<type xmi:idref="EAID_094B22C6_9067_46ca_ADA5_BBB2C03DB5EA"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:UseCase" xmi:id="EAID_C9ED136B_C077_4f59_A824_143C00698063" name="Iniciar chat con estudiante"/>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_4818B211_E9DC_4fde_A0E1_D907F8A3728A">
+				<memberEnd xmi:idref="EAID_dst18B211_E9DC_4fde_A0E1_D907F8A3728A"/>
+				<memberEnd xmi:idref="EAID_src18B211_E9DC_4fde_A0E1_D907F8A3728A"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_src18B211_E9DC_4fde_A0E1_D907F8A3728A" association="EAID_4818B211_E9DC_4fde_A0E1_D907F8A3728A">
+					<type xmi:idref="EAID_52368077_5A53_453c_8551_204029962B95"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dst18B211_E9DC_4fde_A0E1_D907F8A3728A" association="EAID_4818B211_E9DC_4fde_A0E1_D907F8A3728A">
+					<type xmi:idref="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:UseCase" xmi:id="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA" name="Proponer cita">
+				<extend xmi:type="uml:Extend" xmi:id="EAID_9043B2C1_E9DF_4357_B479_D0886E67C730" extendedCase="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+			</ownedMember>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_83566BEF_83AB_47ae_9020_9D5C5D3880E6">
+				<memberEnd xmi:idref="EAID_dst566BEF_83AB_47ae_9020_9D5C5D3880E6"/>
+				<memberEnd xmi:idref="EAID_src566BEF_83AB_47ae_9020_9D5C5D3880E6"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_src566BEF_83AB_47ae_9020_9D5C5D3880E6" association="EAID_83566BEF_83AB_47ae_9020_9D5C5D3880E6">
+					<type xmi:idref="EAID_52368077_5A53_453c_8551_204029962B95"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dst566BEF_83AB_47ae_9020_9D5C5D3880E6" association="EAID_83566BEF_83AB_47ae_9020_9D5C5D3880E6">
+					<type xmi:idref="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_D1931A54_12AA_42d6_A505_BFB735166F09">
+				<memberEnd xmi:idref="EAID_dst931A54_12AA_42d6_A505_BFB735166F09"/>
+				<memberEnd xmi:idref="EAID_src931A54_12AA_42d6_A505_BFB735166F09"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_src931A54_12AA_42d6_A505_BFB735166F09" association="EAID_D1931A54_12AA_42d6_A505_BFB735166F09">
+					<type xmi:idref="EAID_B0A4E29A_9EF8_4c1c_8A7B_D100A8C1635D"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dst931A54_12AA_42d6_A505_BFB735166F09" association="EAID_D1931A54_12AA_42d6_A505_BFB735166F09">
+					<type xmi:idref="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:UseCase" xmi:id="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863" name="Publicar en el foro"/>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_DD93A5D7_A49F_4de9_B056_0E206BC8B855">
+				<memberEnd xmi:idref="EAID_dst93A5D7_A49F_4de9_B056_0E206BC8B855"/>
+				<memberEnd xmi:idref="EAID_src93A5D7_A49F_4de9_B056_0E206BC8B855"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_src93A5D7_A49F_4de9_B056_0E206BC8B855" association="EAID_DD93A5D7_A49F_4de9_B056_0E206BC8B855">
+					<type xmi:idref="EAID_3871791F_C1FD_4639_A729_2F3A271598D7"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dst93A5D7_A49F_4de9_B056_0E206BC8B855" association="EAID_DD93A5D7_A49F_4de9_B056_0E206BC8B855">
+					<type xmi:idref="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:UseCase" xmi:id="EAID_1A967F71_5828_4dc2_AF5F_A0049EB1868B" name="Registrarse en el sistema">
+				<include xmi:type="uml:Include" xmi:id="EAID_7EBC3F08_1CE1_4b2a_9CA0_82A7F4E12F13" addition="EAID_AD00ED5F_9BD0_4cb2_A9C4_31A6FD5F67CC"/>
+			</ownedMember>
+			<ownedMember xmi:type="uml:Association" xmi:id="EAID_ADA0A723_5F1E_4f24_B1A9_CE185FAE5E67">
+				<memberEnd xmi:idref="EAID_dstA0A723_5F1E_4f24_B1A9_CE185FAE5E67"/>
+				<memberEnd xmi:idref="EAID_srcA0A723_5F1E_4f24_B1A9_CE185FAE5E67"/>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_srcA0A723_5F1E_4f24_B1A9_CE185FAE5E67" association="EAID_ADA0A723_5F1E_4f24_B1A9_CE185FAE5E67">
+					<type xmi:idref="EAID_3871791F_C1FD_4639_A729_2F3A271598D7"/>
+				</ownedEnd>
+				<ownedEnd xmi:type="uml:Property" xmi:id="EAID_dstA0A723_5F1E_4f24_B1A9_CE185FAE5E67" association="EAID_ADA0A723_5F1E_4f24_B1A9_CE185FAE5E67">
+					<type xmi:idref="EAID_1A967F71_5828_4dc2_AF5F_A0049EB1868B"/>
+				</ownedEnd>
+			</ownedMember>
+			<ownedMember xmi:type="uml:Class" xmi:id="EAID_3A228D7F_72F6_4323_9C35_416771A695FF" name="MindBridge"/>
+		</ownedMember>
+		<profileApplication xmi:type="uml:ProfileApplication" xmi:id="profileap_thecustomprofile">
+			<appliedProfile xmi:type="uml:Profile" href="http://www.sparxsystems.com/profiles/thecustomprofile/1.0#thecustomprofile"/>
+		</profileApplication>
+	</uml:Model>
+	<xmi:Extension extender="Enterprise Architect" extenderID="6.5">
+		<elements>
+			<element xmi:idref="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" xmi:type="uml:Package" name="Fase_Requisitos" scope="public">
+				<model package2="EAID_39C8CF7C_75BF_4d3a_9211_A373134B9E19" package="EAPK_11A7EA1B_463C_4301_90B4_DB65CD087C0E" tpos="0" ea_localid="20" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:18:57" modified="2026-04-23 02:18:57" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Model"/>
+				<packageproperties version="1.0"/>
+				<paths/>
+				<times created="2026-04-23 02:18:57" modified="2026-04-23 02:18:57"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" usedtd="FALSE" logxml="FALSE" packageFlags="isModel=1;VICON=3;"/>
+			</element>
+			<element xmi:idref="EAID_AD00ED5F_9BD0_4cb2_A9C4_31A6FD5F67CC" xmi:type="uml:UseCase" name="Aceptar aviso de consentimiento de uso" scope="public">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" tpos="0" ea_localid="165" ea_eleType="element"/>
+				<properties isSpecification="false" sType="UseCase" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:50:49" modified="2026-04-23 02:50:56" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Fase_Requisitos"/>
+				<links>
+					<Association xmi:id="EAID_65529D64_D420_46ed_9670_30F00F2AE290" start="EAID_3871791F_C1FD_4639_A729_2F3A271598D7" end="EAID_AD00ED5F_9BD0_4cb2_A9C4_31A6FD5F67CC"/>
+					<UseCase xmi:id="EAID_7EBC3F08_1CE1_4b2a_9CA0_82A7F4E12F13" start="EAID_1A967F71_5828_4dc2_AF5F_A0049EB1868B" end="EAID_AD00ED5F_9BD0_4cb2_A9C4_31A6FD5F67CC"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_10044AF0_6B2A_45b9_A2F9_BDEC1E7E5295" xmi:type="uml:UseCase" name="Editar contenido propio" scope="public">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" tpos="0" ea_localid="167" ea_eleType="element"/>
+				<properties isSpecification="false" sType="UseCase" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:51:44" modified="2026-04-23 02:51:49" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Fase_Requisitos"/>
+				<links>
+					<UseCase xmi:id="EAID_0A0D121C_CE5E_464f_BB31_D220637E75F7" start="EAID_10044AF0_6B2A_45b9_A2F9_BDEC1E7E5295" end="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863"/>
+					<Association xmi:id="EAID_F8C95713_473B_4023_B645_38B67778C3D4" start="EAID_3871791F_C1FD_4639_A729_2F3A271598D7" end="EAID_10044AF0_6B2A_45b9_A2F9_BDEC1E7E5295"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_E5B51622_5A22_454a_9874_17E266CA5044" xmi:type="uml:UseCase" name="Eliminar contenido propio" scope="public">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" tpos="0" ea_localid="168" ea_eleType="element"/>
+				<properties isSpecification="false" sType="UseCase" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:52:00" modified="2026-04-23 02:52:05" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Fase_Requisitos"/>
+				<links>
+					<UseCase xmi:id="EAID_D79652F6_AFA9_450c_BF2F_544CB9DC7A86" start="EAID_E5B51622_5A22_454a_9874_17E266CA5044" end="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863"/>
+					<Association xmi:id="EAID_F9A9F3EB_CDCE_4c96_96D1_46865C447091" start="EAID_3871791F_C1FD_4639_A729_2F3A271598D7" end="EAID_E5B51622_5A22_454a_9874_17E266CA5044"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A" xmi:type="uml:UseCase" name="Exportar caso a Adviser" scope="public">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" tpos="0" ea_localid="173" ea_eleType="element"/>
+				<properties isSpecification="false" sType="UseCase" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:53:45" modified="2026-04-23 02:53:56" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Fase_Requisitos"/>
+				<links>
+					<UseCase xmi:id="EAID_4A96E239_7729_4128_92FC_5751F6280818" start="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A" end="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+					<Association xmi:id="EAID_622B7FF9_2F6D_424a_8054_7BB12CE8A9C0" start="EAID_6F7CBF4D_F150_4700_8B1A_142B7BC46E5E" end="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A"/>
+					<Association xmi:id="EAID_6CB8EE42_822A_4412_886A_0C2655546636" start="EAID_52368077_5A53_453c_8551_204029962B95" end="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_2D209DFE_5C10_4304_B31A_02040B781B5D" xmi:type="uml:UseCase" name="Facilitar consentimiento FO-BU-O13" scope="public">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" tpos="0" ea_localid="172" ea_eleType="element"/>
+				<properties isSpecification="false" sType="UseCase" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:53:32" modified="2026-04-23 02:53:33" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Fase_Requisitos"/>
+				<links>
+					<UseCase xmi:id="EAID_BD2215CF_EB3F_451c_8CAF_70F60DA08024" start="EAID_2D209DFE_5C10_4304_B31A_02040B781B5D" end="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+					<Association xmi:id="EAID_FCF6C1C9_FA0B_488e_A231_87B496746916" start="EAID_52368077_5A53_453c_8551_204029962B95" end="EAID_2D209DFE_5C10_4304_B31A_02040B781B5D"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_094B22C6_9067_46ca_ADA5_BBB2C03DB5EA" xmi:type="uml:UseCase" name="Gestionar alerta" scope="public">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" tpos="0" ea_localid="169" ea_eleType="element"/>
+				<properties isSpecification="false" sType="UseCase" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:52:33" modified="2026-04-23 02:52:36" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Fase_Requisitos"/>
+				<links>
+					<UseCase xmi:id="EAID_EE290C28_8001_43b1_9C80_D1A228BECD0F" start="EAID_094B22C6_9067_46ca_ADA5_BBB2C03DB5EA" end="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+					<Association xmi:id="EAID_88720B64_5D8A_458c_BC92_6E6C3012CBB6" start="EAID_52368077_5A53_453c_8551_204029962B95" end="EAID_094B22C6_9067_46ca_ADA5_BBB2C03DB5EA"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_C9ED136B_C077_4f59_A824_143C00698063" xmi:type="uml:UseCase" name="Iniciar chat con estudiante" scope="public">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" tpos="0" ea_localid="170" ea_eleType="element"/>
+				<properties isSpecification="false" sType="UseCase" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:52:48" modified="2026-04-23 02:52:52" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Fase_Requisitos"/>
+				<links>
+					<Association xmi:id="EAID_4818B211_E9DC_4fde_A0E1_D907F8A3728A" start="EAID_52368077_5A53_453c_8551_204029962B95" end="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+					<UseCase xmi:id="EAID_4A96E239_7729_4128_92FC_5751F6280818" start="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A" end="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+					<UseCase xmi:id="EAID_9043B2C1_E9DF_4357_B479_D0886E67C730" start="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA" end="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+					<UseCase xmi:id="EAID_BD2215CF_EB3F_451c_8CAF_70F60DA08024" start="EAID_2D209DFE_5C10_4304_B31A_02040B781B5D" end="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+					<UseCase xmi:id="EAID_EE290C28_8001_43b1_9C80_D1A228BECD0F" start="EAID_094B22C6_9067_46ca_ADA5_BBB2C03DB5EA" end="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA" xmi:type="uml:UseCase" name="Proponer cita" scope="public">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" tpos="0" ea_localid="171" ea_eleType="element"/>
+				<properties isSpecification="false" sType="UseCase" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:53:09" modified="2026-04-23 02:53:13" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Fase_Requisitos"/>
+				<links>
+					<UseCase xmi:id="EAID_9043B2C1_E9DF_4357_B479_D0886E67C730" start="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA" end="EAID_C9ED136B_C077_4f59_A824_143C00698063"/>
+					<Association xmi:id="EAID_83566BEF_83AB_47ae_9020_9D5C5D3880E6" start="EAID_52368077_5A53_453c_8551_204029962B95" end="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA"/>
+					<Association xmi:id="EAID_D1931A54_12AA_42d6_A505_BFB735166F09" start="EAID_B0A4E29A_9EF8_4c1c_8A7B_D100A8C1635D" end="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863" xmi:type="uml:UseCase" name="Publicar en el foro" scope="public">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" tpos="0" ea_localid="166" ea_eleType="element"/>
+				<properties isSpecification="false" sType="UseCase" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:51:07" modified="2026-04-23 02:51:13" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Fase_Requisitos"/>
+				<links>
+					<UseCase xmi:id="EAID_0A0D121C_CE5E_464f_BB31_D220637E75F7" start="EAID_10044AF0_6B2A_45b9_A2F9_BDEC1E7E5295" end="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863"/>
+					<UseCase xmi:id="EAID_D79652F6_AFA9_450c_BF2F_544CB9DC7A86" start="EAID_E5B51622_5A22_454a_9874_17E266CA5044" end="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863"/>
+					<Association xmi:id="EAID_DD93A5D7_A49F_4de9_B056_0E206BC8B855" start="EAID_3871791F_C1FD_4639_A729_2F3A271598D7" end="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_1A967F71_5828_4dc2_AF5F_A0049EB1868B" xmi:type="uml:UseCase" name="Registrarse en el sistema" scope="public">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" tpos="0" ea_localid="164" ea_eleType="element"/>
+				<properties isSpecification="false" sType="UseCase" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:50:25" modified="2026-04-23 02:50:32" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Fase_Requisitos"/>
+				<links>
+					<UseCase xmi:id="EAID_7EBC3F08_1CE1_4b2a_9CA0_82A7F4E12F13" start="EAID_1A967F71_5828_4dc2_AF5F_A0049EB1868B" end="EAID_AD00ED5F_9BD0_4cb2_A9C4_31A6FD5F67CC"/>
+					<Association xmi:id="EAID_ADA0A723_5F1E_4f24_B1A9_CE185FAE5E67" start="EAID_3871791F_C1FD_4639_A729_2F3A271598D7" end="EAID_1A967F71_5828_4dc2_AF5F_A0049EB1868B"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_3A228D7F_72F6_4323_9C35_416771A695FF" xmi:type="uml:Boundary" name="MindBridge" scope="public">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" tpos="0" ea_localid="163" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
+				<project author="jn" version="1.0" phase="1.0" created="2026-04-23 02:35:57" modified="2026-04-23 02:50:17" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Fase_Requisitos"/>
+			</element>
+		</elements>
+		<connectors>
+			<connector xmi:idref="EAID_65529D64_D420_46ed_9670_30F00F2AE290">
+				<source xmi:idref="EAID_3871791F_C1FD_4639_A729_2F3A271598D7">
+					<model ea_localid="95" type="Actor" name="Estudiante"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_AD00ED5F_9BD0_4cb2_A9C4_31A6FD5F67CC">
+					<model ea_localid="165" type="UseCase" name="Aceptar aviso de consentimiento de uso"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="159"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_7EBC3F08_1CE1_4b2a_9CA0_82A7F4E12F13">
+				<source xmi:idref="EAID_1A967F71_5828_4dc2_AF5F_A0049EB1868B">
+					<model ea_localid="164" type="UseCase" name="Registrarse en el sistema"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_AD00ED5F_9BD0_4cb2_A9C4_31A6FD5F67CC">
+					<model ea_localid="165" type="UseCase" name="Aceptar aviso de consentimiento de uso"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="150"/>
+				<properties ea_type="UseCase" subtype="Includes" stereotype="include" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels mb=" &#xA;«include»"/>
+				<extendedProperties conditional=" &#xA;«include»" virtualInheritance="0"/>
+				<style/>
+				<xrefs value="$XREFPROP=$XID={A253D77C-959B-44c9-BF1A-2B143AF0C1EE}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=include;GUID={411F9EAA-C2ED-4db8-92BE-87133D6EADA3};@ENDSTEREO;$DES;$CLT={7EBC3F08-1CE1-4b2a-9CA0-82A7F4E12F13}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_0A0D121C_CE5E_464f_BB31_D220637E75F7">
+				<source xmi:idref="EAID_10044AF0_6B2A_45b9_A2F9_BDEC1E7E5295">
+					<model ea_localid="167" type="UseCase" name="Editar contenido propio"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863">
+					<model ea_localid="166" type="UseCase" name="Publicar en el foro"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="151"/>
+				<properties ea_type="UseCase" subtype="Extends" stereotype="extend" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels mb=" &#xA;«extend»"/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs value="$XREFPROP=$XID={287322C4-0A87-4b89-A1DA-B2066617C041}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=extend;GUID={B7188122-1EF1-4dbe-AB8C-95987053D175};@ENDSTEREO;$DES;$CLT={0A0D121C-CE5E-464f-BB31-D220637E75F7}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;$XREFPROP=$XID={29C3DCBA-BD64-4e42-A770-D7A6D42F94D4}$XID;$NAM=MOFProps$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$BEH=extensionLocation$BEH;$PAR=0$PAR;$DES=-1;0;0$DES;$CLT={0A0D121C-CE5E-464f-BB31-D220637E75F7}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_F8C95713_473B_4023_B645_38B67778C3D4">
+				<source xmi:idref="EAID_3871791F_C1FD_4639_A729_2F3A271598D7">
+					<model ea_localid="95" type="Actor" name="Estudiante"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_10044AF0_6B2A_45b9_A2F9_BDEC1E7E5295">
+					<model ea_localid="167" type="UseCase" name="Editar contenido propio"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="161"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_D79652F6_AFA9_450c_BF2F_544CB9DC7A86">
+				<source xmi:idref="EAID_E5B51622_5A22_454a_9874_17E266CA5044">
+					<model ea_localid="168" type="UseCase" name="Eliminar contenido propio"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863">
+					<model ea_localid="166" type="UseCase" name="Publicar en el foro"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="152"/>
+				<properties ea_type="UseCase" subtype="Extends" stereotype="extend" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels mb=" &#xA;«extend»"/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs value="$XREFPROP=$XID={AF295D62-67F5-4dc2-9E3C-F945B0D56AB2}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=extend;GUID={B7188122-1EF1-4dbe-AB8C-95987053D175};@ENDSTEREO;$DES;$CLT={D79652F6-AFA9-450c-BF2F-544CB9DC7A86}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;$XREFPROP=$XID={3AD5CC39-F3F7-4ad3-9833-43FE83E1825B}$XID;$NAM=MOFProps$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$BEH=extensionLocation$BEH;$PAR=0$PAR;$DES=-1;0;0$DES;$CLT={D79652F6-AFA9-450c-BF2F-544CB9DC7A86}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_F9A9F3EB_CDCE_4c96_96D1_46865C447091">
+				<source xmi:idref="EAID_3871791F_C1FD_4639_A729_2F3A271598D7">
+					<model ea_localid="95" type="Actor" name="Estudiante"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_E5B51622_5A22_454a_9874_17E266CA5044">
+					<model ea_localid="168" type="UseCase" name="Eliminar contenido propio"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="162"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_4A96E239_7729_4128_92FC_5751F6280818">
+				<source xmi:idref="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A">
+					<model ea_localid="173" type="UseCase" name="Exportar caso a Adviser"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_C9ED136B_C077_4f59_A824_143C00698063">
+					<model ea_localid="170" type="UseCase" name="Iniciar chat con estudiante"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="156"/>
+				<properties ea_type="UseCase" subtype="Extends" stereotype="extend" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels mb=" &#xA;«extend»"/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs value="$XREFPROP=$XID={5966F04D-753A-4067-BF8E-02D42D322DF6}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=extend;GUID={B7188122-1EF1-4dbe-AB8C-95987053D175};@ENDSTEREO;$DES;$CLT={4A96E239-7729-4128-92FC-5751F6280818}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;$XREFPROP=$XID={E7628E06-3DD3-429a-B184-01E4414DB7D2}$XID;$NAM=MOFProps$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$BEH=extensionLocation$BEH;$PAR=0$PAR;$DES=-1;0;0$DES;$CLT={4A96E239-7729-4128-92FC-5751F6280818}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_622B7FF9_2F6D_424a_8054_7BB12CE8A9C0">
+				<source xmi:idref="EAID_6F7CBF4D_F150_4700_8B1A_142B7BC46E5E">
+					<model ea_localid="109" type="Actor" name="Adviser"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A">
+					<model ea_localid="173" type="UseCase" name="Exportar caso a Adviser"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="170"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_6CB8EE42_822A_4412_886A_0C2655546636">
+				<source xmi:idref="EAID_52368077_5A53_453c_8551_204029962B95">
+					<model ea_localid="96" type="Actor" name="Psicológo"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A">
+					<model ea_localid="173" type="UseCase" name="Exportar caso a Adviser"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="165"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_BD2215CF_EB3F_451c_8CAF_70F60DA08024">
+				<source xmi:idref="EAID_2D209DFE_5C10_4304_B31A_02040B781B5D">
+					<model ea_localid="172" type="UseCase" name="Facilitar consentimiento FO-BU-O13"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_C9ED136B_C077_4f59_A824_143C00698063">
+					<model ea_localid="170" type="UseCase" name="Iniciar chat con estudiante"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="154"/>
+				<properties ea_type="UseCase" subtype="Extends" stereotype="extend" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels mb=" &#xA;«extend»"/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs value="$XREFPROP=$XID={449C92D6-24BA-4424-9A22-24466E96BE18}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=extend;GUID={B7188122-1EF1-4dbe-AB8C-95987053D175};@ENDSTEREO;$DES;$CLT={BD2215CF-EB3F-451c-8CAF-70F60DA08024}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;$XREFPROP=$XID={B39DC6F1-CA42-446b-B668-17E45CD7581C}$XID;$NAM=MOFProps$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$BEH=extensionLocation$BEH;$PAR=0$PAR;$DES=-1;0;0$DES;$CLT={BD2215CF-EB3F-451c-8CAF-70F60DA08024}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_FCF6C1C9_FA0B_488e_A231_87B496746916">
+				<source xmi:idref="EAID_52368077_5A53_453c_8551_204029962B95">
+					<model ea_localid="96" type="Actor" name="Psicológo"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_2D209DFE_5C10_4304_B31A_02040B781B5D">
+					<model ea_localid="172" type="UseCase" name="Facilitar consentimiento FO-BU-O13"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="167"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_EE290C28_8001_43b1_9C80_D1A228BECD0F">
+				<source xmi:idref="EAID_094B22C6_9067_46ca_ADA5_BBB2C03DB5EA">
+					<model ea_localid="169" type="UseCase" name="Gestionar alerta"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_C9ED136B_C077_4f59_A824_143C00698063">
+					<model ea_localid="170" type="UseCase" name="Iniciar chat con estudiante"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="153"/>
+				<properties ea_type="UseCase" subtype="Includes" stereotype="include" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels mb=" &#xA;«include»"/>
+				<extendedProperties conditional=" &#xA;«include»" virtualInheritance="0"/>
+				<style/>
+				<xrefs value="$XREFPROP=$XID={9F6FBC00-6D53-4bcc-9A98-152AA47EAD84}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=include;GUID={411F9EAA-C2ED-4db8-92BE-87133D6EADA3};@ENDSTEREO;$DES;$CLT={EE290C28-8001-43b1-9C80-D1A228BECD0F}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_88720B64_5D8A_458c_BC92_6E6C3012CBB6">
+				<source xmi:idref="EAID_52368077_5A53_453c_8551_204029962B95">
+					<model ea_localid="96" type="Actor" name="Psicológo"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_094B22C6_9067_46ca_ADA5_BBB2C03DB5EA">
+					<model ea_localid="169" type="UseCase" name="Gestionar alerta"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="163"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_4818B211_E9DC_4fde_A0E1_D907F8A3728A">
+				<source xmi:idref="EAID_52368077_5A53_453c_8551_204029962B95">
+					<model ea_localid="96" type="Actor" name="Psicológo"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_C9ED136B_C077_4f59_A824_143C00698063">
+					<model ea_localid="170" type="UseCase" name="Iniciar chat con estudiante"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="164"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_9043B2C1_E9DF_4357_B479_D0886E67C730">
+				<source xmi:idref="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA">
+					<model ea_localid="171" type="UseCase" name="Proponer cita"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_C9ED136B_C077_4f59_A824_143C00698063">
+					<model ea_localid="170" type="UseCase" name="Iniciar chat con estudiante"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="155"/>
+				<properties ea_type="UseCase" subtype="Extends" stereotype="extend" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels mb=" &#xA;«extend»"/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs value="$XREFPROP=$XID={75C8BFDE-9ECD-4903-9858-08BA3C1AD4B1}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=extend;GUID={B7188122-1EF1-4dbe-AB8C-95987053D175};@ENDSTEREO;$DES;$CLT={9043B2C1-E9DF-4357-B479-D0886E67C730}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;$XREFPROP=$XID={25194144-9DF4-4cdc-9EA1-61DFAEF08C35}$XID;$NAM=MOFProps$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$BEH=extensionLocation$BEH;$PAR=0$PAR;$DES=-1;0;0$DES;$CLT={9043B2C1-E9DF-4357-B479-D0886E67C730}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_83566BEF_83AB_47ae_9020_9D5C5D3880E6">
+				<source xmi:idref="EAID_52368077_5A53_453c_8551_204029962B95">
+					<model ea_localid="96" type="Actor" name="Psicológo"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA">
+					<model ea_localid="171" type="UseCase" name="Proponer cita"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="166"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_D1931A54_12AA_42d6_A505_BFB735166F09">
+				<source xmi:idref="EAID_B0A4E29A_9EF8_4c1c_8A7B_D100A8C1635D">
+					<model ea_localid="174" type="Actor" name="Google Calendar"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA">
+					<model ea_localid="171" type="UseCase" name="Proponer cita"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="169"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_DD93A5D7_A49F_4de9_B056_0E206BC8B855">
+				<source xmi:idref="EAID_3871791F_C1FD_4639_A729_2F3A271598D7">
+					<model ea_localid="95" type="Actor" name="Estudiante"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863">
+					<model ea_localid="166" type="UseCase" name="Publicar en el foro"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="160"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_ADA0A723_5F1E_4f24_B1A9_CE185FAE5E67">
+				<source xmi:idref="EAID_3871791F_C1FD_4639_A729_2F3A271598D7">
+					<model ea_localid="95" type="Actor" name="Estudiante"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_1A967F71_5828_4dc2_AF5F_A0049EB1868B">
+					<model ea_localid="164" type="UseCase" name="Registrarse en el sistema"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="157"/>
+				<properties ea_type="Association" direction="Unspecified"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<parameterSubstitutions/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+		</connectors>
+		<primitivetypes>
+			<packagedElement xmi:type="uml:Package" xmi:id="EAPrimitiveTypesPackage" name="EA_PrimitiveTypes_Package"/>
+		</primitivetypes>
+		<profiles>
+			<uml:Profile xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmi:id="thecustomprofile" nsPrefix="thecustomprofile" name="thecustomprofile" metamodelReference="mmref01">
+				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="thecustomprofile">
+					<body> Version:1.0</body>
+				</ownedComment>
+				<packageImport xmi:id="mmref01">
+					<importedPackage href="http://schema.omg.org/spec/UML/2.0"/>
+				</packageImport>
+				<ownedMember xmi:type="uml:Stereotype" xmi:id="extend" name="extend">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="extend-base_Extend" name="base_Extend" association="Extend_extend">
+						<type href="http://schema.omg.org/spec/UML/2.0/uml.xml#Extend"/>
+					</ownedAttribute>
+				</ownedMember>
+				<ownedMember xmi:type="uml:Extension" xmi:id="Extend_extend" name="A_Extend_extend" memberEnd="extension_extend extend-base_Extend">
+					<ownedEnd xmi:id="extension_extend" name="extension_extend" type="extend" isComposite="true" lower="0" upper="1" memberEnd="extension_extend extend-base_Extend"/>
+				</ownedMember>
+				<ownedMember xmi:type="uml:Stereotype" xmi:id="include" name="include">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="include-base_Include" name="base_Include" association="Include_include">
+						<type href="http://schema.omg.org/spec/UML/2.0/uml.xml#Include"/>
+					</ownedAttribute>
+				</ownedMember>
+				<ownedMember xmi:type="uml:Extension" xmi:id="Include_include" name="A_Include_include" memberEnd="extension_include include-base_Include">
+					<ownedEnd xmi:id="extension_include" name="extension_include" type="include" isComposite="true" lower="0" upper="1" memberEnd="extension_include include-base_Include"/>
+				</ownedMember>
+			</uml:Profile>
+		</profiles>
+		<diagrams>
+			<diagram xmi:id="EAID_B0A0713B_73FF_4a15_8D70_EDF9873D600B">
+				<model package="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19" localID="16" owner="EAPK_39C8CF7C_75BF_4d3a_9211_A373134B9E19"/>
+				<properties name="DCU_to_be" type="Use Case"/>
+				<project author="jn" version="1.0" created="2026-04-23 02:20:01" modified="2026-04-23 03:03:15"/>
+				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=0;PPgs.cy=0;DocSize.cx=827;DocSize.cy=1169;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
+				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=439649B1;"/>
+				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;SwimlaneFont=lfh:-10,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
+				<matrixitems value="locked=false;matrixactive=false;swimlanesactive=true;kanbanactive=false;width=1;clrLine=0;"/>
+				<extendedProperties/>
+				<elements>
+					<element geometry="Left=1211;Top=342;Right=1256;Bottom=432;imgL=1017;imgT=353;imgR=1062;imgB=443;" subject="EAID_6F7CBF4D_F150_4700_8B1A_142B7BC46E5E" seqno="1" style="DUID=3B535ED8;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/>
+					<element geometry="Left=1225;Top=519;Right=1270;Bottom=609;imgL=1031;imgT=530;imgR=1076;imgB=620;" subject="EAID_B0A4E29A_9EF8_4c1c_8A7B_D100A8C1635D" seqno="2" style="DUID=1AD3BA70;"/>
+					<element geometry="Left=926;Top=739;Right=1031;Bottom=809;imgL=732;imgT=750;imgR=837;imgB=820;" subject="EAID_75D7A0F6_30D7_41a1_B839_8DDB9DB2F17A" seqno="3" style="DUID=905811AB;"/>
+					<element geometry="Left=610;Top=739;Right=715;Bottom=809;imgL=416;imgT=750;imgR=521;imgB=820;" subject="EAID_2D209DFE_5C10_4304_B31A_02040B781B5D" seqno="4" style="DUID=EDC38C3F;"/>
+					<element geometry="Left=765;Top=739;Right=870;Bottom=809;imgL=571;imgT=750;imgR=676;imgB=820;" subject="EAID_E30E582A_8109_4ac2_8209_9DA6C47CE6AA" seqno="5" style="DUID=08863F58;"/>
+					<element geometry="Left=889;Top=528;Right=994;Bottom=598;imgL=695;imgT=539;imgR=800;imgB=609;" subject="EAID_C9ED136B_C077_4f59_A824_143C00698063" seqno="6" style="DUID=38DB34F9;"/>
+					<element geometry="Left=647;Top=528;Right=752;Bottom=598;imgL=453;imgT=539;imgR=558;imgB=609;" subject="EAID_094B22C6_9067_46ca_ADA5_BBB2C03DB5EA" seqno="7" style="DUID=96675DFA;"/>
+					<element geometry="Left=949;Top=399;Right=1054;Bottom=469;imgL=755;imgT=410;imgR=860;imgB=480;" subject="EAID_E5B51622_5A22_454a_9874_17E266CA5044" seqno="8" style="DUID=04A80D5B;"/>
+					<element geometry="Left=592;Top=386;Right=697;Bottom=456;imgL=398;imgT=397;imgR=503;imgB=467;" subject="EAID_10044AF0_6B2A_45b9_A2F9_BDEC1E7E5295" seqno="9" style="DUID=B6C86755;"/>
+					<element geometry="Left=784;Top=289;Right=889;Bottom=359;imgL=590;imgT=300;imgR=695;imgB=370;" subject="EAID_1FE77139_3D8D_4f7b_89FA_F5374642D863" seqno="10" style="DUID=2DBEC720;"/>
+					<element geometry="Left=924;Top=156;Right=1029;Bottom=226;imgL=730;imgT=167;imgR=835;imgB=237;" subject="EAID_AD00ED5F_9BD0_4cb2_A9C4_31A6FD5F67CC" seqno="11" style="DUID=8775645B;"/>
+					<element geometry="Left=647;Top=156;Right=752;Bottom=226;imgL=453;imgT=167;imgR=558;imgB=237;" subject="EAID_1A967F71_5828_4dc2_AF5F_A0049EB1868B" seqno="12" style="DUID=7E73825C;"/>
+					<element geometry="Left=266;Top=439;Right=311;Bottom=529;imgL=72;imgT=450;imgR=117;imgB=540;" subject="EAID_52368077_5A53_453c_8551_204029962B95" seqno="13" style="DUID=1DC18CD2;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/>
+					<element geometry="Left=264;Top=87;Right=309;Bottom=177;imgL=70;imgT=98;imgR=115;imgB=188;" subject="EAID_3871791F_C1FD_4639_A729_2F3A271598D7" seqno="14" style="DUID=5E6A7039;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/>
+					<element geometry="Left=510;Top=66;Right=1105;Bottom=900;imgL=316;imgT=77;imgR=911;imgB=911;" subject="EAID_3A228D7F_72F6_4323_9C35_416771A695FF" seqno="15" style="DUID=28CE1CE7;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_F8C95713_473B_4023_B645_38B67778C3D4" style="Mode=3;EOID=B6C86755;SOID=5E6A7039;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=CX=38:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_0A0D121C_CE5E_464f_BB31_D220637E75F7" style="Mode=3;EOID=2DBEC720;SOID=B6C86755;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=4;$LLB=;LLT=;LMT=;LMB=CX=38:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_D79652F6_AFA9_450c_BF2F_544CB9DC7A86" style="Mode=3;EOID=2DBEC720;SOID=04A80D5B;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=CX=39:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_EE290C28_8001_43b1_9C80_D1A228BECD0F" style="Mode=3;EOID=38DB34F9;SOID=96675DFA;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=CX=38:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_BD2215CF_EB3F_451c_8CAF_70F60DA08024" style="Mode=3;EOID=38DB34F9;SOID=EDC38C3F;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=CX=38:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_9043B2C1_E9DF_4357_B479_D0886E67C730" style="Mode=3;EOID=38DB34F9;SOID=08863F58;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=CX=38:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_4A96E239_7729_4128_92FC_5751F6280818" style="Mode=3;EOID=38DB34F9;SOID=905811AB;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_ADA0A723_5F1E_4f24_B1A9_CE185FAE5E67" style="Mode=3;EOID=7E73825C;SOID=5E6A7039;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=CX=39:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_7EBC3F08_1CE1_4b2a_9CA0_82A7F4E12F13" style="Mode=3;EOID=8775645B;SOID=7E73825C;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=-1;SY=-16;EX=-1;EY=-16;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_DD93A5D7_A49F_4de9_B056_0E206BC8B855" style="Mode=3;EOID=2DBEC720;SOID=5E6A7039;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=4;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_622B7FF9_2F6D_424a_8054_7BB12CE8A9C0" style="Mode=3;EOID=905811AB;SOID=3B535ED8;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=26;EX=0;EY=35;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1079:-106$1079:-399$;" subject="EAID_F9A9F3EB_CDCE_4c96_96D1_46865C447091" style="Mode=3;EOID=04A80D5B;SOID=5E6A7039;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_88720B64_5D8A_458c_BC92_6E6C3012CBB6" style="Mode=3;EOID=96675DFA;SOID=1DC18CD2;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=6;SY=22;EX=6;EY=22;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_4818B211_E9DC_4fde_A0E1_D907F8A3728A" style="Mode=3;EOID=38DB34F9;SOID=1DC18CD2;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_6CB8EE42_822A_4412_886A_0C2655546636" style="Mode=3;EOID=905811AB;SOID=1DC18CD2;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_83566BEF_83AB_47ae_9020_9D5C5D3880E6" style="Mode=3;EOID=08863F58;SOID=1DC18CD2;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_FCF6C1C9_FA0B_488e_A231_87B496746916" style="Mode=3;EOID=EDC38C3F;SOID=1DC18CD2;Color=-1;LWidth=0;Hidden=0;"/>
+					<element geometry="SX=-23;SY=0;EX=18;EY=0;EDGE=3;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=1225:-837$835:-837$;" subject="EAID_D1931A54_12AA_42d6_A505_BFB735166F09" style="Mode=3;EOID=08863F58;SOID=1AD3BA70;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/>
+					<element geometry="SX=1;SY=0;EX=1;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=288:-35$977:-35$;" subject="EAID_65529D64_D420_46ed_9670_30F00F2AE290" style="Mode=3;EOID=8775645B;SOID=5E6A7039;Color=-1;LWidth=0;TREE=OR;Hidden=0;"/>
+				</elements>
+			</diagram>
+		</diagrams>
+	</xmi:Extension>
+	<thecustomprofile:extend base_Extend="EAID_0A0D121C_CE5E_464f_BB31_D220637E75F7"/>
+	<thecustomprofile:extend base_Extend="EAID_D79652F6_AFA9_450c_BF2F_544CB9DC7A86"/>
+	<thecustomprofile:extend base_Extend="EAID_4A96E239_7729_4128_92FC_5751F6280818"/>
+	<thecustomprofile:extend base_Extend="EAID_BD2215CF_EB3F_451c_8CAF_70F60DA08024"/>
+	<thecustomprofile:include base_Include="EAID_EE290C28_8001_43b1_9C80_D1A228BECD0F"/>
+	<thecustomprofile:extend base_Extend="EAID_9043B2C1_E9DF_4357_B479_D0886E67C730"/>
+	<thecustomprofile:include base_Include="EAID_7EBC3F08_1CE1_4b2a_9CA0_82A7F4E12F13"/>
+</xmi:XMI>

@@ -109,3 +109,12 @@ CREATE TABLE wellness_event (
 - El endpoint valida control multicampus: el campus del estudiante debe coincidir con el del psicólogo autenticado.
 - Se agrega `FO_BU_O13_FORM_URL` a la configuración (Zod + env) para que el link sea inyectado dinámicamente en los mensajes `CHARACTERIZATION_LINK`.
 - Si en el futuro se necesitan encuestas alternativas (psicosocial, académica), se añadirá un campo `form_code` al body del mensaje para seleccionar la URL desde configuración.
+
+---
+
+## AD-07: `caso_formal_activo` computado dinámicamente desde `active_case_id`
+
+**Fecha:** 2026-06-11
+**Contexto:** El campo `caso_formal_activo` se almacenaba como columna booleana en la tabla `student`. Un estudiante (`elpanajhon`) tenía un caso clínico ASSIGNED pero `caso_formal_activo=false` en la BD, lo que impedía que el frontend mostrara el sidebar de chat. La columna podía desincronizarse de la realidad porque no había triggers que la mantuvieran actualizada al crear/asignar casos.
+**Decisión:** En `auth.service.ts`, el campo `caso_formal_activo` se computa dinámicamente a partir de `active_case_id`: si `activeCase?.id` es no-null, se retorna `true`; caso contrario `false`. La columna `student.caso_formal_activo` queda como redundancia no utilizada.
+**Consecuencia:** Elimina la dependencia de un campo propenso a desincronización. El sidebar de chat se muestra correctamente para todos los estudiantes con un caso activo, independientemente del valor almacenado en la BD.

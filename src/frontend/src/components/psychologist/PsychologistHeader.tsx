@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ThemeToggle } from "../ui/theme-toggle";
 import { apiGet } from "../../lib/api";
 
@@ -44,9 +45,10 @@ export function PsychologistHeader() {
         <div className="flex items-center">
           <Link
             href="/dashboard"
-            className="text-lg font-bold font-display text-primary"
+            className="flex items-center gap-2"
           >
-            MindBridge
+            <Image src="/mindbridge-logo.png" alt="MindBridge" width={24} height={24} className="w-6 h-6" />
+            <span className="text-lg font-bold font-display text-primary">MindBridge</span>
           </Link>
         </div>
 

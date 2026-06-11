@@ -1,0 +1,28 @@
+Exporting package to 'C:\TrabajosdeJuan\Proyectos\isoft-project\Documentación\Borradores\MindBridgeDiagrams.xml'
+Retrieving data for export: diagram elements
+Retrieving data for export: links
+Retrieving data for export: constraints
+Retrieving data for export: attribute tagged values
+Retrieving data for export: operation tagged values
+Retrieving data for export: operation parameter tagged values
+Retrieving data for export: connector tagged values
+Completed data retrieval
+Pre-processing export tree...
+Completed pre-processing
+Processing package: Fase_Requisitos
+Diagram: DCU_to_be
+Element:0: Aceptar aviso de consentimiento de uso
+Element:1: Editar contenido propio
+Element:2: Eliminar contenido propio
+Element:3: Exportar caso a Adviser
+Element:4: Facilitar consentimiento FO-BU-O13
+Element:5: Gestionar alerta
+Element:6: Iniciar chat con estudiante
+Element:7: Proponer cita
+Element:8: Publicar en el foro
+Element:9: Registrarse en el sistema
+Element:10: MindBridge
+Adding Document Item XML
+Sequencing Interaction Diagrams
+Formatting output XML...please wait
+XMI Document Export Complete!
