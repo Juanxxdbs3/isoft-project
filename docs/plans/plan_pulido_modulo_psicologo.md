@@ -400,7 +400,7 @@ Verificar manualmente:
 
 ---
 
-## Sesión D — Chat funcional
+## Sesión D — Chat funcional ✅ COMPLETADA
 
 **Objetivo:** conectar el chat de la pantalla del caso al backend. El
 componente `chat-widget.tsx` ya existe; solo hay que cablearlo.
@@ -412,20 +412,22 @@ mensajes localmente sin errores en consola.
 
 ### Cambios en el chat
 
-**Crear sala si no existe:**
+**Crear sala si no existe:** ✅
 Al cargar `/cases/[caseId]`, si `chat_room` es `null`, mostrar botón
 "Iniciar conversación" que llama `POST /api/v1/cases/:caseId/chat`.
 Tras la respuesta exitosa, renderizar el widget de chat con el `chat_id`
 recibido.
 
-**Conectar envío de mensajes:**
+**Conectar envío de mensajes:** ✅
 El input del chat llama `POST /api/v1/cases/:caseId/chat/messages`. El
 mensaje se agrega optimistamente al estado local antes de recibir la
 respuesta del servidor.
 
-**Suscripción Realtime:**
-El trigger `trg_chat_message_broadcast` ya existe en la BD. El cliente
-se suscribe al topic `room:{chatRoomId}:messages`:
+**Suscripción Realtime:** ✅
+El trigger `trg_chat_message_inserted` reemplazó al anterior `trg_chat_message_broadcast`
+en la BD (renombrado para mayor claridad semántica y para alinear el nombre con la
+convención `trg_{table}_{operation}`). El cliente se suscribe al topic
+`room:{chatRoomId}:messages`:
 
 ```typescript
 const channel = supabase
@@ -438,7 +440,7 @@ const channel = supabase
 return () => { supabase.removeChannel(channel); };
 ```
 
-**Tipos de mensaje por rol:**
+**Tipos de mensaje por rol:** ✅
 - Psicólogo: botones adicionales para `APPOINTMENT_PROPOSAL` y
   `CHARACTERIZATION_LINK`
 - Estudiante: solo `STANDARD_TEXT` (el input estándar es suficiente)
@@ -453,6 +455,21 @@ Verificar con dos ventanas (psicólogo y estudiante del mismo caso):
   sin recargar
 - `CHARACTERIZATION_LINK` muestra el URL del formulario en el chat
 - `APPOINTMENT_PROPOSAL` muestra una tarjeta de propuesta de cita
+
+### Refuerzo Realtime (post-Sesión D)
+
+Se aplicaron los siguientes refuerzos a `CaseChatShell` (`case-chat-shell.tsx`) para
+robustecer la conexión Realtime:
+
+- **setAuth:** Se agregó `useEffect` que llama `supabase.realtime.setAuth(token)` para
+  inyectar el JWT del usuario en el canal, necesario para canales Realtime privados.
+- **409 handling:** La inicialización de sala ahora maneja error 409 (sala ya existente)
+  con un fallback a `GET`; detecta el código mediante `err.status || err.statusCode || err.error || err.message`.
+- **Payload extraction 3-way:** El mapeo de mensajes entrantes usa
+  `payload.payload || record || payload` con guarda `if (!msgData?.id) return` para
+  manejar variaciones en la estructura del mensaje broadcast.
+- **Dependencies estabilizadas:** El `useEffect` de suscripción usa `chatRoom?.id` (primitivo)
+  en lugar de `chatRoom` (objeto) para evitar re-ejecuciones innecesarias.
 
 ---
 

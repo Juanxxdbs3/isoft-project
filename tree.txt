@@ -42,6 +42,7 @@
 |    |    +--- project-status.md
 |    |    \--- project-status-module-psycho.md
 |    \--- plans
+|         +--- plan_pulido_modulo_psicologo.md
 |         \--- psychologist_module_implementation_plan.md
 +--- Documentación
 |    +--- Anexos
@@ -186,12 +187,14 @@
 |    |    +--- src
 |    |    |    +--- app
 |    |    |    |    +--- (psychologist)
+|    |    |    |    |    +--- cases
+|    |    |    |    |    |    +--- [caseId]
+|    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    \--- page.tsx
 |    |    |    |    |    +--- dashboard
 |    |    |    |    |    |    +--- alerts
 |    |    |    |    |    |    |    \--- [alertId]
 |    |    |    |    |    |    |         \--- page.tsx
-|    |    |    |    |    |    +--- cases
-|    |    |    |    |    |    |    \--- page.tsx
 |    |    |    |    |    |    +--- chat
 |    |    |    |    |    |    |    \--- page.tsx
 |    |    |    |    |    |    \--- page.tsx
@@ -229,6 +232,13 @@
 |    |    |    |    |    +--- alert-list.tsx
 |    |    |    |    |    +--- nlp-scores-panel.tsx
 |    |    |    |    |    \--- post-history-list.tsx
+|    |    |    |    +--- cases
+|    |    |    |    |    +--- case-actions.tsx
+|    |    |    |    |    +--- case-alerts-list.tsx
+|    |    |    |    |    +--- case-chat-shell.tsx
+|    |    |    |    |    +--- case-info-panel.tsx
+|    |    |    |    |    +--- case-post-history.tsx
+|    |    |    |    |    \--- student-data-panel.tsx
 |    |    |    |    +--- chat
 |    |    |    |    |    +--- chat-bubble.tsx
 |    |    |    |    |    +--- chat-case-list.tsx
@@ -390,6 +400,7 @@
 +--- agents.md
 +--- Design.md
 +--- FINAL_TEST_SUMMARY.md
++--- Guía para la presentación de proyectos Ing SW.docx
 +--- prompts.md
 +--- skills-lock.json
 +--- SPEC.md

@@ -125,6 +125,7 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
           chatRoom={caseData.chat_room || { id: null, status: null }}
           studentName={studentName}
           studentAvatarUrl={caseData.avatar_url || undefined}
+          token={token}
         />
       </div>
     </div>

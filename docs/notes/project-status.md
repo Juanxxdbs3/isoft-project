@@ -52,6 +52,8 @@
 - [x] Detalle de alerta con puntuaciones NLP (RF14) — ruta `/dashboard/alerts/[alertId]`, componente `AlertDetailPanel`
 - [x] Aceptación de caso con optimistic concurrency (RF19) — botón Accept en `AlertDetailPanel` con llamada `POST /alerts/:id/accept`
 - [x] Sesión A — Routing restructure psicólogo: `cases/page.tsx` creado, `cases/[caseId]/page.tsx` stub, `dashboard/chat/page.tsx` reemplazado con redirect, Sidebar actualizado, enlaces de chat arreglados, `dashboard/cases/` eliminado
+- [x] Sesión D — Chat funcional en detalle de caso: CaseChatShell cableado a `POST /cases/:caseId/chat/messages` + `GET /cases/:caseId/chat` con Realtime broadcast; sala auto-creada en primera visita; envío optimista con rollback de error; estados de carga/error integrados
+- [x] CaseChatShell Realtime refuerzos: setAuth JWT injection, 409 handling con GET fallback, payload extraction 3-way (`payload.payload || record || payload`) con null guard, dependencias estabilizadas (`chatRoom?.id` en lugar de `chatRoom`)
 
 ### Pendiente 🔲
 
@@ -141,7 +143,7 @@
 
 - [x] Schema SQL v1.1 (`docs/models/schema_mindbridge_v1.1.sql`)
 - [x] `.env.example` para los tres servicios
-- [x] Triggers Realtime — `trg_chat_message_broadcast` en `chat_message` para broadcast a `room:<room_id>:messages`
+- [x] Triggers Realtime — `trg_chat_message_inserted` (reemplazó a `trg_chat_message_broadcast`) en `chat_message` para broadcast a `room:<room_id>:messages`
 - [x] Schema SQL v1.1 desplegado en Supabase
 - [x] Datos de prueba insertados (psicólogo, caso clínico, sala de chat)
 - [x] Triggers Realtime funcionando para chat

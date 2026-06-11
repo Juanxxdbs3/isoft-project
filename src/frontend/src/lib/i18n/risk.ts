@@ -20,8 +20,8 @@ export const caseStatusTranslation: Record<string, string> = {
 };
 
 export const caseTypeTranslation: Record<string, string> = {
-  AUTOMATIC_ALERT: "alerta_automatica",
-  SELF_REFERRAL: "autoreferencia",
+  AUTOMATIC_ALERT: "Alerta automática",
+  SELF_REFERRAL: "Autoreferencia",
 };
 
 export const postStatusTranslation: Record<string, string> = {
@@ -49,9 +49,9 @@ export const accountStatusTranslation: Record<string, string> = {
 };
 
 export const adviserExportStatusTranslation: Record<string, string> = {
-  NOT_EXPORTED: "no_exportado",
-  EXPORTED_SUCCESS: "exportado_exitoso",
-  FAILED: "fallido",
+  NOT_EXPORTED: "No exportado",
+  EXPORTED_SUCCESS: "Exportado con éxito",
+  FAILED: "Fallido",
 };
 
 export const shiftTypeTranslation: Record<string, string> = {

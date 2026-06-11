@@ -165,6 +165,22 @@ Reusa `lib/i18n/risk.ts` y `forum/risk-badge.tsx` para todos los scores, i18n y 
 - [x] Links alert to case via `case_id`
 - [x] Includes rollback on failure (reverts alert to PENDING)
 
+## ✅ Sesión D — Chat funcional en detalle del caso
+
+- [x] CaseChatShell wired to backend `POST /cases/:caseId/chat/messages` + `GET /cases/:caseId/chat` + Realtime broadcast subscription
+- [x] Room auto-created on first visit (`POST /api/v1/cases/:caseId/chat` when `chat_room` is null) — botón "Iniciar conversación" en `cases/[caseId]/page.tsx`
+- [x] Optimistic send with error rollback (message added locally before server response; reverted on failure with toast error)
+- [x] Loading/error states in chat widget (spinner during send, error toast on failure, empty states when no messages)
+- [x] `chat-widget.tsx` and `cases/[caseId]/page.tsx` modified — chat fully integrated into case detail view
+
+### Realtime refuerzos en CaseChatShell
+
+- [x] **setAuth JWT injection:** `useEffect` added calling `supabase.realtime.setAuth(token)` to inject JWT for private Realtime channels
+- [x] **409 handling with GET fallback:** Room init now catches 409 (room already exists), detects via `err.status / statusCode / error / message`, and falls back to `GET /cases/:caseId/chat`
+- [x] **Payload extraction 3-way null guard:** Incoming broadcast messages mapped via `payload.payload || record || payload` with `if (!msgData?.id) return` guard
+- [x] **Dependencies stabilized:** Subscription `useEffect` uses `chatRoom?.id` (primitive string) instead of `chatRoom` (object reference)
+- [x] **DB trigger replaced:** `trg_chat_message_broadcast` renamed to `trg_chat_message_inserted` following `trg_{table}_{operation}` convention; old trigger dropped, new function `on_chat_message_inserted()` created with `SECURITY DEFINER`
+
 ## Deuda Técnica
 
 - [ ] Migrar `auth.router.ts` de `NLP_SERVICE_BEARER_TOKEN` a `ADMIN_SECRET` para password-reset
