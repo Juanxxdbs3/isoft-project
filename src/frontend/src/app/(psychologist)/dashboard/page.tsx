@@ -57,6 +57,7 @@ export default async function DashboardPage() {
   const sortedAlerts = [...pendingAlerts].sort(
     (a, b) => (SEVERITY[b.risk_level] ?? 0) - (SEVERITY[a.risk_level] ?? 0)
   );
+  const feedAlerts = sortedAlerts.filter((a) => !a.is_complementary);
   const totalAlerts = pendingAlerts.length;
 
   const todayStr = new Date().toISOString().slice(0, 10);
@@ -94,7 +95,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Risk filters + Alert feed */}
-      <AlertFeed alerts={sortedAlerts} />
+      <AlertFeed alerts={feedAlerts} />
     </div>
   );
 }

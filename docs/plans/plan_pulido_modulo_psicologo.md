@@ -48,7 +48,7 @@ Mis casos   → /cases         (link activo tras esta sesión)
 
 ---
 
-## Sesión A — Corrección de routing y estructura de carpetas
+## Sesión A — Corrección de routing y estructura de carpetas ✅ COMPLETADA
 
 **Objetivo:** establecer la estructura de rutas correcta sin tocar lógica
 de negocio. Es la sesión más corta pero desbloquea todo lo demás.
@@ -102,7 +102,7 @@ Verificar manualmente:
 
 ---
 
-## Sesión B — Corrección de caso único por estudiante
+## Sesión B — Corrección de caso único por estudiante ✅ COMPLETADA
 
 **Objetivo:** garantizar que un estudiante tenga como máximo un
 `clinical_case` activo. Todas las alertas posteriores se asocian al caso
@@ -310,6 +310,13 @@ const { data: posts } = await supabase
 │  └─────────────────────────┘ │                                  │
 │                              │                                  │
 │  ┌─────────────────────────┐ │                                  │
+│  │ ALERTAS DEL CASO        │ │                                  │
+│  │ (lista de todas las     │ │                                  │
+│  │  alertas asociadas,     │ │                                  │
+│  │  incl. complementarias) │ │                                  │
+│  └─────────────────────────┘ │                                  │
+│                              │                                  │
+│  ┌─────────────────────────┐ │                                  │
 │  │ HISTORIAL               │ │                                  │
 │  │ publicaciones ordenadas │ │                                  │
 │  │ por fecha (descendente) │ │                                  │
@@ -323,6 +330,7 @@ const { data: posts } = await supabase
 src/frontend/src/components/cases/case-info-panel.tsx
 src/frontend/src/components/cases/student-data-panel.tsx
 src/frontend/src/components/cases/case-actions.tsx
+src/frontend/src/components/cases/case-alert-list.tsx
 src/frontend/src/components/cases/case-post-history.tsx
 ```
 
@@ -345,6 +353,37 @@ de los botones y las mutaciones.
 Para obtener el `alertId` correspondiente, el caso ya devuelve `alerts[]`
 en la respuesta. Tomar la alerta más reciente con `status = 'ACCEPTED'`.
 
+### Complemento: Lista de alertas en el detalle del caso
+
+Además del historial de publicaciones, el detalle del caso debe incluir una
+sección que liste todas las alertas asociadas al caso (incluidas las
+complementarias).
+
+**Backend (`getCaseById()`):** El campo `alerts[]` ya está especificado en el
+contrato de respuesta arriba. Verificar que la query incluya el join a `alert`
+filtrado por `case_id`.
+
+**Componente frontend a crear:**
+```
+src/frontend/src/components/cases/case-alert-list.tsx
+```
+Este componente recibe `alerts: AlertSummary[]` y renderiza una lista
+cronológica con el estado, fecha, tipo y nivel de riesgo de cada alerta.
+
+### Complemento: Filtro de alertas complementarias en dashboard
+
+Las alertas con `is_complementary = true` deben excluirse de la lista de
+alertas en `/dashboard`. Solo deben ser visibles desde el detalle del caso
+(`/cases/[caseId]`).
+
+**Backend:** En `GET /api/v1/alerts`, agregar filtro
+`is_complementary.is.null` (o `is_complementary.eq.false`) en la query para
+que el endpoint no retorne alertas complementarias.
+
+**Frontend:** El dashboard (`/dashboard/page.tsx`) solo muestra las alertas
+devueltas por el endpoint filtrado. Las alertas complementarias se visualizan
+exclusivamente en `case-alert-list.tsx` dentro del detalle del caso.
+
 ### Validación de la sesión
 
 ```bash
@@ -354,6 +393,8 @@ tsc --noEmit   # 0 errores
 Verificar manualmente:
 - Datos del estudiante aparecen (incluidos los complementarios si existen)
 - El historial muestra publicaciones anteriores a la fecha de la alerta
+- Las alertas del caso se listan en orden cronológico
+- Las alertas complementarias NO aparecen en `/dashboard` pero SÍ en `/cases/[caseId]`
 - Los botones de acción disparan las llamadas correctas al backend
 - "Exportar PDF" aparece deshabilitado con tooltip
 
@@ -496,6 +537,6 @@ primero, frontend después). D y E caben en un prompt cada una.
 |--------|------|----------|---------|
 | A | `cases/page.tsx`, `cases/[caseId]/page.tsx` | `PsychologistSidebar.tsx`, `alert-card.tsx` | `dashboard/chat/page.tsx` |
 | B | — | `alerts.service.ts` | — |
-| C | `case-info-panel.tsx`, `student-data-panel.tsx`, `case-actions.tsx`, `case-post-history.tsx`, `cases/[caseId]/page.tsx` (reemplaza stub) | `cases.service.ts` (getCaseById) | — |
+| C | `case-info-panel.tsx`, `student-data-panel.tsx`, `case-actions.tsx`, `case-alert-list.tsx`, `case-post-history.tsx`, `cases/[caseId]/page.tsx` (reemplaza stub) | `cases.service.ts` (getCaseById), `alerts.service.ts` (filtro complementarias) | — |
 | D | — | `chat-widget.tsx`, `cases/[caseId]/page.tsx` | — |
 | E | — | Client Component del dashboard (useEffect cleanup) | — |

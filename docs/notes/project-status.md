@@ -51,6 +51,7 @@
 - [x] Footer usa CSS variables `--footer-bg`, `--footer-text`, `--footer-muted`
 - [x] Detalle de alerta con puntuaciones NLP (RF14) — ruta `/dashboard/alerts/[alertId]`, componente `AlertDetailPanel`
 - [x] Aceptación de caso con optimistic concurrency (RF19) — botón Accept en `AlertDetailPanel` con llamada `POST /alerts/:id/accept`
+- [x] Sesión A — Routing restructure psicólogo: `cases/page.tsx` creado, `cases/[caseId]/page.tsx` stub, `dashboard/chat/page.tsx` reemplazado con redirect, Sidebar actualizado, enlaces de chat arreglados, `dashboard/cases/` eliminado
 
 ### Pendiente 🔲
 
@@ -83,6 +84,7 @@
 - [x] Forum service retorna `avatar_url` en todos los endpoints post/comment
 - [x] Módulo Alerts: GET /alerts, GET /alerts/:id, POST /:id/accept, PATCH /:id/status
 - [x] Módulo Cases: GET /cases, GET /cases/:id, POST /cases (self-referral), PATCH /:id/formal-active, chat CRUD, consent
+- [x] Sesión B — Unique case per student: `acceptAlert()` reusa caso activo existente, marca `is_complementary = true`, rollback on failure
 
 ### Completado ✅ (Sesión 1.1)
 

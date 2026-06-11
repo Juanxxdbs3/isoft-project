@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { RiskBadge } from "../forum/risk-badge";
 import { NlpScoresPanel } from "./nlp-scores-panel";
@@ -58,14 +58,17 @@ export function AlertDetailPanel({ alert }: AlertDetailPanelProps) {
   const router = useRouter();
   const [accepting, setAccepting] = useState(false);
   const [accepted, setAccepted] = useState(false);
+  const [formattedDate, setFormattedDate] = useState("");
+
+  useEffect(() => {
+    setFormattedDate(formatDate(alert.generated_at));
+  }, [alert.generated_at]);
 
   const isPending = alert.status === "PENDING" && !accepted;
   const isBlurred = alert.status === "PENDING";
 
   const level = riskLevelTranslation[alert.risk_level] as NivelRiesgo | undefined;
   const statusText = alertStatusTranslation[alert.status] as EstadoAlerta | undefined;
-
-  const formattedDate = formatDate(alert.generated_at);
 
   async function handleAccept() {
     setAccepting(true);

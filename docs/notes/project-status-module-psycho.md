@@ -147,6 +147,24 @@ Reusa `lib/i18n/risk.ts` y `forum/risk-badge.tsx` para todos los scores, i18n y 
 
 - [x] Replaced `pseudonym!active_pseudonym_id` with `pseudonym!fk_student_active_pseudonym` in `src/backend/src/modules/cases/cases.service.ts` to resolve `PGRST201: Could not embed because more than one relationship was found` for the `student.active_pseudonym_id → pseudonym.id` FK.
 
+## ✅ Sesión A (Routing restructure)
+
+- [x] `cases/page.tsx` created (moved from `dashboard/cases`)
+- [x] `cases/[caseId]/page.tsx` stub created
+- [x] `dashboard/chat/page.tsx` replaced with redirect to `/cases`
+- [x] `PsychologistSidebar.tsx` updated (href → `/cases`, Chat item removed)
+- [x] `chat-case-list.tsx` and `chat-case-view.tsx` links fixed
+- [x] `dashboard/cases/` directory deleted
+- [x] `tsc --noEmit` passes with 0 errors
+
+## ✅ Sesión B (Unique case per student)
+
+- [x] `alerts.service.ts` `acceptAlert()` now checks for existing active cases
+- [x] If existing case found → reuses it, marks alert as `is_complementary = true`
+- [x] If no existing case → creates new one, alert `is_complementary = false`
+- [x] Links alert to case via `case_id`
+- [x] Includes rollback on failure (reverts alert to PENDING)
+
 ## Deuda Técnica
 
 - [ ] Migrar `auth.router.ts` de `NLP_SERVICE_BEARER_TOKEN` a `ADMIN_SECRET` para password-reset

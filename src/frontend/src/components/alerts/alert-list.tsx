@@ -87,7 +87,7 @@ function throttle<T extends (...args: any[]) => void>(
 
 export function AlertList({ alerts: initialAlerts }: AlertListProps) {
   const [alerts, setAlerts] = useState<AlertItem[]>(
-    initialAlerts.filter((a) => !a.assigned_psychologist_id)
+    initialAlerts.filter((a) => !a.assigned_psychologist_id && !a.is_complementary)
   );
   const [error, setError] = useState<string | null>(null);
   const campusRef = useRef<string>("");
@@ -110,7 +110,7 @@ export function AlertList({ alerts: initialAlerts }: AlertListProps) {
           const json = await res.json();
           const items: any[] = json.data || [];
           const newItems = items
-            .filter((a) => a.status === "PENDING" && !a.assigned_psychologist_id)
+            .filter((a) => a.status === "PENDING" && !a.assigned_psychologist_id && !a.is_complementary)
             .map(normalizeAlertItem);
           setAlerts((prev) => {
             const existingIds = new Set(prev.map((a) => a.id));

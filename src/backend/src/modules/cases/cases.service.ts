@@ -3,6 +3,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { ICaseRepository } from "../../repositories/interfaces.js";
 import { Errors, createError } from "../../lib/errors.js";
 import { CONFIG } from "../../config.js";
+import { decryptStudentCode } from "../../lib/encryption.js";
 import type { ChatMessagesQuery, CreateChatMessageBody } from "./cases.schema.js";
 
 export class CasesService {
@@ -99,6 +100,9 @@ export class CasesService {
       .select(`
         *,
         student!inner (
+          codigo_estudiante_encrypted,
+          campus,
+          caso_formal_activo,
           pseudonym!fk_student_active_pseudonym (
             texto,
             avatar_url
@@ -121,11 +125,84 @@ export class CasesService {
     }
 
     const c = caseData as any;
+    const studentId = c.student_id;
     const pseudonymObj = c.student?.pseudonym;
+
+    const { data: alerts } = await this.supabase
+      .from("alert")
+      .select("id, risk_level, status, generated_at, is_complementary")
+      .eq("case_id", caseId)
+      .order("generated_at", { ascending: false });
+
+    const { data: compData } = await this.supabase
+      .from("complementary_data")
+      .select("nombre_completo, programa, semestre, correo_contacto")
+      .eq("student_id", studentId)
+      .maybeSingle();
+
+    let decryptedCode = "";
+    try {
+      decryptedCode = decryptStudentCode(
+        c.student?.codigo_estudiante_encrypted || "",
+        CONFIG.STUDENT_CODE_ENCRYPTION_KEY,
+      );
+    } catch (e) {
+      this.logger.warn({ studentId }, "Failed to decrypt student code in getCaseById");
+    }
+
+    const latestAlert = alerts && alerts.length > 0 ? alerts[0] : null;
+    const cutoffDate = latestAlert?.generated_at ?? new Date().toISOString();
+
+    const { data: posts } = await this.supabase
+      .from("post")
+      .select("id, text_content, created_at")
+      .eq("student_id", studentId)
+      .lte("created_at", cutoffDate)
+      .eq("status", "VISIBLE")
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    const { data: chatRoom } = await this.supabase
+      .from("chat_room")
+      .select("id, status")
+      .eq("case_id", caseId)
+      .maybeSingle();
+
+    const complementaryData = compData
+      ? {
+          nombre_completo: compData.nombre_completo,
+          programa: compData.programa,
+          semestre: compData.semestre,
+          correo_contacto: compData.correo_contacto,
+        }
+      : null;
+
     return {
       ...c,
       anonymous_alias: pseudonymObj?.texto || null,
       avatar_url: pseudonymObj?.avatar_url || null,
+      student: {
+        ...c.student,
+        id: studentId,
+        student_code: decryptedCode,
+        complementary_data: complementaryData,
+      },
+      complementary_data: complementaryData,
+      alerts: (alerts || []).map((a: any) => ({
+        id: a.id,
+        risk_level: a.risk_level,
+        status: a.status,
+        generated_at: a.generated_at,
+        is_complementary: a.is_complementary,
+      })),
+      post_history: (posts || []).map((p: any) => ({
+        id: p.id,
+        text_content: p.text_content,
+        created_at: p.created_at,
+      })),
+      chat_room: chatRoom
+        ? { id: chatRoom.id, status: chatRoom.status }
+        : { id: null, status: null },
     };
   }
 
