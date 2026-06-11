@@ -30,6 +30,7 @@ export interface ICaseRepository {
   findByStudentId(studentId: string): Promise<ClinicalCase[]>;
   findByPsychologistId(psychologistId: string): Promise<ClinicalCase[]>;
   findByStatus(status: CaseStatus): Promise<ClinicalCase[]>;
+  findActiveByStudent(studentId: string): Promise<{ id: string; status: string } | null>;
   create(data: Partial<ClinicalCase>): Promise<ClinicalCase>;
   update(id: string, data: Partial<ClinicalCase>): Promise<ClinicalCase>;
 }

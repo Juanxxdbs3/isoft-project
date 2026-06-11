@@ -45,6 +45,21 @@ export class SupabaseCaseRepository implements ICaseRepository {
     return (data as ClinicalCase[]) || [];
   }
 
+  async findActiveByStudent(studentId: string): Promise<{ id: string; status: string } | null> {
+    const { data, error } = await this.client
+      .from("clinical_case")
+      .select("id, status")
+      .eq("student_id", studentId)
+      .in("status", ["OPENED", "ASSIGNED"])
+      .order("opened_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (error) {
+      throw new Error(`Failed to find active case by student: ${error.message}`);
+    }
+    return data ?? null;
+  }
+
   async findByStatus(status: CaseStatus): Promise<ClinicalCase[]> {
     const { data, error } = await this.client
       .from("clinical_case")

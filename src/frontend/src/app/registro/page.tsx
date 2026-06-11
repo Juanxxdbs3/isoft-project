@@ -7,6 +7,7 @@ import Image from "next/image";
 import { apiPost, ApiError } from "../../lib/api";
 import { validateStudentCode } from "../../lib/student-code";
 import { CAMPUSES } from "../../lib/campus";
+import { TermsModal } from "../../components/auth/terms-modal";
 
 interface RegisterResponse {
   student_id: string;
@@ -29,6 +30,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showTerms, setShowTerms] = useState(true);
 
   function updateField<K extends keyof typeof form>(
     key: K,
@@ -86,6 +88,20 @@ export default function RegisterPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (showTerms) {
+    return (
+      <TermsModal
+        onAccept={() => {
+          setForm((prev) => ({ ...prev, accepted_terms: true }));
+          setShowTerms(false);
+        }}
+        onDecline={() => {
+          window.location.href = "https://google.com";
+        }}
+      />
+    );
   }
 
   return (

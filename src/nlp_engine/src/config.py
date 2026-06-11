@@ -39,9 +39,11 @@ class Settings(BaseSettings):
 
     # Model paths
     clinical_model_path: str = "src/models/clinical_model_v1"
+    community_model_path: str = "src/models/community_model_v1"
 
     # Model versions
-    clinical_model_version: str = "stub-v0.3"
+    clinical_model_version: str = "beto-v1.0"
+    community_model_version: str = "community-v1.0"
     norms_model_version: str = "stub-v0.3"
 
 

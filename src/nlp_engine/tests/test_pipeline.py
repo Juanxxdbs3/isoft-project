@@ -25,28 +25,27 @@ def test_full_analysis_returns_valid_response():
     )
     response = pipeline.run(_make_request(texto))
 
-    assert response.text_sufficient is True
-    assert response.risk_level == "bajo"
-    assert response.suicidal_override is False
-    assert response.complies_with_norms is True
-    assert response.imb == 36.0
-    assert response.dimensions.p_depression == 40.0
-    assert response.dimensions.p_anxiety == 30.0
-    assert response.dimensions.p_suicidal == 20.0
+    assert response.texto_suficiente is True
+    assert response.clinical is not None
+    assert response.community is not None
+    assert response.clinical.suicidal_override is True
+    assert response.clinical.risk_level == "HIGH"
+    assert response.clinical.top_clinical_label == "SUICIDAL"
+    assert response.community.cumple_normas is True
+    assert response.community.moderation_decision == "APPROVED"
 
 
 def test_short_text_returns_insufficient_response():
     response = pipeline.run(_make_request("Hola mundo"))
 
-    assert response.text_sufficient is False
-    assert response.risk_level is None
-    assert response.imb is None
-    assert response.dimensions.p_depression is None
+    assert response.texto_suficiente is False
+    assert response.clinical is None
+    assert response.community is None
 
 
 def test_short_text_with_risk_expression_activates_safety_filter():
     response = pipeline.run(_make_request("quiero morir ahora"))
 
-    assert response.text_sufficient is False
-    assert response.safety_filter_activated is True
-    assert response.risk_level == "alto_por_filtro_seguridad"
+    assert response.texto_suficiente is False
+    assert response.safety_filter_triggered is True
+    assert response.clinical is None

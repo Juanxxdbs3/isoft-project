@@ -1,88 +1,66 @@
-""""
-    This file contains the main orchestration pipeline for processing analysis requests. 
-    It integrates text preprocessing, safety filtering, and model inference to produce a comprehensive 
-    analysis response. The pipeline handles both short texts that do not meet the minimum word count for 
-    analysis and longer texts that undergo full processing. It also calculates risk levels based on model 
-    scores and applies safety filters when necessary.
-"""
-
+import time
 from datetime import datetime, timezone
 from src.config import settings
 from src.orchestration.preprocessor import TextPreprocessor
 from src.orchestration.safety_filter import SafetyFilter
 from src.models.clinical import BETOClinicalModel
-from src.stubs.model_stub import ModelStub
+from src.models.community import CommunityClassifier
 from src.schemas.request import AnalysisRequest
 from src.schemas.response import (
     AnalysisResponse,
-    ClinicalDimensions,
-    AnalysisMetadata,
+    ClinicalSection,
+    CommunitySection,
 )
-
-
-class RiskLevel:
-    LOW = "bajo"
-    MEDIUM = "medio"
-    HIGH = "alto"
-    HIGH_SAFETY_FILTER = "alto_por_filtro_seguridad"
 
 
 class AnalysisPipeline:
     def __init__(self) -> None:
         self._preprocessor = TextPreprocessor(
-            mixed_language_threshold=settings.mixed_language_threshold
+            mixed_language_threshold=settings.mixed_language_threshold,
         )
         self._safety_filter = SafetyFilter()
-        self._model = BETOClinicalModel(settings.clinical_model_path)
+        self._clinical_model = BETOClinicalModel(settings.clinical_model_path)
+
+        self._community_model = CommunityClassifier(
+            shared_encoder=self._clinical_model.backbone,
+            head_path=f"{settings.community_model_path}/community_classifier_head.pt",
+            device=str(self._clinical_model.device),
+        )
 
     def run(self, request: AnalysisRequest) -> AnalysisResponse:
         preprocessing = self._preprocessor.process(request.text)
         warnings = self._build_warnings(preprocessing.mixed_language_detected)
 
         if preprocessing.word_count < settings.min_words_for_analysis:
-            return self._handle_short_text(request, preprocessing, warnings)
+            return self._handle_short_text(request, warnings)
 
         return self._handle_full_analysis(request, preprocessing, warnings)
 
     def _handle_short_text(
         self,
         request: AnalysisRequest,
-        preprocessing,
         warnings: list[str],
     ) -> AnalysisResponse:
-        safety_result = self._safety_filter.evaluate(preprocessing.normalized_text)
+        safety_result = self._safety_filter.evaluate(request.text)
 
-        if safety_result.activated:
-            return self._build_response(
-                request=request,
-                text_sufficient=False,
-                safety_filter_activated=True,
-                reduced_confidence=preprocessing.mixed_language_detected,
-                warnings=warnings,
-                dimensions=ClinicalDimensions(),
-                imb=None,
-                suicidal_override=None,
-                risk_level=RiskLevel.HIGH_SAFETY_FILTER,
-                complies_with_norms=None,
-                norms_score=None,
-                tokens_processed=0,
-                context_entries_used=0,
-            )
-
-        return self._build_response(
-            request=request,
-            text_sufficient=False,
-            safety_filter_activated=False,
-            reduced_confidence=preprocessing.mixed_language_detected,
-            warnings=warnings,
-            dimensions=ClinicalDimensions(),
-            imb=None,
-            suicidal_override=None,
-            risk_level=None,
-            complies_with_norms=None,
-            norms_score=None,
-            tokens_processed=0,
-            context_entries_used=0,
+        return AnalysisResponse(
+            id_publicacion=request.publication_id,
+            status="success",
+            timestamp_analisis=datetime.now(timezone.utc).isoformat(),
+            execution_time_ms=0.0,
+            texto_suficiente=False,
+            safety_filter_triggered=safety_result.activated,
+            confianza_reducida=False,
+            advertencias=warnings,
+            clinical=None,
+            community=None,
+            metadatos={
+                "tokens_procesados": 0,
+                "publicaciones_contexto_usadas": len(request.previous_context),
+                "version_modelo_clinico": settings.clinical_model_version,
+                "version_modelo_normas": settings.community_model_version,
+            },
+            explicabilidad=None,
         )
 
     def _handle_full_analysis(
@@ -91,75 +69,90 @@ class AnalysisPipeline:
         preprocessing,
         warnings: list[str],
     ) -> AnalysisResponse:
-        model_input = self._build_model_input(request, preprocessing.normalized_text)
-        scores = self._model.predict(model_input)
+        start = time.monotonic()
 
-        imb = self._calculate_imb(scores.p_depression, scores.p_anxiety)
-        suicidal_override = scores.p_suicidal >= settings.suicide_override_threshold
-        risk_level = self._classify_risk(imb, suicidal_override)
-        complies_with_norms = scores.score_norms < 0.5
-
-        context_entries_used = min(
-            len(request.previous_context), settings.max_context_entries
+        encoding = self._clinical_model.tokenizer(
+            preprocessing.normalized_text,
+            max_length=256,
+            padding="max_length",
+            truncation=True,
+            return_tensors="pt",
         )
 
-        return self._build_response(
-            request=request,
-            text_sufficient=True,
-            safety_filter_activated=False,
-            reduced_confidence=preprocessing.mixed_language_detected,
-            warnings=warnings,
-            dimensions=ClinicalDimensions(
-                p_depression=round(scores.p_depression, 2),
-                p_anxiety=round(scores.p_anxiety, 2),
-                p_suicidal=round(scores.p_suicidal, 2),
+        clinical_scores = self._clinical_model.predict_tokens(
+            encoding["input_ids"], encoding["attention_mask"]
+        )
+
+        score_normas = self._community_model.predict(
+            encoding["input_ids"], encoding["attention_mask"]
+        )
+
+        imb = (
+            settings.imb_weight_depression * clinical_scores["p_depresion"]
+            + settings.imb_weight_anxiety * clinical_scores["p_ansiedad"]
+        )
+        suicidal_override = (
+            clinical_scores["p_suicida"] >= settings.suicide_override_threshold
+        )
+        risk_level = self._stratify(imb, suicidal_override)
+
+        score_normas = 1.0
+
+        elapsed_ms = (time.monotonic() - start) * 1000
+
+        return AnalysisResponse(
+            id_publicacion=request.publication_id,
+            status="success",
+            timestamp_analisis=datetime.now(timezone.utc).isoformat(),
+            execution_time_ms=round(elapsed_ms, 2),
+            texto_suficiente=True,
+            safety_filter_triggered=False,
+            confianza_reducida=preprocessing.mixed_language_detected,
+            advertencias=warnings,
+            clinical=ClinicalSection(
+                p_depresion=round(clinical_scores["p_depresion"], 2),
+                p_ansiedad=round(clinical_scores["p_ansiedad"], 2),
+                p_suicida=round(clinical_scores["p_suicida"], 2),
+                imb=round(imb, 2),
+                suicidal_override=suicidal_override,
+                risk_level=risk_level,
+                top_clinical_label=self._top_label(clinical_scores),
+                rationale=None,
             ),
-            imb=round(imb, 2),
-            suicidal_override=suicidal_override,
-            risk_level=risk_level,
-            complies_with_norms=complies_with_norms,
-            norms_score=round(scores.score_norms, 4),
-            tokens_processed=len(model_input.split()),
-            context_entries_used=context_entries_used,
+            community=CommunitySection(
+                cumple_normas=score_normas >= 0.5,
+                score_normas=round(score_normas, 4),
+                moderation_decision="APPROVED",
+            ),
+            metadatos={
+                "tokens_procesados": encoding["input_ids"].shape[1],
+                "publicaciones_contexto_usadas": len(request.previous_context),
+                "version_modelo_clinico": settings.clinical_model_version,
+                "version_modelo_normas": settings.community_model_version,
+            },
+            explicabilidad=None,
         )
 
-    def _build_model_input(self, request: AnalysisRequest, normalized_text: str) -> str:
-        context_entries = request.previous_context[: settings.max_context_entries]
-        parts = [entry.summarized_text for entry in context_entries]
-        parts.append(normalized_text)
-        return " [SEP] ".join(parts) #[SEP] es el token separador nativo de BERT/BETO
-
-    def _calculate_imb(self, p_depression: float, p_anxiety: float) -> float:
-        return (
-            settings.imb_weight_depression * p_depression
-            + settings.imb_weight_anxiety * p_anxiety
-        )
-
-    def _classify_risk(self, imb: float, suicidal_override: bool) -> str:
+    def _stratify(self, imb: float, suicidal_override: bool) -> str:
         if suicidal_override:
-            return RiskLevel.HIGH
+            return "HIGH"
         if imb >= settings.imb_high_threshold:
-            return RiskLevel.HIGH
+            return "HIGH"
         if imb >= settings.imb_medium_threshold:
-            return RiskLevel.MEDIUM
-        return RiskLevel.LOW
+            return "MEDIUM"
+        return "LOW"
+
+    def _top_label(self, scores: dict) -> str:
+        max_dim = max(scores, key=scores.get)
+        label_map = {
+            "p_depresion": "DEPRESSION",
+            "p_ansiedad": "ANXIETY",
+            "p_suicida": "SUICIDAL",
+        }
+        return label_map[max_dim]
 
     def _build_warnings(self, mixed_language_detected: bool) -> list[str]:
         warnings = []
         if mixed_language_detected:
             warnings.append("texto_mixto_detectado")
         return warnings
-
-    def _build_response(self, request: AnalysisRequest, **kwargs) -> AnalysisResponse:
-        return AnalysisResponse(
-            publication_id=request.publication_id,
-            pseudonym_id=request.pseudonym_id,
-            analysis_timestamp=datetime.now(timezone.utc),
-            metadata=AnalysisMetadata(
-                tokens_processed=kwargs["tokens_processed"],
-                context_entries_used=kwargs["context_entries_used"],
-                clinical_model_version=settings.clinical_model_version,
-                norms_model_version=settings.norms_model_version,
-            ),
-            **{k: v for k, v in kwargs.items() if k not in ("tokens_processed", "context_entries_used")},
-        )

@@ -2,6 +2,9 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { Avatar } from "../../../components/ui/avatar";
 import { MessageSquare, ChevronRight } from "lucide-react";
+import { API_BASE } from "../../../lib/api";
+
+export const dynamic = "force-dynamic";
 
 interface CaseRaw {
   id: string;
@@ -14,13 +17,15 @@ interface CaseRaw {
 }
 
 async function getMyCases(token: string): Promise<CaseRaw[]> {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api/v1";
   try {
-    const res = await fetch(`${baseUrl}/cases?status=ASSIGNED`, {
+    const res = await fetch(`${API_BASE}/cases?status=ASSIGNED`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
     });
-    if (!res.ok) return [];
+    if (!res.ok) {
+      console.error(`[getMyCases] HTTP ${res.status} ${res.statusText}`);
+      return [];
+    }
     const json = await res.json();
     return (json.data || []).map((c: any) => ({
       id: c.id,
@@ -31,7 +36,8 @@ async function getMyCases(token: string): Promise<CaseRaw[]> {
       student_id: c.student_id,
       opened_at: c.opened_at || c.created_at || "",
     }));
-  } catch {
+  } catch (err) {
+    console.error("[getMyCases] Fetch failed:", err);
     return [];
   }
 }

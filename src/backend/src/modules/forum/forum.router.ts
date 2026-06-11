@@ -1,5 +1,8 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import { ForumService } from "./forum.service.js";
+import { NLPService } from "../nlp/nlp.service.js";
+import { SupabaseAlertRepository } from "../../repositories/alert.repository.js";
+import { SupabaseCaseRepository } from "../../repositories/case.repository.js";
 import {
   CreatePostBodySchema,
   UpdatePostBodySchema,
@@ -13,7 +16,13 @@ import {
 import { sendError, Errors } from "../../lib/errors.js";
 
 const forumRouter: FastifyPluginAsync = async (fastify: FastifyInstance) => {
-  const forumService = new ForumService(fastify.supabase, fastify.log);
+  const forumService = new ForumService(
+    fastify.supabase,
+    fastify.log,
+    new NLPService(fastify.log),
+    new SupabaseAlertRepository(fastify.supabase),
+    new SupabaseCaseRepository(fastify.supabase),
+  );
 
   // ──────────────────────────────────────
   // POST /forum/posts — Create post (student only)

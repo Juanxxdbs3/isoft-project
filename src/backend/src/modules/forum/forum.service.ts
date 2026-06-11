@@ -2,22 +2,18 @@ import { FastifyBaseLogger } from "fastify";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Errors } from "../../lib/errors.js";
 import { PostsQuery } from "./forum.schema.js";
+import { NLPService } from "../nlp/nlp.service.js";
+import { IAlertRepository, ICaseRepository } from "../../repositories/interfaces.js";
 
-// ──────────────────────────────────────
-// ForumService
-// ──────────────────────────────────────
 export class ForumService {
   constructor(
     private readonly supabase: SupabaseClient,
     private readonly logger: FastifyBaseLogger,
+    private readonly nlpService: NLPService,
+    private readonly alertRepo: IAlertRepository,
+    private readonly caseRepo: ICaseRepository,
   ) {}
 
-  // ── Helpers ──────────────────────────
-
-  /**
-   * Returns the active pseudonym text for a given student.
-   * Throws NOT_FOUND if no active pseudonym exists.
-   */
   async getActivePseudonym(studentId: string): Promise<string> {
     const { data, error } = await this.supabase
       .from("pseudonym")
@@ -34,16 +30,10 @@ export class ForumService {
     return data.texto;
   }
 
-  /**
-   * Updates the avatar_url on the student's active pseudonym.
-   * Throws NOT_FOUND if no active pseudonym exists.
-   * Returns the updated avatar_url.
-   */
   async updateAvatar(
     studentId: string,
     avatarUrl: string,
   ): Promise<{ avatar_url: string | null }> {
-    // Find the active pseudonym for this student
     const { data: pseudonym, error: findError } = await this.supabase
       .from("pseudonym")
       .select("id")
@@ -59,7 +49,6 @@ export class ForumService {
       throw Errors.NOT_FOUND("Seudónimo activo");
     }
 
-    // Update the avatar_url on that pseudonym
     const { data, error: updateError } = await this.supabase
       .from("pseudonym")
       .update({ avatar_url: avatarUrl })
@@ -72,18 +61,12 @@ export class ForumService {
         { err: updateError, studentId },
         "Failed to update avatar URL",
       );
-      throw Errors.INTERNAL_SERVER_ERROR(
-        "Error al actualizar la URL del avatar",
-      );
+      throw Errors.INTERNAL_SERVER_ERROR("Error al actualizar la URL del avatar");
     }
 
     return { avatar_url: data.avatar_url };
   }
 
-  /**
-   * Verifies that post exists, is not deleted, and belongs to studentId.
-   * Throws NOT_FOUND or FORBIDDEN accordingly.
-   */
   private async checkPostOwnership(
     postId: string,
     studentId: string,
@@ -107,10 +90,6 @@ export class ForumService {
     }
   }
 
-  /**
-   * Verifies that comment exists, is not deleted, and belongs to studentId.
-   * Throws NOT_FOUND or FORBIDDEN accordingly.
-   */
   private async checkCommentOwnership(
     commentId: string,
     studentId: string,
@@ -134,13 +113,8 @@ export class ForumService {
     }
   }
 
-  // ── Posts ────────────────────────────
-
-  /**
-   * Creates a new post.
-   */
   async createPost(studentId: string, textContent: string) {
-    const { data, error } = await this.supabase
+    const { data: post, error } = await this.supabase
       .from("post")
       .insert({
         student_id: studentId,
@@ -155,12 +129,14 @@ export class ForumService {
       throw Errors.INTERNAL_SERVER_ERROR("Error al crear la publicación");
     }
 
-    return data;
+    this._runTriagePipeline(post.id, studentId, textContent, "POST").catch(
+      (err) =>
+        this.logger.error({ err, postId: post.id }, "Triage pipeline error"),
+    );
+
+    return post;
   }
 
-  /**
-   * Updates the text_content of an existing post after verifying ownership.
-   */
   async updatePost(postId: string, studentId: string, textContent: string) {
     await this.checkPostOwnership(postId, studentId);
 
@@ -179,9 +155,6 @@ export class ForumService {
     return data;
   }
 
-  /**
-   * Soft-deletes a post by setting status to 'DELETED'.
-   */
   async deletePost(postId: string, studentId: string) {
     await this.checkPostOwnership(postId, studentId);
 
@@ -198,13 +171,7 @@ export class ForumService {
     return { deleted: true };
   }
 
-  // ── Comments ─────────────────────────
-
-  /**
-   * Creates a comment on a post. Verifies the target post exists and is visible.
-   */
   async createComment(postId: string, studentId: string, textContent: string) {
-    // Verify the post exists and is visible
     const { data: post, error: postError } = await this.supabase
       .from("post")
       .select("id")
@@ -235,9 +202,6 @@ export class ForumService {
     return data;
   }
 
-  /**
-   * Updates the text_content of an existing comment after verifying ownership.
-   */
   async updateComment(
     commentId: string,
     studentId: string,
@@ -260,9 +224,6 @@ export class ForumService {
     return data;
   }
 
-  /**
-   * Soft-deletes a comment by setting status to 'DELETED'.
-   */
   async deleteComment(commentId: string, studentId: string) {
     await this.checkCommentOwnership(commentId, studentId);
 
@@ -279,12 +240,6 @@ export class ForumService {
     return { deleted: true };
   }
 
-  // ── List / Read ──────────────────────
-
-  /**
-   * Lists all visible posts with pagination.
-   * Flattens the joined pseudonym and campus into the response.
-   */
   async listPosts(query: PostsQuery) {
     const { page, limit } = query;
     const from = (page - 1) * limit;
@@ -318,7 +273,6 @@ export class ForumService {
       throw Errors.INTERNAL_SERVER_ERROR("Error al obtener publicaciones");
     }
 
-    // Flatten the nested structure for the frontend
     const posts = (data || []).map((post: any) => ({
       id: post.id,
       text: post.text_content,
@@ -333,9 +287,6 @@ export class ForumService {
     return { posts, total: count || 0, page, limit };
   }
 
-  /**
-   * Lists the current student's own visible posts.
-   */
   async getMyPosts(studentId: string) {
     const { data, error } = await this.supabase
       .from("post")
@@ -378,9 +329,6 @@ export class ForumService {
     return posts;
   }
 
-  /**
-   * Retrieves a single visible post by ID with its pseudonym and campus.
-   */
   async getPostById(postId: string) {
     const { data, error } = await this.supabase
       .from("post")
@@ -421,9 +369,6 @@ export class ForumService {
     };
   }
 
-  /**
-   * Lists visible comments for a post with their pseudonyms.
-   */
   async getPostComments(postId: string) {
     const { data, error } = await this.supabase
       .from("comment")
@@ -458,5 +403,114 @@ export class ForumService {
       pseudonym: comment.student?.pseudonym?.texto || "Anónimo",
       avatar_url: comment.student?.pseudonym?.avatar_url || null,
     }));
+  }
+
+  private async _runTriagePipeline(
+    contentId: string,
+    studentId: string,
+    text: string,
+    contentType: "POST" | "COMMENT",
+  ) {
+    const nlpResult = await this.nlpService.analyze({
+      id_publicacion: contentId,
+      id_seudonimo: studentId,
+      texto: text,
+      timestamp: new Date().toISOString(),
+      incluir_explicabilidad: false,
+    });
+
+    if (!nlpResult || nlpResult.status === "error") {
+      this.logger.warn({ contentId }, "NLP returned null or error — skipping triage");
+      return;
+    }
+
+    if (nlpResult.community?.moderation_decision === "REJECTED") {
+      await this.supabase
+        .from(contentType === "POST" ? "post" : "comment")
+        .update({ status: "MODERATED" })
+        .eq("id", contentId);
+      this.logger.info({ contentId }, "Content moderated by community classifier");
+    }
+
+    if (!nlpResult.clinical || !nlpResult.texto_suficiente) return;
+
+    const {
+      risk_level,
+      p_depresion,
+      p_ansiedad,
+      p_suicida,
+      imb,
+      suicidal_override,
+    } = nlpResult.clinical;
+
+    if (risk_level === "LOW" && !nlpResult.safety_filter_triggered) return;
+
+    const { data: nlpRecord } = await this.supabase
+      .from("nlp_analysis")
+      .insert({
+        post_id: contentType === "POST" ? contentId : null,
+        comment_id: contentType === "COMMENT" ? contentId : null,
+        content_type: contentType,
+        analyzed_text_snapshot: text,
+        depressive_probability: p_depresion,
+        anxiety_probability: p_ansiedad,
+        suicidal_probability: p_suicida,
+        base_malaise_index: imb,
+        suicidal_override: suicidal_override ?? false,
+        community_rules_infraction:
+          nlpResult.community?.moderation_decision === "REJECTED",
+        risk_level: nlpResult.safety_filter_triggered ? "HIGH" : risk_level,
+      })
+      .select("id")
+      .single();
+
+    if (!nlpRecord) return;
+
+    let caseId: string;
+    const existingCase = await this.caseRepo.findActiveByStudent(studentId);
+
+    if (existingCase) {
+      caseId = existingCase.id;
+    } else {
+      const newCase = await this.supabase
+        .from("clinical_case")
+        .insert({
+          student_id: studentId,
+          case_type: "AUTOMATIC_ALERT",
+          status: "OPENED",
+        })
+        .select("id")
+        .single();
+      if (!newCase.data) return;
+      caseId = newCase.data.id;
+    }
+
+    const { data: student } = await this.supabase
+      .from("student")
+      .select("campus, caso_formal_activo")
+      .eq("id", studentId)
+      .maybeSingle();
+
+    if (!student) return;
+
+    await this.supabase.from("alert").insert({
+      case_id: caseId,
+      nlp_analysis_id: nlpRecord.id,
+      student_id: studentId,
+      campus: student.campus,
+      risk_level: nlpResult.safety_filter_triggered ? "HIGH" : risk_level,
+      status: "PENDING",
+      is_complementary: !!existingCase && student.caso_formal_activo,
+    });
+
+    this.logger.info(
+      { contentId, studentId, risk_level, caseId },
+      "Alert created from triage pipeline",
+    );
+
+    this.logger.info(
+      { campus: student.campus, risk_level },
+      "STUB: Notification to psychologist would fire here (RF15 pending)",
+    );
   }
 }

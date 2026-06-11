@@ -83,21 +83,7 @@ class BETOClinicalModel:
         self.suicidal_head.to(self.device).eval()
 
     def predict(self, text: str) -> ModelScores:
-        """Run inference and return probability scores (0–100 scale).
-
-        Parameters
-        ----------
-        text : str
-            Preprocessed text (the pipeline guarantees this has already
-            passed through ``TextPreprocessor``).
-
-        Returns
-        -------
-        ModelScores
-            Dataclass with ``p_depression``, ``p_anxiety``,
-            ``p_suicidal`` (all 0–100) and ``score_norms`` (always 0.0
-            because the clinical model does not predict norms).
-        """
+        """Run inference and return probability scores (0–100 scale)."""
         inputs = self.tokenizer(
             text,
             return_tensors="pt",
@@ -109,8 +95,7 @@ class BETOClinicalModel:
 
         with torch.no_grad():
             outputs = self.backbone(**inputs)
-            # pooler_output = [CLS] token → tanh(dense(768→768))
-            pooled = outputs.pooler_output  # (1, 768)
+            pooled = outputs.pooler_output
 
             p_depression = torch.sigmoid(self.depression_head(pooled)).item()
             p_anxiety = torch.sigmoid(self.anxiety_head(pooled)).item()
@@ -122,3 +107,30 @@ class BETOClinicalModel:
             p_suicidal=round(p_suicidal * 100, 2),
             score_norms=0.0,
         )
+
+    def predict_tokens(
+        self, input_ids: torch.Tensor, attention_mask: torch.Tensor
+    ) -> dict:
+        """Run inference on pre-tokenized inputs.
+
+        Returns a dict with Spanish keys ``p_depresion``, ``p_ansiedad``,
+        ``p_suicida`` (all 0–100).
+        """
+        input_ids = input_ids.to(self.device)
+        attention_mask = attention_mask.to(self.device)
+
+        with torch.no_grad():
+            outputs = self.backbone(
+                input_ids=input_ids, attention_mask=attention_mask
+            )
+            pooled = outputs.pooler_output
+
+            p_depression = torch.sigmoid(self.depression_head(pooled)).item()
+            p_anxiety = torch.sigmoid(self.anxiety_head(pooled)).item()
+            p_suicidal = torch.sigmoid(self.suicidal_head(pooled)).item()
+
+        return {
+            "p_depresion": round(p_depression * 100, 2),
+            "p_ansiedad": round(p_anxiety * 100, 2),
+            "p_suicida": round(p_suicidal * 100, 2),
+        }

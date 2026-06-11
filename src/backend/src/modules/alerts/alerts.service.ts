@@ -270,9 +270,28 @@ export class AlertsService {
     let isComplementary = false;
 
     if (existingCase) {
-      // Reutilizar caso existente — esta alerta es complementaria
       caseData = existingCase;
       isComplementary = true;
+
+      // Si el caso existente no tiene psicólogo asignado (ej. autoderivación),
+      // asignar el psicólogo actual y marcar como ASSIGNED
+      if (!existingCase.assigned_psychologist_id) {
+        const { error: assignError } = await this.supabase
+          .from("clinical_case")
+          .update({
+            assigned_psychologist_id: psychologistId,
+            status: "ASSIGNED",
+          })
+          .eq("id", existingCase.id);
+
+        if (assignError) {
+          this.logger.error({ err: assignError, caseId: existingCase.id }, "Failed to assign psychologist to existing case");
+        } else {
+          caseData.assigned_psychologist_id = psychologistId;
+          caseData.status = "ASSIGNED";
+          isComplementary = false; // ya no es complementaria, es la primera asignación
+        }
+      }
     } else {
       // Crear caso nuevo
       const { data: newCase, error: caseError } = await this.supabase
