@@ -456,7 +456,7 @@ Verificar con dos ventanas (psicólogo y estudiante del mismo caso):
 - `CHARACTERIZATION_LINK` muestra el URL del formulario en el chat
 - `APPOINTMENT_PROPOSAL` muestra una tarjeta de propuesta de cita
 
-### Refuerzo Realtime (post-Sesión D)
+### Refuerzo Realtime (post-Sesión D) ✅
 
 Se aplicaron los siguientes refuerzos a `CaseChatShell` (`case-chat-shell.tsx`) para
 robustecer la conexión Realtime:
@@ -470,6 +470,31 @@ robustecer la conexión Realtime:
   manejar variaciones en la estructura del mensaje broadcast.
 - **Dependencies estabilizadas:** El `useEffect` de suscripción usa `chatRoom?.id` (primitivo)
   en lugar de `chatRoom` (objeto) para evitar re-ejecuciones innecesarias.
+- **DB trigger fix — `realtime.send()` en lugar de `broadcast_changes()`:** La función
+  `on_chat_message_inserted()` se reescribió para usar `realtime.send()`, que acepta
+  `jsonb` directamente y resuelve el error PostgreSQL 42883 (type mismatch `record` vs `jsonb`
+  en `broadcast_changes`):
+
+  ```sql
+  CREATE OR REPLACE FUNCTION public.on_chat_message_inserted()
+  RETURNS trigger
+  LANGUAGE plpgsql
+  SECURITY DEFINER
+  AS $$
+  BEGIN
+      PERFORM realtime.send(
+          row_to_json(NEW)::jsonb,
+          'INSERT',
+          'room:' || NEW.chat_room_id::text || ':messages',
+          true    -- private channel, coincide con frontend { private: true }
+      );
+      RETURN NEW;
+  END;
+  $$;
+  ```
+
+  **Limpieza:** `trg_chat_message_broadcast` → DROPPED, `on_chat_message_broadcast()` → DROPPED,
+  `trg_chat_message_inserted` → RECREADO apuntando a la nueva función.
 
 ---
 

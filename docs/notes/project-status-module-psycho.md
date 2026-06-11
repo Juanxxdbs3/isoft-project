@@ -1,6 +1,6 @@
 # Módulo del Psicólogo — Estado del Proyecto
 
-> **Actualizado 2026-06-10:** Se actualizó el estado real de Sesiones 3 y 4 del backend de psicólogo (completadas).
+> **Actualizado 2026-06-11:** Se documentó el fix definitivo del trigger Realtime: `realtime.send()` reemplazó a `broadcast_changes()` por type mismatch `record` vs `jsonb`.
 
 Seguimiento específico para la implementación del módulo del psicólogo.
 Ver plan completo en `docs/plans/psychologist_module_implementation_plan.md`.
@@ -179,7 +179,7 @@ Reusa `lib/i18n/risk.ts` y `forum/risk-badge.tsx` para todos los scores, i18n y 
 - [x] **409 handling with GET fallback:** Room init now catches 409 (room already exists), detects via `err.status / statusCode / error / message`, and falls back to `GET /cases/:caseId/chat`
 - [x] **Payload extraction 3-way null guard:** Incoming broadcast messages mapped via `payload.payload || record || payload` with `if (!msgData?.id) return` guard
 - [x] **Dependencies stabilized:** Subscription `useEffect` uses `chatRoom?.id` (primitive string) instead of `chatRoom` (object reference)
-- [x] **DB trigger replaced:** `trg_chat_message_broadcast` renamed to `trg_chat_message_inserted` following `trg_{table}_{operation}` convention; old trigger dropped, new function `on_chat_message_inserted()` created with `SECURITY DEFINER`
+- [x] **DB trigger fix — `realtime.send()` replaces `broadcast_changes()`:** The old function `on_chat_message_broadcast()` called `realtime.broadcast_changes()` which expects `record` type for args 6-7, not `jsonb` → PostgreSQL error 42883. Rewritten to use `realtime.send(payload jsonb, event text, topic text, private boolean)` which accepts `jsonb` directly. Cleanup: `trg_chat_message_broadcast` and `on_chat_message_broadcast()` dropped; `trg_chat_message_inserted` and `on_chat_message_inserted()` recreated. Audit root cause confirmed: `broadcast_changes()` type signature expects `record`, not `jsonb`, making it incompatible with the `row_to_json(NEW)::jsonb` pattern.
 
 ## Deuda Técnica
 

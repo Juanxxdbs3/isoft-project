@@ -60,3 +60,5 @@ build/
 *.tsbuildinfo
 
 prompts.md
+
+supabase/

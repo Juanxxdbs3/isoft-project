@@ -1,6 +1,6 @@
 # MindBridge — Estado del proyecto
 
-> **Actualizado 2026-06-10:** Se actualizó el estado real de los módulos Alerts y Cases del backend (completados) y los frontend RF14/RF19 (completados).
+> **Actualizado 2026-06-11:** Se documentó el fix definitivo del trigger Realtime (`realtime.send()` por type mismatch `record` vs `jsonb` en `broadcast_changes`).
 
 ## Frontend (Next.js 16, TypeScript, Tailwind v4, shadcn/ui)
 
@@ -143,7 +143,8 @@
 
 - [x] Schema SQL v1.1 (`docs/models/schema_mindbridge_v1.1.sql`)
 - [x] `.env.example` para los tres servicios
-- [x] Triggers Realtime — `trg_chat_message_inserted` (reemplazó a `trg_chat_message_broadcast`) en `chat_message` para broadcast a `room:<room_id>:messages`
+- [x] Triggers Realtime — `trg_chat_message_inserted` en `chat_message` para broadcast a `room:<room_id>:messages`
+- [x] **Fix type cast — `realtime.send()` en lugar de `broadcast_changes()`:** La función del trigger se reescribió porque `realtime.broadcast_changes()` espera tipo `record` en args 6-7 y fallaba con error PostgreSQL 42883 al recibir `jsonb`. Se reemplazó por `realtime.send(payload jsonb, event text, topic text, private boolean)` que acepta `jsonb` directamente. `trg_chat_message_broadcast` y su función `on_chat_message_broadcast()` eliminados; `trg_chat_message_inserted` y `on_chat_message_inserted()` recreados.
 - [x] Schema SQL v1.1 desplegado en Supabase
 - [x] Datos de prueba insertados (psicólogo, caso clínico, sala de chat)
 - [x] Triggers Realtime funcionando para chat
