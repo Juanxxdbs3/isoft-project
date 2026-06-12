@@ -199,6 +199,11 @@ export class ForumService {
       throw Errors.INTERNAL_SERVER_ERROR("Error al crear el comentario");
     }
 
+    this._runTriagePipeline(data.id, studentId, textContent, "COMMENT").catch(
+      (err) =>
+        this.logger.error({ err, commentId: data.id }, "Triage pipeline error"),
+    );
+
     return data;
   }
 

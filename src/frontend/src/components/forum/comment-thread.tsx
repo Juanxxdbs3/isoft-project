@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { EyeOff, SendHorizonal } from "lucide-react";
+import { EyeOff, SendHorizonal, Pencil, Trash2, X, Check } from "lucide-react";
 import { Avatar } from "../ui/avatar";
-import { apiGet, apiPost, ApiError } from "../../lib/api";
+import { apiGet, apiPost, apiPatch, apiDelete, ApiError } from "../../lib/api";
 import type { CommentItem as CommentItemType, EstadoContenido } from "../../types/domain";
 
 interface PsychologistProfile {
@@ -78,16 +78,29 @@ export function CommentThread({ postId, initialComments = [] }: CommentThreadPro
   return (
     <div className="space-y-4">
       {comments.map((comment) => (
-        <div key={comment.id} className="flex gap-3">
-          <Avatar seed={comment.pseudonym} size={28} url={comment.avatarUrl} className="shrink-0 mt-0.5" />
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-xs font-semibold text-foreground">{comment.pseudonym}</span>
-              <span className="text-[10px] text-muted">{formatCommentDate(comment.createdAt)}</span>
-            </div>
-            <p className="text-sm text-foreground leading-relaxed">{comment.text}</p>
-          </div>
-        </div>
+        <CommentItemDisplay
+          key={comment.id}
+          comment={comment}
+          onUpdate={(id, text) => {
+            const token = localStorage.getItem("access_token");
+            if (!token) return;
+            apiPatch(`/forum/comments/${id}`, { text_content: text }, token)
+              .then(() => {
+                setComments((prev) =>
+                  prev.map((c) => (c.id === id ? { ...c, text } : c))
+                );
+              })
+              .catch(() => alert("Error al editar el comentario"));
+          }}
+          onDelete={(id) => {
+            if (!confirm("¿Estás seguro de eliminar este comentario?")) return;
+            const token = localStorage.getItem("access_token");
+            if (!token) return;
+            apiDelete(`/forum/comments/${id}`, undefined, token)
+              .then(() => setComments((prev) => prev.filter((c) => c.id !== id)))
+              .catch(() => alert("Error al eliminar el comentario"));
+          }}
+        />
       ))}
 
       {error && (
@@ -123,6 +136,83 @@ export function CommentThread({ postId, initialComments = [] }: CommentThreadPro
           </button>
         </form>
       )}
+    </div>
+  );
+}
+
+function CommentItemDisplay({
+  comment,
+  onUpdate,
+  onDelete,
+}: {
+  comment: CommentItemType;
+  onUpdate: (id: string, text: string) => void;
+  onDelete: (id: string) => void;
+}) {
+  const [editing, setEditing] = useState(false);
+  const [editText, setEditText] = useState(comment.text);
+
+  const currentPseudonym =
+    typeof window !== "undefined" ? localStorage.getItem("pseudonym") : null;
+  const isOwner = currentPseudonym === comment.pseudonym;
+
+  return (
+    <div className="flex gap-3">
+      <Avatar seed={comment.pseudonym} size={28} url={comment.avatarUrl} className="shrink-0 mt-0.5" />
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-0.5">
+          <span className="text-xs font-semibold text-foreground">{comment.pseudonym}</span>
+          <span className="text-[10px] text-muted">{formatCommentDate(comment.createdAt)}</span>
+          {isOwner && !editing && (
+            <div className="flex items-center gap-1 ml-auto">
+              <button
+                onClick={() => { setEditing(true); setEditText(comment.text); }}
+                className="p-1 rounded-lg text-muted hover:text-foreground hover:bg-sidebar transition-colors"
+                aria-label="Editar comentario"
+              >
+                <Pencil size={12} />
+              </button>
+              <button
+                onClick={() => onDelete(comment.id)}
+                className="p-1 rounded-lg text-muted hover:text-red-600 hover:bg-red-50 transition-colors"
+                aria-label="Eliminar comentario"
+              >
+                <Trash2 size={12} />
+              </button>
+            </div>
+          )}
+        </div>
+        {editing ? (
+          <div className="space-y-2">
+            <textarea
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              className="w-full px-3 py-2 bg-background border border-input rounded-xl text-sm text-foreground resize-none focus:outline-none focus:ring-2 focus:ring-primary/40"
+              rows={2}
+              maxLength={1000}
+              autoFocus
+            />
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => { onUpdate(comment.id, editText); setEditing(false); }}
+                className="px-3 py-1.5 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                <Check size={14} className="inline mr-1" />
+                Guardar
+              </button>
+              <button
+                onClick={() => setEditing(false)}
+                className="px-3 py-1.5 text-xs text-muted hover:text-foreground transition-colors"
+              >
+                <X size={14} className="inline mr-1" />
+                Cancelar
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-foreground leading-relaxed">{comment.text}</p>
+        )}
+      </div>
     </div>
   );
 }

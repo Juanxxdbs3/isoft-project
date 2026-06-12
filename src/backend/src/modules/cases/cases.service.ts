@@ -66,6 +66,8 @@ export class CasesService {
 
     if (query?.status) {
       dbQuery = dbQuery.eq("status", query.status);
+    } else {
+      dbQuery = dbQuery.in("status", ["OPENED", "ASSIGNED"]);
     }
 
     dbQuery = dbQuery.order("opened_at", { ascending: false });

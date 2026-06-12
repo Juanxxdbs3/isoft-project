@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { RiskBadge } from "../forum/risk-badge";
 import { NlpScoresPanel } from "./nlp-scores-panel";
 import { PostHistoryList } from "./post-history-list";
-import { apiPost } from "../../lib/api";
+import { apiPost, apiPatch } from "../../lib/api";
 import { riskLevelTranslation, alertStatusTranslation } from "../../lib/i18n/risk";
 import { formatDate } from "../../lib/format-date";
 import type { NivelRiesgo, EstadoAlerta } from "../../types/domain";
@@ -58,13 +58,30 @@ export function AlertDetailPanel({ alert }: AlertDetailPanelProps) {
   const router = useRouter();
   const [accepting, setAccepting] = useState(false);
   const [accepted, setAccepted] = useState(false);
+  const [rejecting, setRejecting] = useState(false);
+  const [rejected, setRejected] = useState(false);
   const [formattedDate, setFormattedDate] = useState("");
 
   useEffect(() => {
     setFormattedDate(formatDate(alert.generated_at));
   }, [alert.generated_at]);
 
-  const isPending = alert.status === "PENDING" && !accepted;
+  async function handleReject() {
+    setRejecting(true);
+    try {
+      const token = localStorage.getItem("access_token");
+      if (!token) return;
+      await apiPatch(`/alerts/${alert.id}/status`, { status: "FALSE_POSITIVE" }, token);
+      setRejected(true);
+      router.refresh();
+    } catch {
+      // error silently handled
+    } finally {
+      setRejecting(false);
+    }
+  }
+
+  const isPending = alert.status === "PENDING" && !accepted && !rejected;
   const isBlurred = alert.status === "PENDING";
 
   const level = riskLevelTranslation[alert.risk_level] as NivelRiesgo | undefined;
@@ -209,15 +226,24 @@ export function AlertDetailPanel({ alert }: AlertDetailPanelProps) {
         triggerText={alert.ai_generated_summary || ""}
       />
 
-      {/* Accept action */}
+      {/* Actions */}
       {isPending && (
-        <button
-          onClick={handleAccept}
-          disabled={accepting}
-          className="w-full py-3 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-50 transition-opacity cursor-pointer"
-        >
-          {accepting ? "Aceptando..." : "Aceptar caso"}
-        </button>
+        <div className="flex flex-col gap-2">
+          <button
+            onClick={handleAccept}
+            disabled={accepting}
+            className="w-full py-3 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-50 transition-opacity cursor-pointer"
+          >
+            {accepting ? "Aceptando..." : "Aceptar caso"}
+          </button>
+          <button
+            onClick={handleReject}
+            disabled={rejecting}
+            className="w-full py-3 rounded-xl text-sm font-semibold bg-surface text-muted border border-border hover:bg-border hover:text-foreground disabled:opacity-50 transition-colors cursor-pointer"
+          >
+            {rejecting ? "Descartando..." : "Marcar como falso positivo"}
+          </button>
+        </div>
       )}
 
       {/* Accepted confirmation */}
@@ -225,6 +251,15 @@ export function AlertDetailPanel({ alert }: AlertDetailPanelProps) {
         <div className="bg-risk-low-bg border border-risk-low rounded-2xl p-4 text-center">
           <p className="text-sm font-semibold text-risk-low">
             Alerta aceptada correctamente
+          </p>
+        </div>
+      )}
+
+      {/* Rejected confirmation */}
+      {rejected && (
+        <div className="bg-muted border border-border rounded-2xl p-4 text-center">
+          <p className="text-sm font-semibold text-muted">
+            Alerta descartada como falso positivo
           </p>
         </div>
       )}

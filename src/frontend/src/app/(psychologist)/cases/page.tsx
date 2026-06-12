@@ -18,7 +18,7 @@ interface CaseRaw {
 
 async function getMyCases(token: string): Promise<CaseRaw[]> {
   try {
-    const res = await fetch(`${API_BASE}/cases?status=ASSIGNED`, {
+    const res = await fetch(`${API_BASE}/cases`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
     });

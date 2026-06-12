@@ -45,11 +45,12 @@ export class SupabaseCaseRepository implements ICaseRepository {
     return (data as ClinicalCase[]) || [];
   }
 
-  async findActiveByStudent(studentId: string): Promise<{ id: string; status: string } | null> {
+  async findActiveByStudent(studentId: string): Promise<{ id: string; status: string; assigned_psychologist_id: string | null } | null> {
     const { data, error } = await this.client
       .from("clinical_case")
-      .select("id, status")
+      .select("id, status, assigned_psychologist_id")
       .eq("student_id", studentId)
+      .is("assigned_psychologist_id", null)
       .in("status", ["OPENED", "ASSIGNED"])
       .order("opened_at", { ascending: false })
       .limit(1)

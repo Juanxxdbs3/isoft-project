@@ -137,8 +137,23 @@ export class AlertsService {
     const avatarUrl = (studentData as any)?.pseudonym?.avatar_url || null;
 
     let deanonymizedData: DeanonymizedData | null = null;
-    let postHistory: PostHistoryItem[] = [];
     let nlpDetail: NlpDetail | null = null;
+
+    // Siempre mostrar historial de publicaciones (sin blur), filtrado hasta la fecha de la alerta
+    const { data: posts } = await this.supabase
+      .from("post")
+      .select("id, text_content, created_at")
+      .eq("student_id", alert.student_id)
+      .lte("created_at", alert.generated_at)
+      .neq("status", "DELETED")
+      .order("created_at", { ascending: false })
+      .limit(10);
+
+    const postHistory: PostHistoryItem[] = (posts || []).map((p: any) => ({
+      id: p.id,
+      text_content: p.text_content,
+      created_at: p.created_at,
+    }));
 
     if (isOwner && alert.status !== "PENDING") {
       const { data: compData } = await this.supabase
@@ -164,20 +179,6 @@ export class AlertsService {
         semestre: (compData as any)?.semestre || null,
         correo_contacto: (compData as any)?.correo_contacto || null,
       };
-
-      const { data: posts } = await this.supabase
-        .from("post")
-        .select("id, text_content, created_at")
-        .eq("student_id", alert.student_id)
-        .neq("status", "DELETED")
-        .order("created_at", { ascending: false })
-        .limit(10);
-
-      postHistory = (posts || []).map((p: any) => ({
-        id: p.id,
-        text_content: p.text_content,
-        created_at: p.created_at,
-      }));
 
       const { data: nlpData } = await this.supabase
         .from("nlp_analysis")
@@ -271,26 +272,24 @@ export class AlertsService {
 
     if (existingCase) {
       caseData = existingCase;
-      isComplementary = true;
 
-      // Si el caso existente no tiene psicólogo asignado (ej. autoderivación),
-      // asignar el psicólogo actual y marcar como ASSIGNED
-      if (!existingCase.assigned_psychologist_id) {
-        const { error: assignError } = await this.supabase
-          .from("clinical_case")
-          .update({
-            assigned_psychologist_id: psychologistId,
-            status: "ASSIGNED",
-          })
-          .eq("id", existingCase.id);
+      const needsAssign = existingCase.assigned_psychologist_id !== psychologistId;
+      isComplementary = !needsAssign;
 
-        if (assignError) {
-          this.logger.error({ err: assignError, caseId: existingCase.id }, "Failed to assign psychologist to existing case");
-        } else {
-          caseData.assigned_psychologist_id = psychologistId;
-          caseData.status = "ASSIGNED";
-          isComplementary = false; // ya no es complementaria, es la primera asignación
-        }
+      // Siempre asegurar psicólogo correcto y estado ASSIGNED
+      const { error: assignError } = await this.supabase
+        .from("clinical_case")
+        .update({
+          assigned_psychologist_id: psychologistId,
+          status: "ASSIGNED",
+        })
+        .eq("id", existingCase.id);
+
+      if (assignError) {
+        this.logger.error({ err: assignError, caseId: existingCase.id }, "Failed to update existing case on accept");
+      } else {
+        caseData.assigned_psychologist_id = psychologistId;
+        caseData.status = "ASSIGNED";
       }
     } else {
       // Crear caso nuevo
@@ -315,6 +314,24 @@ export class AlertsService {
         throw Errors.INTERNAL_SERVER_ERROR("Error al crear el caso clínico");
       }
       caseData = newCase;
+    }
+
+    // Verificar que el caso se actualizó correctamente
+    const { data: verifyCase } = await this.supabase
+      .from("clinical_case")
+      .select("status, assigned_psychologist_id")
+      .eq("id", caseData.id)
+      .maybeSingle();
+
+    if (verifyCase && verifyCase.status !== "ASSIGNED") {
+      this.logger.warn({ caseId: caseData.id, status: verifyCase.status }, "Case status not updated to ASSIGNED, retrying...");
+      const { error: retryError } = await this.supabase
+        .from("clinical_case")
+        .update({ status: "ASSIGNED", assigned_psychologist_id: psychologistId })
+        .eq("id", caseData.id);
+      if (retryError) {
+        this.logger.error({ err: retryError, caseId: caseData.id }, "Retry to update case status also failed");
+      }
     }
 
     // Vincular alerta al caso y marcar como complementaria si aplica

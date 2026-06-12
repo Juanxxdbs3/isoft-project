@@ -86,15 +86,17 @@ export function AlertCard({
       {/* Trigger text */}
       <p className="text-xs text-muted line-clamp-2">{trigger_text}</p>
 
-      {/* Accept action */}
+      {/* Actions */}
       {isPending && (
-        <button
-          onClick={handleAccept}
-          disabled={accepting}
-          className="mt-1 self-start px-4 py-1.5 rounded-xl text-xs font-semibold bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-50 transition-opacity cursor-pointer"
-        >
-          {accepting ? "Aceptando..." : "Aceptar caso"}
-        </button>
+        <div className="flex items-center gap-2 mt-1">
+          <button
+            onClick={handleAccept}
+            disabled={accepting}
+            className="px-4 py-1.5 rounded-xl text-xs font-semibold bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-50 transition-opacity cursor-pointer"
+          >
+            {accepting ? "Aceptando..." : "Aceptar caso"}
+          </button>
+        </div>
       )}
       </div>
     </Link>

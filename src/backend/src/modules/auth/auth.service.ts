@@ -184,6 +184,15 @@ export class AuthService {
       throw Errors.INTERNAL_SERVER_ERROR("Error al crear el perfil de estudiante");
     }
 
+    // ── Generate DiceBear avatar URL ──
+    const AVATAR_STYLES = [
+      "open-peeps", "bottts", "avataaars", "identicon",
+      "adventurer", "lorelei", "big-smile", "personas",
+      "notionists", "micah", "croodles", "thumbs",
+    ];
+    const randomStyle = AVATAR_STYLES[Math.floor(Math.random() * AVATAR_STYLES.length)];
+    const avatar_url = `https://api.dicebear.com/10.x/${randomStyle}/svg?seed=${finalPseudonym}`;
+
     // ── Insert pseudonym (admin, bypass RLS) ──
     const { data: pseudonymData, error: pseudonymError } = await this.supabaseAdmin
       .from("pseudonym")
@@ -191,6 +200,7 @@ export class AuthService {
         student_id: authUserId,
         texto: finalPseudonym.toLowerCase(),
         status: "ACTIVE",
+        avatar_url,
       })
       .select("id")
       .single();
