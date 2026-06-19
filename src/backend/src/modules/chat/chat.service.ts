@@ -23,22 +23,27 @@ export class ChatService {
     roomId: string,
     userId: string,
   ): Promise<void> {
-    const { data, error } = await this.supabase
+    const { data: room, error } = await this.supabase
       .from("chat_room")
-      .select("id, psychologist_id, case:clinical_case!inner(student_id)")
+      .select("id, case_id, psychologist_id")
       .eq("id", roomId)
       .single();
 
-    if (error || !data) {
+    if (error || !room) {
       this.logger.error({ err: error, roomId }, "Chat room not found");
       throw Errors.NOT_FOUND("Sala de chat");
     }
 
-    const isMember =
-      data.psychologist_id === userId ||
-      (data.case as { student_id: string })?.student_id === userId;
+    if (room.psychologist_id === userId) return;
 
-    if (!isMember) {
+    const { data: studentCase } = await this.supabase
+      .from("clinical_case")
+      .select("id")
+      .eq("id", room.case_id)
+      .eq("student_id", userId)
+      .maybeSingle();
+
+    if (!studentCase) {
       this.logger.warn(
         { roomId, userId },
         "User is not a member of this chat room",
@@ -70,7 +75,7 @@ export class ChatService {
         sender_id: senderId,
         sender_role: senderRole,
         text_content: textContent,
-        type,
+        message_type: type,
       })
       .select()
       .single();
@@ -97,7 +102,7 @@ export class ChatService {
     let dbQuery = this.supabase
       .from("chat_message")
       .select(
-        "id, chat_room_id, sender_id, sender_role, text_content, type, created_at",
+        "id, chat_room_id, sender_id, sender_role, text_content, message_type, sent_at",
       )
       .eq("chat_room_id", roomId)
       .order("created_at", { ascending: false })
@@ -117,7 +122,7 @@ export class ChatService {
     // Sort ascending so oldest is first
     const messages = (data || []).sort(
       (a: any, b: any) =>
-        new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
+        new Date(a.sent_at).getTime() - new Date(b.sent_at).getTime(),
     );
 
     return messages;

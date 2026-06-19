@@ -8,6 +8,7 @@
 |    |    +--- nlp.md
 |    |    \--- qa.md
 |    +--- .gitignore
+|    +--- opencode.json
 |    +--- package.json
 |    \--- package-lock.json
 +--- docs
@@ -31,19 +32,27 @@
 |    |    +--- triage-forum-module.txt
 |    |    +--- types.png
 |    |    \--- types.txt
+|    +--- migrations
+|    |    +--- 002_make_alert_case_id_nullable.sql
+|    |    \--- 003_rls_claim_unassigned_case.sql
 |    +--- models
 |    |    +--- MindBridge_entity_reference.md
 |    |    +--- mindbridge_schema.sql
-|    |    \--- mindbridge_schema_compact.md
+|    |    +--- mindbridge_schema_compact.md
+|    |    \--- remote_current_dump.sql
 |    +--- notes
 |    |    +--- blockers.md
 |    |    +--- design-decisions.md
 |    |    +--- nlp-dataset-status.md
 |    |    +--- project-status.md
-|    |    \--- project-status-module-psycho.md
-|    \--- plans
-|         +--- plan_pulido_modulo_psicologo.md
-|         \--- psychologist_module_implementation_plan.md
+|    |    +--- project-status-module-psycho.md
+|    |    \--- Terminos_y_Condiciones_MindBridge.docx
+|    +--- plans
+|    |    +--- plan_integracion_nlp_triage.md
+|    |    +--- plan_pulido_modulo_psicologo.md
+|    |    \--- psychologist_module_implementation_plan.md
+|    \--- team
+|         \--- workflow.md
 +--- Documentación
 |    +--- Anexos
 |    |    +--- Acta_Entrevista_Estudiante.docx
@@ -69,6 +78,7 @@
 |    |    +--- Images
 |    |    |    +--- arquitectura-sistema-componentes.png
 |    |    |    +--- attention-alerts-module.png
+|    |    |    +--- EAID_B0A0713B_73FF_4a15_8D70_EDF9873D600B.png
 |    |    |    +--- entidades-del-negocio.png
 |    |    |    +--- persistence-and-infraestructure.png
 |    |    |    +--- presentacion-e-interfaz.png
@@ -91,6 +101,7 @@
 |    |    +--- GRASP.txt
 |    |    +--- MindBridge_NLP_Mental_Health_.pdf
 |    |    +--- MindBridgeDiagrams.xml
+|    |    +--- MindBridgeDiagrams_export.log
 |    |    \--- Proyecto.docx
 |    +--- Cronograma
 |    |    \--- cronograma_mindbridge_v2.html
@@ -100,9 +111,275 @@
 |         \--- Manual del sistema_3.docx
 +--- EntregaFinal
 |    +--- Anexos
-|    +--- Código_fuente
+|    |    +--- Acta_Entrevista_Estudiante.docx
+|    |    +--- Acta_Entrevista_Estudiante_2.docx
+|    |    +--- Acta_Entrevista_Experto.docx
+|    |    +--- Acta_Entrevista_Experto_2.docx
+|    |    \--- Acta_Entrevista_Experto_3.docx
+|    +--- Codigo_fuente
+|    |    +--- src
+|    |    |    +--- backend
+|    |    |    |    +--- src
+|    |    |    |    |    +--- lib
+|    |    |    |    |    |    +--- encryption.ts
+|    |    |    |    |    |    +--- errors.ts
+|    |    |    |    |    |    +--- roles.ts
+|    |    |    |    |    |    \--- student-code.ts
+|    |    |    |    |    +--- modules
+|    |    |    |    |    |    +--- alerts
+|    |    |    |    |    |    |    +--- alerts.router.ts
+|    |    |    |    |    |    |    +--- alerts.schema.ts
+|    |    |    |    |    |    |    \--- alerts.service.ts
+|    |    |    |    |    |    +--- auth
+|    |    |    |    |    |    |    +--- auth.router.ts
+|    |    |    |    |    |    |    +--- auth.schema.ts
+|    |    |    |    |    |    |    \--- auth.service.ts
+|    |    |    |    |    |    +--- cases
+|    |    |    |    |    |    |    +--- cases.router.ts
+|    |    |    |    |    |    |    +--- cases.schema.ts
+|    |    |    |    |    |    |    \--- cases.service.ts
+|    |    |    |    |    |    +--- chat
+|    |    |    |    |    |    |    +--- chat.router.ts
+|    |    |    |    |    |    |    +--- chat.schema.ts
+|    |    |    |    |    |    |    \--- chat.service.ts
+|    |    |    |    |    |    +--- export
+|    |    |    |    |    |    +--- forum
+|    |    |    |    |    |    |    +--- forum.router.ts
+|    |    |    |    |    |    |    +--- forum.schema.ts
+|    |    |    |    |    |    |    \--- forum.service.ts
+|    |    |    |    |    |    +--- nlp
+|    |    |    |    |    |    |    +--- nlp.service.ts
+|    |    |    |    |    |    |    \--- nlp.types.ts
+|    |    |    |    |    |    +--- notifications
+|    |    |    |    |    |    +--- psychologists
+|    |    |    |    |    |    |    +--- psychologists.router.ts
+|    |    |    |    |    |    |    +--- psychologists.schema.ts
+|    |    |    |    |    |    |    \--- psychologists.service.ts
+|    |    |    |    |    |    +--- students
+|    |    |    |    |    |    |    +--- students.router.ts
+|    |    |    |    |    |    |    +--- students.schema.ts
+|    |    |    |    |    |    |    \--- students.service.ts
+|    |    |    |    |    |    \--- triage
+|    |    |    |    |    +--- plugins
+|    |    |    |    |    |    +--- auth.ts
+|    |    |    |    |    |    \--- supabase.ts
+|    |    |    |    |    +--- repositories
+|    |    |    |    |    |    +--- alert.repository.ts
+|    |    |    |    |    |    +--- case.repository.ts
+|    |    |    |    |    |    +--- chat.repository.ts
+|    |    |    |    |    |    +--- interfaces.ts
+|    |    |    |    |    |    \--- psychologist.repository.ts
+|    |    |    |    |    +--- types
+|    |    |    |    |    |    \--- domain.ts
+|    |    |    |    |    +--- app.ts
+|    |    |    |    |    +--- config.ts
+|    |    |    |    |    \--- server.ts
+|    |    |    |    +--- .env.example
+|    |    |    |    +--- package.json
+|    |    |    |    +--- package-lock.json
+|    |    |    |    \--- tsconfig.json
+|    |    |    +--- frontend
+|    |    |    |    +--- public
+|    |    |    |    |    +--- forum-empty.svg
+|    |    |    |    |    +--- mindbridge-logo.png
+|    |    |    |    |    +--- post-card.jpg
+|    |    |    |    |    +--- post-card.png
+|    |    |    |    |    +--- student-in-laptop.jpg
+|    |    |    |    |    +--- student-in-laptop.png
+|    |    |    |    |    +--- therapy-sesion.jpg
+|    |    |    |    |    \--- therapy-sesion.png
+|    |    |    |    +--- src
+|    |    |    |    |    +--- app
+|    |    |    |    |    |    +--- (psychologist)
+|    |    |    |    |    |    |    +--- cases
+|    |    |    |    |    |    |    |    +--- [caseId]
+|    |    |    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    |    +--- dashboard
+|    |    |    |    |    |    |    |    +--- alerts
+|    |    |    |    |    |    |    |    |    \--- [alertId]
+|    |    |    |    |    |    |    |    |         \--- page.tsx
+|    |    |    |    |    |    |    |    +--- chat
+|    |    |    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    |    \--- layout.tsx
+|    |    |    |    |    |    +--- (student)
+|    |    |    |    |    |    |    +--- chat
+|    |    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    |    +--- configuracion
+|    |    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    |    +--- foro
+|    |    |    |    |    |    |    |    +--- [id]
+|    |    |    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    |    +--- perfil
+|    |    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    |    \--- layout.tsx
+|    |    |    |    |    |    +--- admin
+|    |    |    |    |    |    |    \--- register-psychologist
+|    |    |    |    |    |    |         \--- page.tsx
+|    |    |    |    |    |    +--- login
+|    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    +--- registro
+|    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    +--- terminos
+|    |    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    |    +--- favicon.ico
+|    |    |    |    |    |    +--- globals.css
+|    |    |    |    |    |    +--- layout.tsx
+|    |    |    |    |    |    \--- page.tsx
+|    |    |    |    |    +--- components
+|    |    |    |    |    |    +--- alerts
+|    |    |    |    |    |    |    +--- alert-card.tsx
+|    |    |    |    |    |    |    +--- alert-detail-panel.tsx
+|    |    |    |    |    |    |    +--- alert-feed.tsx
+|    |    |    |    |    |    |    +--- alert-list.tsx
+|    |    |    |    |    |    |    +--- nlp-scores-panel.tsx
+|    |    |    |    |    |    |    \--- post-history-list.tsx
+|    |    |    |    |    |    +--- auth
+|    |    |    |    |    |    |    \--- terms-modal.tsx
+|    |    |    |    |    |    +--- cases
+|    |    |    |    |    |    |    +--- case-actions.tsx
+|    |    |    |    |    |    |    +--- case-alerts-list.tsx
+|    |    |    |    |    |    |    +--- case-chat-shell.tsx
+|    |    |    |    |    |    |    +--- case-info-panel.tsx
+|    |    |    |    |    |    |    +--- case-post-history.tsx
+|    |    |    |    |    |    |    +--- student-chat-shell.tsx
+|    |    |    |    |    |    |    \--- student-data-panel.tsx
+|    |    |    |    |    |    +--- chat
+|    |    |    |    |    |    |    +--- chat-bubble.tsx
+|    |    |    |    |    |    |    +--- chat-case-list.tsx
+|    |    |    |    |    |    |    +--- chat-case-view.tsx
+|    |    |    |    |    |    |    +--- chat-header.tsx
+|    |    |    |    |    |    |    +--- chat-input.tsx
+|    |    |    |    |    |    |    +--- chat-message.tsx
+|    |    |    |    |    |    |    +--- chat-widget.tsx
+|    |    |    |    |    |    |    +--- index.ts
+|    |    |    |    |    |    |    \--- psychologist-chat-input.tsx
+|    |    |    |    |    |    +--- forum
+|    |    |    |    |    |    |    +--- comment-thread.tsx
+|    |    |    |    |    |    |    +--- create-post-form.tsx
+|    |    |    |    |    |    |    +--- post-card.tsx
+|    |    |    |    |    |    |    +--- post-pagination.tsx
+|    |    |    |    |    |    |    \--- risk-badge.tsx
+|    |    |    |    |    |    +--- navigation
+|    |    |    |    |    |    |    \--- student-nav-items.tsx
+|    |    |    |    |    |    +--- psychologist
+|    |    |    |    |    |    |    +--- PsychologistHeader.tsx
+|    |    |    |    |    |    |    +--- PsychologistSidebar.tsx
+|    |    |    |    |    |    |    +--- SidebarLayout.tsx
+|    |    |    |    |    |    |    \--- welcome-greeting.tsx
+|    |    |    |    |    |    +--- theme
+|    |    |    |    |    |    |    \--- theme-provider.tsx
+|    |    |    |    |    |    \--- ui
+|    |    |    |    |    |         +--- avatar.tsx
+|    |    |    |    |    |         +--- avatar-modal.tsx
+|    |    |    |    |    |         +--- button.tsx
+|    |    |    |    |    |         +--- status-toast.tsx
+|    |    |    |    |    |         +--- theme-toggle.tsx
+|    |    |    |    |    |         \--- user-badge.tsx
+|    |    |    |    |    +--- lib
+|    |    |    |    |    |    +--- i18n
+|    |    |    |    |    |    |    \--- risk.ts
+|    |    |    |    |    |    +--- mock
+|    |    |    |    |    |    |    +--- comments.json
+|    |    |    |    |    |    |    +--- posts.json
+|    |    |    |    |    |    |    \--- profile.json
+|    |    |    |    |    |    +--- api.ts
+|    |    |    |    |    |    +--- campus.ts
+|    |    |    |    |    |    +--- format-date.ts
+|    |    |    |    |    |    +--- student-code.ts
+|    |    |    |    |    |    +--- supabase.ts
+|    |    |    |    |    |    +--- terms-content.ts
+|    |    |    |    |    |    \--- utils.ts
+|    |    |    |    |    +--- types
+|    |    |    |    |    |    \--- domain.ts
+|    |    |    |    |    \--- middleware.ts
+|    |    |    |    +--- .env.example
+|    |    |    |    +--- components.json
+|    |    |    |    +--- eslint.config.mjs
+|    |    |    |    +--- next.config.ts
+|    |    |    |    +--- package.json
+|    |    |    |    +--- package-lock.json
+|    |    |    |    +--- postcss.config.mjs
+|    |    |    |    +--- tailwind.config.ts
+|    |    |    |    \--- tsconfig.json
+|    |    |    \--- nlp_engine
+|    |    |         +--- data
+|    |    |         |    +--- conceptual_validation
+|    |    |         |    |    +--- phase2_results backup.json
+|    |    |         |    |    \--- phase2_validate.py
+|    |    |         |    +--- emoji_map.json
+|    |    |         |    +--- en_markers.txt
+|    |    |         |    \--- immediate_risk_expressions.txt
+|    |    |         +--- src
+|    |    |         |    +--- models
+|    |    |         |    |    +--- clinical_model_v1
+|    |    |         |    |    |    +--- config.json
+|    |    |         |    |    |    +--- special_tokens_map.json
+|    |    |         |    |    |    +--- tokenizer.json
+|    |    |         |    |    |    +--- tokenizer_config.json
+|    |    |         |    |    |    +--- training_metadata.json
+|    |    |         |    |    |    \--- vocab.txt
+|    |    |         |    |    +--- community_model_v1
+|    |    |         |    |    |    +--- config.json
+|    |    |         |    |    |    +--- special_tokens_map.json
+|    |    |         |    |    |    +--- tokenizer.json
+|    |    |         |    |    |    +--- tokenizer_config.json
+|    |    |         |    |    |    +--- training_metadata.json
+|    |    |         |    |    |    \--- vocab.txt
+|    |    |         |    |    +--- __init__.py
+|    |    |         |    |    +--- clinical.py
+|    |    |         |    |    \--- community.py
+|    |    |         |    +--- orchestration
+|    |    |         |    |    +--- __init__.py
+|    |    |         |    |    +--- pipeline.py
+|    |    |         |    |    +--- preprocessor.py
+|    |    |         |    |    \--- safety_filter.py
+|    |    |         |    +--- routers
+|    |    |         |    |    +--- __init__.py
+|    |    |         |    |    +--- analysis.py
+|    |    |         |    |    \--- health.py
+|    |    |         |    +--- schemas
+|    |    |         |    |    +--- __init__.py
+|    |    |         |    |    +--- request.py
+|    |    |         |    |    \--- response.py
+|    |    |         |    +--- stubs
+|    |    |         |    |    +--- __init__.py
+|    |    |         |    |    \--- model_stub.py
+|    |    |         |    +--- __init__.py
+|    |    |         |    +--- config.py
+|    |    |         |    \--- main.py
+|    |    |         +--- tests
+|    |    |         |    +--- conftest.py
+|    |    |         |    \--- test_pipeline.py
+|    |    |         +--- .env.example
+|    |    |         \--- requirements.txt
+|    |    +--- .gitattributes
+|    |    \--- .gitignore
 |    +--- Documentación
+|    |    +--- Diapositivas Exposicion mindbridge.pdf
+|    |    +--- Informe_3.docx
+|    |    +--- Manual del sistema_3.docx
+|    |    +--- Manual_de_Usuario_MindBridge.docx
+|    |    \--- Mindbridge_UML.qea
 |    \--- Instaladores
+|         +--- deploy
+|         |    +--- docker-compose.yml
+|         |    +--- Dockerfile.backend
+|         |    +--- Dockerfile.frontend
+|         |    +--- Dockerfile.nlp
+|         |    +--- railway.json
+|         |    \--- vercel.json
+|         +--- modelos
+|         |    +--- clinical_model_v1
+|         |    |    +--- classifier_heads.pt
+|         |    |    \--- model.safetensors
+|         |    \--- community_model_v1
+|         |         +--- community_classifier_head.pt
+|         |         \--- model.safetensors
+|         +--- Credenciales.txt
+|         \--- README_Instalacion.md
 +--- src
 |    +--- backend
 |    |    +--- scripts
@@ -139,6 +416,9 @@
 |    |    |    |    |    +--- forum.router.ts
 |    |    |    |    |    +--- forum.schema.ts
 |    |    |    |    |    \--- forum.service.ts
+|    |    |    |    +--- nlp
+|    |    |    |    |    +--- nlp.service.ts
+|    |    |    |    |    \--- nlp.types.ts
 |    |    |    |    +--- notifications
 |    |    |    |    +--- psychologists
 |    |    |    |    |    +--- psychologists.router.ts
@@ -175,6 +455,7 @@
 |    +--- frontend
 |    |    +--- public
 |    |    |    +--- forum-empty.svg
+|    |    |    +--- mindbridge-logo.png
 |    |    |    +--- post-card.jpg
 |    |    |    +--- post-card.png
 |    |    |    +--- student-in-laptop.jpg
@@ -232,12 +513,15 @@
 |    |    |    |    |    +--- alert-list.tsx
 |    |    |    |    |    +--- nlp-scores-panel.tsx
 |    |    |    |    |    \--- post-history-list.tsx
+|    |    |    |    +--- auth
+|    |    |    |    |    \--- terms-modal.tsx
 |    |    |    |    +--- cases
 |    |    |    |    |    +--- case-actions.tsx
 |    |    |    |    |    +--- case-alerts-list.tsx
 |    |    |    |    |    +--- case-chat-shell.tsx
 |    |    |    |    |    +--- case-info-panel.tsx
 |    |    |    |    |    +--- case-post-history.tsx
+|    |    |    |    |    +--- student-chat-shell.tsx
 |    |    |    |    |    \--- student-data-panel.tsx
 |    |    |    |    +--- chat
 |    |    |    |    |    +--- chat-bubble.tsx
@@ -283,6 +567,7 @@
 |    |    |    |    +--- format-date.ts
 |    |    |    |    +--- student-code.ts
 |    |    |    |    +--- supabase.ts
+|    |    |    |    +--- terms-content.ts
 |    |    |    |    \--- utils.ts
 |    |    |    +--- types
 |    |    |    |    \--- domain.ts
@@ -335,7 +620,8 @@
 |         |    +--- models
 |         |    |    +--- __pycache__
 |         |    |    |    +--- __init__.cpython-313.pyc
-|         |    |    |    \--- clinical.cpython-313.pyc
+|         |    |    |    +--- clinical.cpython-313.pyc
+|         |    |    |    \--- community.cpython-313.pyc
 |         |    |    +--- clinical_model_v1
 |         |    |    |    +--- classifier_heads.pt
 |         |    |    |    +--- config.json
@@ -345,8 +631,18 @@
 |         |    |    |    +--- tokenizer_config.json
 |         |    |    |    +--- training_metadata.json
 |         |    |    |    \--- vocab.txt
+|         |    |    +--- community_model_v1
+|         |    |    |    +--- community_classifier_head.pt
+|         |    |    |    +--- config.json
+|         |    |    |    +--- model.safetensors
+|         |    |    |    +--- special_tokens_map.json
+|         |    |    |    +--- tokenizer.json
+|         |    |    |    +--- tokenizer_config.json
+|         |    |    |    +--- training_metadata.json
+|         |    |    |    \--- vocab.txt
 |         |    |    +--- __init__.py
-|         |    |    \--- clinical.py
+|         |    |    +--- clinical.py
+|         |    |    \--- community.py
 |         |    +--- orchestration
 |         |    |    +--- __pycache__
 |         |    |    |    +--- __init__.cpython-313.pyc
@@ -395,18 +691,23 @@
 |         +--- DEVELOPMENT.MD
 |         +--- readme.md
 |         \--- requirements.txt
++--- supabase
+|    \--- .temp
+|         +--- cli-latest
+|         +--- gotrue-version
+|         +--- linked-project.json
+|         +--- pooler-url
+|         +--- postgres-version
+|         +--- project-ref
+|         +--- rest-version
+|         +--- storage-migration
+|         \--- storage-version
++--- .env
 +--- .gitattributes
 +--- .gitignore
 +--- agents.md
 +--- Design.md
-+--- FINAL_TEST_SUMMARY.md
-+--- Guía para la presentación de proyectos Ing SW.docx
-+--- prompts.md
 +--- skills-lock.json
 +--- SPEC.md
-+--- TEST_EXECUTION_REPORT.md
-+--- TEST_GUIDE.md
-+--- TEST_INDEX.md
-+--- TEST_SUMMARY.md
 +--- tree.txt
 \--- tree-skip.ps1

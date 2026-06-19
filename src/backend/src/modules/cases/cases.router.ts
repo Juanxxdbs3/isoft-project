@@ -5,17 +5,18 @@ import {
   CreateCaseBodySchema,
   FormalActiveParamsSchema,
   CasesQuerySchema,
-  ChatMessagesQuerySchema,
-  CreateChatMessageBodySchema,
   ArchiveChatBodySchema,
   CreateConsentBodySchema,
 } from "./cases.schema.js";
 import { sendError, Errors } from "../../lib/errors.js";
 import { SupabaseCaseRepository } from "../../repositories/case.repository.js";
+import { ChatService } from "../chat/chat.service.js";
+import { CreateMessageBodySchema } from "../chat/chat.schema.js";
 
 const casesRouter: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   const caseRepo = new SupabaseCaseRepository(fastify.supabase);
   const casesService = new CasesService(fastify.supabase, fastify.log, caseRepo);
+  const chatService = new ChatService(fastify.supabase, fastify.log);
 
   fastify.get(
     "/",
@@ -232,23 +233,50 @@ const casesRouter: FastifyPluginAsync = async (fastify: FastifyInstance) => {
         );
       }
 
-      const queryResult = ChatMessagesQuerySchema.safeParse(request.query);
-      if (!queryResult.success) {
-        return sendError(
-          reply,
-          Errors.VALIDATION_ERROR(queryResult.error.issues.map((i) => i.message).join("; "))
-        );
-      }
-
       try {
-        const result = await casesService.getCaseChat(
-          paramsResult.data.caseId,
+        const caseId = paramsResult.data.caseId;
+        request.log.debug({ caseId }, "GET /:caseId/chat — querying chat_room");
+
+        const { data: room, error: roomError } = await fastify.supabase
+          .from("chat_room")
+          .select("id, status")
+          .eq("case_id", caseId)
+          .eq("status", "ACTIVE")
+          .maybeSingle();
+
+        if (roomError) {
+          request.log.error({ err: roomError, caseId }, "chat_room query error");
+        }
+
+        if (!room) {
+          request.log.warn({ caseId }, "No active chat_room found for case, trying without status filter");
+          const { data: anyRoom, error: anyError } = await fastify.supabase
+            .from("chat_room")
+            .select("id, status")
+            .eq("case_id", caseId)
+            .maybeSingle();
+          if (anyError) {
+            request.log.error({ err: anyError, caseId }, "Fallback chat_room query error");
+          }
+          request.log.warn({ anyRoom, anyError }, "Fallback query result");
+          return reply.send({
+            data: { chat_id: null, status: null, messages: [] },
+          });
+        }
+
+        const messages = await chatService.getMessages(
+          room.id,
           request.user.sub,
-          request.user.role,
-          request.user.campus,
-          queryResult.data
+          { limit: 50 }
         );
-        return reply.send({ data: result });
+
+        return reply.send({
+          data: {
+            chat_id: room.id,
+            status: room.status,
+            messages,
+          },
+        });
       } catch (err: unknown) {
         if (err && typeof err === "object" && "error" in err && "statusCode" in err) {
           return sendError(reply, err as any);
@@ -271,7 +299,7 @@ const casesRouter: FastifyPluginAsync = async (fastify: FastifyInstance) => {
         );
       }
 
-      const bodyResult = CreateChatMessageBodySchema.safeParse(request.body);
+      const bodyResult = CreateMessageBodySchema.safeParse(request.body);
       if (!bodyResult.success) {
         return sendError(
           reply,
@@ -280,12 +308,26 @@ const casesRouter: FastifyPluginAsync = async (fastify: FastifyInstance) => {
       }
 
       try {
-        const result = await casesService.sendChatMessage(
-          paramsResult.data.caseId,
+        const { data: room } = await fastify.supabase
+          .from("chat_room")
+          .select("id")
+          .eq("case_id", paramsResult.data.caseId)
+          .eq("status", "ACTIVE")
+          .maybeSingle();
+
+        if (!room) {
+          return sendError(
+            reply,
+            Errors.NOT_FOUND("Sala de chat no encontrada para este caso")
+          );
+        }
+
+        const result = await chatService.createMessage(
+          room.id,
           request.user.sub,
-          request.user.role,
-          request.user.campus,
-          bodyResult.data
+          request.user.role.toUpperCase(),
+          bodyResult.data.text_content,
+          bodyResult.data.type,
         );
         return reply.status(201).send({ data: result });
       } catch (err: unknown) {
