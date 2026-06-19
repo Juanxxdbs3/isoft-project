@@ -43,6 +43,7 @@ export function CaseChatShell({
   const [roomError, setRoomError] = useState<string | null>(null);
   const [msgsLoading, setMsgsLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
+  const userIdRef = useRef(userId);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,9 +56,12 @@ export function CaseChatShell({
     if (!token) return;
     try {
       const payload = JSON.parse(atob(token.split(".")[1]));
-      setUserId(payload.sub || null);
+      const sub = payload.sub || null;
+      setUserId(sub);
+      userIdRef.current = sub;
     } catch {
       setUserId(null);
+      userIdRef.current = null;
     }
   }, [token]);
 
@@ -148,13 +152,13 @@ export function CaseChatShell({
           return;
         }
 
-        if (userId && msgData.sender_id === userId) {
+        if (userIdRef.current && msgData.sender_id === userIdRef.current) {
           console.log("⏭️ Mensaje propio ignorado (ya recibido vía POST response):", msgData.id);
           return;
         }
 
         setMessages((prev) => {
-          if (prev.some((m) => m.id === msgData.id || m.id === `temp_${msgData.id}`)) return prev;
+          if (prev.some((m) => m.id === msgData.id || m.id.startsWith("temp_"))) return prev;
           return [...prev, mapMessage(msgData)];
         });
       });
@@ -193,7 +197,10 @@ export function CaseChatShell({
       message_type: messageType,
     }, token)
       .then((realMsg: any) => {
-        setMessages((prev) => prev.map((m) => m.id === tempId ? mapMessage(realMsg) : m));
+        setMessages((prev) => [
+          ...prev.filter((m) => m.id !== realMsg.id && m.id !== tempId),
+          mapMessage(realMsg),
+        ]);
       })
       .catch(() => {
         setMessages((prev) => prev.filter((m) => m.id !== tempId));

@@ -105,11 +105,11 @@ export class ChatService {
         "id, chat_room_id, sender_id, sender_role, text_content, message_type, sent_at",
       )
       .eq("chat_room_id", roomId)
-      .order("created_at", { ascending: false })
+      .order("sent_at", { ascending: false })
       .limit(limit);
 
     if (before) {
-      dbQuery = dbQuery.lt("created_at", before);
+      dbQuery = dbQuery.lt("sent_at", before);
     }
 
     const { data, error } = await dbQuery;
